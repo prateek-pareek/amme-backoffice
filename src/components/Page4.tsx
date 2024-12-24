@@ -1,0 +1,599 @@
+import React from "react";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Menu,
+  MenuItem,
+  Paper,
+  Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from "@mui/material";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Add as Plus,
+  Edit as Pen,
+  MoreHoriz,
+  Delete,
+} from "@mui/icons-material";
+import SideBar from "./SideBar";
+import NavBar from "./NavBar";
+import { IoMdArrowDown } from "react-icons/io";
+
+type User = {
+  lastName: string;
+  firstName: string;
+  email: string;
+  status: "Actif" | "Inactif";
+};
+
+const users: User[] = [
+  {
+    lastName: "Blanchard",
+    firstName: "Mathurin",
+    email: "balthazar.charles@example.org",
+    status: "Actif",
+  },
+  {
+    lastName: "Blanchard",
+    firstName: "Mathurin",
+    email: "balthazar.charles@example.org",
+    status: "Actif",
+  },
+  {
+    lastName: "Nguyen",
+    firstName: "Reine",
+    email: "capucine.henry@example.com",
+    status: "Inactif",
+  },
+  {
+    lastName: "Deschamps",
+    firstName: "Balthazar",
+    email: "aristide.berger@example.net",
+    status: "Inactif",
+  },
+  {
+    lastName: "Marty",
+    firstName: "Serge",
+    email: "gilbert.laurent@example.com",
+    status: "Actif",
+  },
+  {
+    lastName: "Leclerc",
+    firstName: "Yvonne",
+    email: "vianney45@example.net",
+    status: "Inactif",
+  },
+  {
+    lastName: "Leclerc",
+    firstName: "Yvonne",
+    email: "vianney45@example.net",
+    status: "Inactif",
+  },
+];
+
+// First define the permission keys type
+type PermissionKey =
+  | "statistics"
+  | "planning"
+  | "services"
+  | "salaries"
+  | "invoices"
+  | "paidLeave";
+
+// Define the interface for each permission item
+interface PermissionItem {
+  label: string;
+  key: PermissionKey;
+}
+
+export default function Page4() {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [selectedUser, setSelectedUser] = React.useState<User | null>(null);
+  // Add this state at the top with other states
+  const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
+  
+
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    user: User
+  ) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedUser(user);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setSelectedUser(null);
+  };
+
+  // Add new function to handle final deletion
+const handleConfirmDelete = () => {
+  console.log('Deleting user:', selectedUser);
+  setDeleteDialogOpen(false);
+};
+
+  const handleModify = () => {
+    // Handle modify action
+    console.log("Modifying user:", selectedUser);
+    handleClose();
+  };
+
+  const handleDelete = () => {
+    setDeleteDialogOpen(true);
+    handleClose(); // Close the menu
+  };
+
+  // Add these state declarations in your Page6 component
+  const [createAccountOpen, setCreateAccountOpen] = React.useState(false);
+  const [formData, setFormData] = React.useState({
+    lastName: "",
+    firstName: "",
+    email: "",
+  });
+  const [permissions, setPermissions] = React.useState({
+    statistics: true,
+    planning: false,
+    services: false,
+    salaries: false,
+    invoices: false,
+    paidLeave: false,
+  });
+
+  // Add these handlers in your Page6 component
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handlePermissionChange =
+    (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setPermissions((prev) => ({
+        ...prev,
+        [name]: event.target.checked,
+      }));
+    };
+
+  return (
+    <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
+      {/* Sidebar */}
+      <SideBar />
+
+      {/* Main content */}
+      <Box sx={{ flex: 1 }}>
+        {/* Top bar */}
+        <NavBar />
+
+        {/* Page content */}
+        <Box
+          sx={{
+            p: 4,
+            backgroundColor: "white",
+            flex: 1,
+            height: "calc(100vh - 80px)",
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
+            <Box>
+              <Typography variant="h5" gutterBottom>
+                Gestion administrateur
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Veuillez retrouver ici l'ensemble des comptes administrateurs
+              </Typography>
+            </Box>
+            <Button
+              variant="contained"
+              startIcon={<Plus />}
+              sx={{ height: 40 }}
+              onClick={() => setCreateAccountOpen(true)}
+            >
+              Créer un compte
+            </Button>
+          </Box>
+
+          <TableContainer
+            component={Paper}
+            elevation={0}
+            sx={{ boxShadow: "none" ,}}
+            
+          >
+            <Table>
+              <TableHead sx={{ bgcolor: "#F6F7F9" , height:'40px'}}>
+                <TableRow >
+                  <TableCell sx={{display:'flex',color:'#818EA0'}}>Nom <IoMdArrowDown size={24}/></TableCell>
+                  <TableCell sx={{color:'#818EA0'}}>Prénom</TableCell>
+                  <TableCell sx={{color:'#818EA0'}}>Adresse email</TableCell>
+                  <TableCell sx={{color:'#818EA0'}}>Statut de compte</TableCell>
+                  <TableCell width={50}></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {users.map((user) => (
+                  <TableRow key={user.email}>
+                    <TableCell>{user.lastName}</TableCell>
+                    <TableCell>{user.firstName}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>
+                      <Box
+                        sx={{
+                          display: "inline-block",
+                          px: '20px',
+                          py: '4px',
+                          fontSize:'14px',fontWeight:'500',
+                          borderRadius: 1,
+                          bgcolor:
+                            user.status === "Actif" ? "#E5F2FF" : "#FFE5E5",
+                          color:
+                            user.status === "Actif" ? "#0C66E6" : "#FF4D4D",
+                        }}
+                      >
+                        {user.status}
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <IconButton onClick={(e) => handleClick(e, user)}>
+                        <MoreHoriz />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+          {/* Action Menu */}
+          <Menu
+            id="action-menu"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            slotProps={{
+              paper: {
+                elevation: 0,
+                sx: {
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.08))",
+                  mt: 1,
+                  minWidth: 180,
+                  borderRadius: "16px", // Add border radius here
+                  "& .MuiMenuItem-root": {
+                    px: 2,
+                    // py: 1,
+                    borderRadius: "2px",
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.04)",
+                    },
+                  },
+                },
+              },
+            }}
+          >
+            <MenuItem onClick={handleModify} sx={{ gap: 1 }}>
+              <Pen sx={{ fontSize: "16px" }} />
+              Modifier
+            </MenuItem>
+            <MenuItem onClick={handleDelete} sx={{ color: "#FF4D4D", gap: 1 }}>
+              <Delete sx={{ fontSize: "16px" }} />
+              Supprimer
+            </MenuItem>
+          </Menu>
+
+          {/* Add this JSX in your return statement */}
+          <Dialog
+            open={createAccountOpen}
+            onClose={() => setCreateAccountOpen(false)}
+            maxWidth="sm"
+            fullWidth
+            PaperProps={{
+              sx: {
+                borderRadius: "16px",
+                height: "960px",
+                maxWidth: "464px",
+                marginLeft: "1200px",
+                overflow: "hidden",
+                paddingX: "8px",
+              },
+            }}
+          >
+            <DialogTitle
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                fontSize: "24px",
+                p: 3,
+                pb: "1px",
+              }}
+            >
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: "600", fontSize: "24px", mb: "2px" }}
+              >
+                Gestion de compte
+              </Typography>
+              <IconButton onClick={() => setCreateAccountOpen(false)}>
+                X
+              </IconButton>
+            </DialogTitle>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ px: 3, mb: 2, mt: 0, fontSize: "14px", fontWeight: "400" }}
+            >
+              Veuillez compléter les informations ci-dessous afin de créer un
+              nouveau compte
+            </Typography>
+
+            <DialogContent sx={{ px: 3, py: "4px" }}>
+              {/* Input Fields Section */}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginTop: "5px",
+                  gap: "12px", // Reduced gap between input fields and Pages accessibles (Change 1)
+                  mb: "4px", // Adjusted bottom margin for the input section
+                }}
+              >
+                <Box
+                  sx={{ display: "flex", flexDirection: "column", gap: "4px" }}
+                >
+                  <Box sx={{ display: "flex" }}>
+                    <Typography variant="body2">Nom</Typography>
+                    <Typography variant="body2" sx={{ color: "#818EA0" }}>
+                      (obligatoire)
+                    </Typography>
+                  </Box>
+                  <TextField
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    fullWidth
+                    size="small"
+                  />
+                </Box>
+
+                <Box
+                  sx={{ display: "flex", flexDirection: "column", gap: "4px" }}
+                >
+                  <Box sx={{ display: "flex" }}>
+                    <Typography variant="body2">Prénom</Typography>
+                    <Typography variant="body2" sx={{ color: "#818EA0" }}>
+                      (obligatoire)
+                    </Typography>
+                  </Box>
+                  <TextField
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    fullWidth
+                    size="small"
+                  />
+                </Box>
+
+                <Box
+                  sx={{ display: "flex", flexDirection: "column", gap: "4px" }}
+                >
+                  <Typography variant="body2">Adresse mail</Typography>
+                  <TextField
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    fullWidth
+                    size="small"
+                  />
+                </Box>
+              </Box>
+
+              {/* Pages Accessibles Section */}
+              <Typography
+                variant="subtitle1"
+                sx={{ fontWeight: "500", fontSize: "18px", mb: "4px" }}
+              >
+                Pages accessibles
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ fontWeight: "400", fontSize: "14px", mb: "8px" }}
+              >
+                Vous pouvez activer les différentes fonctionnalités pour
+                l'utilisateur ci-dessous
+              </Typography>
+
+              {/* Switches Section */}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  height: "224px",
+                  borderRadius: 2,
+                  backgroundColor: "#FFF",
+                  px: 2,
+                  mb: "8px",
+                }}
+              >
+                {[
+                  { label: "Statistiques", key: "statistics" as PermissionKey },
+                  { label: "Planning", key: "planning" as PermissionKey },
+                  { label: "Prestations", key: "services" as PermissionKey },
+                  { label: "Salaires", key: "salaries" as PermissionKey },
+                  { label: "Factures", key: "invoices" as PermissionKey },
+                  { label: "Congés payés", key: "paidLeave" as PermissionKey },
+                ].map((item: PermissionItem) => (
+                  <Box
+                    key={item.key}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "100%",
+                    }}
+                  >
+                    {/* Label Section */}
+                    <Box sx={{ flex: 1, textAlign: "left" }}>
+                      <Typography
+                        variant="body2"
+                        sx={{ fontSize: "14px", fontWeight: 500 }}
+                      >
+                        {item.label}
+                      </Typography>
+                    </Box>
+
+                    {/* Switch Section */}
+                    <Box sx={{ flexShrink: 0 }}>
+                      <Switch
+                        checked={permissions[item.key]}
+                        onChange={() => handlePermissionChange(item.key)}
+                      />
+                    </Box>
+                  </Box>
+                ))}
+              </Box>
+
+              {/* Buttons */}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  borderTop: "1px solid #E9EEF6",
+                  pt: 3,
+                  mt: 1,
+                }}
+              >
+                <Button
+                  color="error"
+                  sx={{
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    borderRadius: "8px",
+                  }}
+                  onClick={() => setCreateAccountOpen(false)}
+                >
+                  Supprimer
+                </Button>
+                <Box sx={{ display: "flex", gap: 2 }}>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      textTransform: "none",
+                      fontWeight: "bold",
+                      borderRadius: "8px",
+                      borderColor: "#E2E8F0",
+                    }}
+                    onClick={() => setCreateAccountOpen(false)}
+                  >
+                    Annuler
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      textTransform: "none",
+                      borderRadius: "8px",
+                      fontWeight: "bold",
+                      backgroundColor: "#E2E8F0",
+                      ":hover": { backgroundColor: "#E2E8F0" },
+                    }}
+                  >
+                    Confirmer
+                  </Button>
+                </Box>
+              </Box>
+            </DialogContent>
+          </Dialog>
+
+          <Dialog
+                      open={deleteDialogOpen}
+                      onClose={() => setDeleteDialogOpen(false)}
+                      PaperProps={{
+                        sx: {
+                          borderRadius: 2,
+                          maxWidth: '400px',
+                          position: 'fixed',
+                          bottom: 20,
+                          right: 20,
+                        }
+                      }}
+                      sx={{
+                        '& .MuiBackdrop-root': {
+                          backgroundColor: 'rgba(0, 0, 0, 0.2)', // Adjust opacity here (default is 0.5)
+                        }
+                      }}
+                    >
+                      <DialogContent sx={{ pt: 3 }}>
+                        <Typography variant="h6" sx={{ mb: 1 }}>
+                          Suppression
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Vous êtes sur le point de supprimer un profil administrateur.
+                          Confirmez-vous cette action ?
+                        </Typography>
+                        <Box sx={{ 
+                          display: 'flex', 
+                          justifyContent: 'flex-end',
+                          gap: 2,
+                          mt: 3 
+                        }}>
+                          <Button 
+                            variant="outlined" 
+                            onClick={() => setDeleteDialogOpen(false)}
+                            sx={{ textTransform: 'none' }}
+                          >
+                            Annuler
+                          </Button>
+                          <Button 
+                            variant="contained" 
+                            color="error"
+                            onClick={handleConfirmDelete}
+                            sx={{ textTransform: 'none' }}
+                          >
+                            Supprimer
+                          </Button>
+                        </Box>
+                      </DialogContent>
+                    </Dialog>
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              mt: 2,
+              px: 2,
+            }}
+          >
+            <Typography variant="body2" color="text.secondary">
+              1-10 sur 240
+            </Typography>
+            <Box
+              sx={{ display: "flex", gap: 1, height: "24px", width: "108px" }}
+            >
+              <IconButton size="small">
+                <ChevronLeft />
+              </IconButton>
+              1/27
+              <IconButton size="small">
+                <ChevronRight />
+              </IconButton>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+  );
+}
