@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import {
   Box,
   Button,
+  Container,
   FormControl,
-  Grid,
+ 
   InputAdornment,
   List,
   ListItem,
   MenuItem,
   Select,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
@@ -129,76 +131,107 @@ export default function NombrePrestations() {
   const renderNurseData = () => {
     if (selectedValue) {
       return (
-        <Grid container spacing={2} marginTop={4}>
-          <Grid item xs={12} md={8}>
+        <Container maxWidth="xl">
+          <Stack spacing={2} marginTop={4} direction="row" justifyContent="space-between">
             <Box 
               sx={{ 
                 p: 2, 
                 bgcolor: "background.paper", 
                 borderRadius: 1, 
                 border: "1px solid #E2E8F0", 
-                display: "flex", 
-                alignItems: 'center' 
+                width: '25%' 
               }}
             >
-              <Box sx={{ p: 2 }}>
-                <Typography sx={{ fontSize: "14px", fontWeight: "500" }}>{selectedValue}</Typography>
-                <Typography sx={{ fontSize: "28px", fontWeight: "bold" }}>150</Typography> 
-              </Box>
-              <Box sx={{ p: 2, marginLeft: 'auto', textAlign: 'center' }}>
-                <Typography sx={{ fontSize: "14px", fontWeight: "500" }}>Prestations prévus cette semaine pour l'infirmier</Typography>
-                <Typography sx={{ fontSize: "28px", fontWeight: "bold" }}>634</Typography>
-              </Box>
-              <Box sx={{ p: 2, marginLeft: 'auto', textAlign: 'center' }}>
-                <Typography sx={{ fontSize: "14px", fontWeight: "500" }}>Prestations de la semaine dernière pour l'infirmier</Typography>
-                <Typography sx={{ fontSize: "28px", fontWeight: "bold" }}>1230</Typography>
-              </Box>
-              <Box sx={{ p: 2, marginLeft: 'auto', textAlign: 'center' }}>
-                <Typography sx={{ fontSize: "14px", fontWeight: "500" }}>Services du mois dernier pour l'infirmier</Typography>
-                <Typography sx={{ fontSize: "28px", fontWeight: "bold" }}>1839</Typography>
-              </Box>
+              <Typography sx={{ fontSize: "16px", fontWeight: "500" }}>LACROIX Auguste</Typography>
+              <Typography sx={{ fontSize: "36px", fontWeight: "500" , color:'#0C66E6' }}>150</Typography> 
             </Box>
-          </Grid>
   
-          <Grid item xs={12}>
             <Box 
               sx={{ 
-                mb: "4px", 
-                borderRadius: "8px", 
+                p: 2, 
+                bgcolor: "background.paper", 
+                borderRadius: 1, 
                 border: "1px solid #E2E8F0", 
-                padding: 2 
+                width: '25%' 
               }}
             >
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems:'center'}}>
-                <Typography fontWeight="bold" sx={{ fontSize: "16px", }}>Prestations par infirmière</Typography>
-                <Box sx={{ width: '250px', display: 'flex', justifyContent: 'flex-end' }}>
-                  <Button 
-                    sx={{ 
-                      fontSize: "14px", 
-                      fontWeight: "500", 
-                      textTransform: "capitalize", 
-                      color: "#0C66E6" 
-                    }}
-                  > Semaine </Button>
-                  <Button 
-                    sx={{ 
-                      fontSize: "14px", 
-                      fontWeight: "500", 
-                      textTransform: "capitalize", 
-                      color: "#818EA0" 
-                    }}
-                  > 30 derniers jours </Button>
-                </Box>
-              </Box>
+              <Typography sx={{ fontSize: "16px", fontWeight: "500" }}>Prestations prévus cette semaine pour l'infirmier</Typography>
+              <Typography sx={{ fontSize: "36px", fontWeight: "500" , color:'#0C66E6' }}>634</Typography>
+            </Box>
   
-              <Box sx={{ height: "250px", width: "100%" }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  {/* ... your BarChart component ... */}
-                </ResponsiveContainer>
+            <Box 
+              sx={{ 
+                p: 2, 
+                bgcolor: "background.paper", 
+                borderRadius: 1, 
+                border: "1px solid #E2E8F0", 
+                width: '25%' 
+              }}
+            >
+              <Typography sx={{ fontSize: "16px", fontWeight: "500" }}>Prestations de la semaine dernière pour l'infirmier</Typography>
+              <Typography sx={{ fontSize: "36px", fontWeight: "500" , color:'#0C66E6'}}>1230</Typography>
+            </Box>
+  
+            <Box 
+              sx={{ 
+                p: 2, 
+                bgcolor: "background.paper", 
+                borderRadius: 1, 
+                border: "1px solid #E2E8F0", 
+                width: '25%' 
+              }}
+            >
+              <Typography sx={{ fontSize: "16px", fontWeight: "500" }}>Services du mois dernier pour l'infirmier</Typography>
+              <Typography sx={{ fontSize: "36px", fontWeight: "500", color:'#0C66E6' }}>1839</Typography>
+            </Box>
+          </Stack>
+  
+          <Box 
+            sx={{ 
+              mt: 4, 
+              borderRadius: "8px", 
+              border: "1px solid #E2E8F0", 
+              padding: 2 ,
+              height: "400px"
+            }}
+          >
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems:'center'}}>
+              <Typography fontWeight="bold" sx={{ fontSize: "16px", }}>Prestations par infirmière</Typography>
+              <Box sx={{ width: '250px', display: 'flex', justifyContent: 'flex-end' }}>
+                <Button 
+                  sx={{ 
+                    fontSize: "14px", 
+                    fontWeight: "500", 
+                    textTransform: "capitalize", 
+                    color: "#0C66E6" 
+                  }}
+                > Semaine </Button>
+                <Button 
+                  sx={{ 
+                    fontSize: "14px", 
+                    fontWeight: "500", 
+                    textTransform: "capitalize", 
+                    color: "#818EA0" 
+                  }}
+                > 30 derniers jours </Button>
               </Box>
             </Box>
-          </Grid>
-        </Grid>
+  
+            <Box sx={{ height: "350px", width: "100%" }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={barData}
+                  margin={{ top: 20, right: 30, left: 20 }}
+                >
+                  <XAxis dataKey="day" tick={{ fontSize: 10, fontWeight: '400', color:'#818EA0' }} axisLine={{ stroke: 'none' }} /> 
+                  <YAxis tick={{ fontSize: '12px', fontWeight:'400' , color:'#818EA0'}} axisLine={{ stroke: 'none' }} domain={[0, 175]} ticks={[0, 25, 50, 75, 100, 125, 150, 175]} />
+                  <Bar dataKey="prestations" fill="#0066FF" barSize={20} />
+                  <Bar dataKey="prestations" fill="#FFA500" barSize={20} />
+                </BarChart>
+              </ResponsiveContainer>
+            </Box>
+          </Box>
+        </Container>
       );
     } else {
       return null;
