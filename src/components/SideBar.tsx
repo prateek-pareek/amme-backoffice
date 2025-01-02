@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
-import logoIcon from '../assets/logo.svg';
-import profile from '../assets/profile.png';
-import { Box, Drawer, List, ListItem, ListItemText, Typography } from '@mui/material';
-import { PiFiles, PiLockSimpleOpenLight, PiUsersThreeLight } from 'react-icons/pi';
-import { GoGraph, GoHome } from 'react-icons/go';
-import { FaRegCalendarAlt } from 'react-icons/fa';
-import { SlPlane } from 'react-icons/sl';
-import { IoIosArrowDown } from 'react-icons/io';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, SetStateAction, Dispatch } from "react";
+import logoIcon from "../assets/logo.svg";
+import profile from "../assets/profile.png";
+import question from "../assets/questionMark.svg"
+import {
+  Box,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+  Modal,
+  Button,
+} from "@mui/material";
+import {
+  PiFiles,
+  PiLockSimpleOpenLight,
+  PiUsersThreeLight,
+} from "react-icons/pi";
+import { GoGraph, GoHome } from "react-icons/go";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { SlPlane } from "react-icons/sl";
+import { IoIosArrowDown } from "react-icons/io";
+import { Link } from "react-router-dom";
+import { PersonOutline, Settings, Logout } from "@mui/icons-material";
 
-// Define types for the sidebar items
 interface SublistItem {
   text: string;
 }
@@ -23,50 +37,139 @@ interface SidebarItem {
   count?: number;
 }
 
-const SideBar: React.FC = () => {
+interface SidebarProps {
+  selectedSublist?: string | null;
+  setSelectedSublist?: Dispatch<SetStateAction<string | null>>
+}
+
+const SideBar: React.FC<SidebarProps> = ({ selectedSublist, setSelectedSublist }) => {
   const [isSublistOpen, setIsSublistOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<string | null>(null); // Track the selected item
-  const [selectedSublist, setSelectedSublist] = useState<string | null>(null); // Track the selected sublist item
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
 
   const toggleSublist = () => {
     setIsSublistOpen(!isSublistOpen);
   };
 
-  const handleItemClick = (itemText: string, hasSublist: boolean, sublist?: SublistItem[]) => {
-    setSelectedItem(itemText); // Set the selected item
+  const handleItemClick = (
+    itemText: string,
+    hasSublist: boolean,
+    sublist?: SublistItem[]
+  ) => {
+    setSelectedItem(itemText);
     if (hasSublist) {
-      toggleSublist(); // Toggle sublist if the item has a sublist
-      if (sublist && sublist.length > 0) {
-        setSelectedSublist(sublist[0].text); // Set the first sublist item as selected
+      toggleSublist();
+      if (!isSublistOpen && sublist && sublist.length > 0) {
+        setSelectedSublist &&
+        setSelectedSublist(sublist[0].text);
+      } else {setSelectedSublist &&
+        setSelectedSublist(null);
       }
     }
   };
 
+
+  const handleProfileClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   const handleSublistClick = (subitemText: string) => {
-    setSelectedSublist(subitemText); // Set the selected sublist item
+    setSelectedSublist &&
+    setSelectedSublist(subitemText);
+  };
+
+  const calculateModalPosition = () => {
+    if (profileRef.current) {
+      const rect = profileRef.current.getBoundingClientRect();
+      return {
+        top: rect.top - 90, // Adjust height as per modal's content
+        left: rect.left + rect.width / 2,
+      };
+    }
+    return { top: "50%", left: "50%" };
+  };
+
+  const modalStyle = {
+    position: "absolute",
+    transform: "translate(-50%, -50%)",
+    width: 250,
+    bgcolor: "background.paper",
+    boxShadow: 12,
+    p: 2,
+    borderRadius: "8px",
+    ...calculateModalPosition(),
   };
 
   const sidebarItems: SidebarItem[] = [
-    { text: 'Accueil', icon: <GoHome size="20px" /> },
-    { text: 'Accès administrateur', icon: <PiLockSimpleOpenLight size="20px" />, link: '/page4' },
+    { text: "Accueil", icon: <GoHome size="20px" /> },
     {
-      text: 'Statistiques',
+      text: "Accès administrateur",
+      icon: <PiLockSimpleOpenLight size="20px" />,
+      link: "/access-administration",
+    },
+    {
+      text: "Statistiques",
       icon: <GoGraph size="20px" />,
-      link:'/page10',
+      link: "/statistiques",
       hasSublist: true,
       sublist: [
-        { text: 'Nombre de prestations' },
-        { text: 'Argent généré' },
-        { text: 'Carte par région' },
-        { text: 'Note de satisfaction' },
+        { text: "Nombre de prestations" },
+        { text: "Argent généré" },
+        { text: "Carte par région" },
+        { text: "Note de satisfaction" },
       ],
     },
-    { text: 'Planning', icon: <FaRegCalendarAlt size="20px" /> },
-    { text: 'Prestations', icon: <PiUsersThreeLight size="20px" /> },
-    { text: 'Salaires', icon: <PiFiles size="20px" />, count: 10 },
-    { text: 'Factures', icon: <PiFiles size="20px" /> },
-    { text: 'Congés payés', icon: <SlPlane size="20px" />, count: 4 },
+    { text: "Planning", icon: <FaRegCalendarAlt size="20px" />, link: "/planning" },
+    {
+      text: "Prestations",
+      icon: <PiUsersThreeLight size="20px" />,
+      link: "/presentation",
+    },
+    { text: "Salaires", icon: <PiFiles size="20px" />, count: 10, link: "/salaires" },
+    { text: "Factures", icon: <PiFiles size="20px" />, link: "/factures" },
+    {
+      text: "Congés payés",
+      icon: <SlPlane size="20px" />,
+      count: 4,
+      link: "/conges-payes",
+    },
   ];
+
+  const handleLogout = () => {
+    setIsModalOpen(false);
+    setIsLogoutModalOpen(true);
+  };
+
+  const handleConfirmLogout = () => {
+    // Add your logout logic here
+    console.log("Logging out...");
+    setIsLogoutModalOpen(false);
+  };
+
+  const handleCancelLogout = () => {
+    setIsLogoutModalOpen(false);
+  };
+
+  const logoutModalStyle = {
+    position: 'absolute',
+    bottom: '-6%',
+    left: '8%',
+    transform: 'translate(-50%, -50%)',
+    width: 250,
+    bgcolor: 'background.paper',
+    height:'241px',
+    borderRadius: '8px',
+    p: 4,
+    boxShadow: 12,
+    outline: 'none',
+  };
+
 
   return (
     <Drawer
@@ -81,41 +184,45 @@ const SideBar: React.FC = () => {
         },
       }}
     >
-      <Box sx={{ p: 1.5, display: 'flex', alignItems: 'center', gap: '8px', ml: '16px', marginTop: '32px' }}>
-        <Box sx={{ bgcolor: '#0C66E6', borderRadius: '4px', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Box sx={{ p: 1.5, display: "flex", alignItems: "center", gap: "8px", ml: "16px", marginTop: "32px" }}>
+        <Box
+          sx={{
+            bgcolor: "#0C66E6",
+            borderRadius: "4px",
+            width: "32px",
+            height: "32px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <img src={logoIcon} alt="Logo" style={{ width: 24, height: 24 }} />
         </Box>
-        <Typography sx={{ fontSize: '14px', fontWeight: '600' }}>
-          AMME
-        </Typography>
+        <Typography sx={{ fontSize: "14px", fontWeight: "600" }}>AMME</Typography>
       </Box>
 
-      <List sx={{ px: '12px', mt: '50px', fontSize: '14px', fontWeight: '500' }}>
+      <List sx={{ px: "12px", mt: "50px", fontSize: "14px", fontWeight: "500" }}>
         {sidebarItems.map((item) => (
           <React.Fragment key={item.text}>
             <ListItem
               sx={{
                 borderRadius: 1,
-                py: '12px',
-                minHeight: '36px',
-                bgcolor: selectedItem === item.text ? 'rgba(12, 102, 230, 0.1)' : 'transparent', // Highlight selected item
-                color: selectedItem === item.text ? '#151515' : '#818EA0', // Change text color for selected item
-                '&:hover': { bgcolor: 'rgba(12, 102, 230, 0.1)' },
+                py: "12px",
+                minHeight: "36px",
+                color: selectedItem === item.text ? "#0C66E6" : "#151515",
+                "&:hover": { bgcolor: "rgba(12, 102, 230, 0.1)" },
               }}
               onClick={() => handleItemClick(item.text, !!item.hasSublist)}
             >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flex: 1 }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, flex: 1 }}>
                 {item.icon}
                 {item.link ? (
-                  <Link to={item.link} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <Link to={item.link} style={{ textDecoration: "none", color: "inherit" }}>
                     <ListItemText
                       primary={item.text}
                       sx={{
                         m: 0,
-                        '& .MuiTypography-root': {
-                          fontSize: '14px',
-                          fontWeight: '600',
-                        },
+                        "& .MuiTypography-root": { fontSize: "14px", fontWeight: "600" },
                       }}
                     />
                   </Link>
@@ -124,10 +231,7 @@ const SideBar: React.FC = () => {
                     primary={item.text}
                     sx={{
                       m: 0,
-                      '& .MuiTypography-root': {
-                        fontSize: '14px',
-                        fontWeight: '600',
-                      },
+                      "& .MuiTypography-root": { fontSize: "14px", fontWeight: "600" },
                     }}
                   />
                 )}
@@ -135,22 +239,22 @@ const SideBar: React.FC = () => {
                   <IoIosArrowDown
                     size="16px"
                     style={{
-                      transform: isSublistOpen ? 'rotate(180deg)' : 'rotate(0)',
-                      transition: 'transform 0.2s ease',
+                      transform: isSublistOpen ? "rotate(180deg)" : "rotate(0)",
+                      transition: "transform 0.2s ease",
                     }}
                   />
                 )}
                 {item.count && (
                   <Box
                     sx={{
-                      bgcolor: '#E9EEF6',
-                      borderRadius: '4px',
+                      bgcolor: "#E9EEF6",
+                      borderRadius: "4px",
                       px: 1,
                       py: 0.25,
-                      minWidth: '20px',
-                      fontSize: '14px',
-                      fontWeight: '500',
-                      textAlign: 'center',
+                      minWidth: "20px",
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      textAlign: "center",
                     }}
                   >
                     {item.count}
@@ -167,23 +271,20 @@ const SideBar: React.FC = () => {
                     sx={{
                       borderRadius: 1,
                       py: 0.75,
-                      fontSize: '14px',
-                      fontWeight: '500',
-                      gap: '20px',
-                      minHeight: '32px',
-                      color: selectedSublist === subitem.text ? '#151515' : '#818EA0', // Highlight selected sublist item
-                      '&:hover': { color: '#151515' },
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      gap: "20px",
+                      minHeight: "32px",
+                      color: selectedSublist === subitem.text ? "#151515" : "#818EA0",
+                      "&:hover": { color: "#151515" },
                     }}
-                    onClick={() => handleSublistClick(subitem.text)} // Handle sublist item click
+                    onClick={() => handleSublistClick(subitem.text)}
                   >
                     <ListItemText
                       primary={subitem.text}
                       sx={{
                         m: 0,
-                        '& .MuiTypography-root': {
-                          fontSize: '14px',
-                          fontWeight: '500',
-                        },
+                        "& .MuiTypography-root": { fontSize: "14px", fontWeight: "500" },
                       }}
                     />
                   </ListItem>
@@ -194,23 +295,164 @@ const SideBar: React.FC = () => {
         ))}
       </List>
 
-      <Box sx={{ mt: 'auto', p: 1.5, borderTop: '1px solid #E9EEF6' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-          <img
-            src={profile}
-            alt="Profile"
-            style={{ width: 40, height: 40, borderRadius: '50%' }}
-          />
-          <Box>
-            <Typography sx={{ fontSize: '13px', fontWeight: '500' }}>
-              Zoubir MOHAMED
-            </Typography>
-            <Typography sx={{ fontSize: '12px', color: '#818EA0' }}>
-              Super administrateur
-            </Typography>
-          </Box>
+      <Box
+        ref={profileRef}
+        sx={{ mt: "auto", p: 1.5, borderTop: "1px solid #E9EEF6", display: "flex", alignItems: "center", gap: 1.5, cursor: "pointer" }}
+        onClick={handleProfileClick}
+      >
+        <img src={profile} alt="Profile" style={{ width: 40, height: 40, borderRadius: "50%" }} />
+        <Box>
+          <Typography sx={{ fontSize: "13px", fontWeight: "500" }}>Zoubir MOHAMED</Typography>
+          <Typography sx={{ fontSize: "12px", color: "#818EA0" }}>Super administrateur</Typography>
         </Box>
       </Box>
+
+      <Modal
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        aria-labelledby="profile-modal-title"
+        aria-describedby="profile-modal-description"
+        BackdropProps={{
+          style: { backgroundColor: "transparent" },
+        }}
+      >
+        <Box sx={modalStyle}>
+          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+            <Typography sx={{ fontSize: "14px", fontWeight: "400", color:'#818EA0' }}>AMME Application 2024</Typography>
+            <Typography sx={{ fontSize: "12px", ml: "auto" }}>v1.0.1</Typography>
+          </Box>
+          <Box sx={{ borderBottom: "1px solid #E2E8F0", mt: 1, mb: 1 }} />
+          <List sx={{ py: 0 }}>
+            <ListItem sx={{ display: "flex", alignItems: "center", gap: 1, py: 1 }}>
+              <PersonOutline fontSize="small" />
+              <ListItemText
+                primary="Mon Compte"
+                sx={{
+                  m: 0,
+                  "& .MuiTypography-root": { fontSize: "14px", fontWeight: "500" },
+                }}
+              />
+            </ListItem>
+            <ListItem  sx={{ display: "flex", alignItems: "center", gap: 1, py: 1 }}>
+              <Settings fontSize="small" />
+              <ListItemText
+                primary="Paramètres"
+                sx={{
+                  m: 0,
+                  "& .MuiTypography-root": { fontSize: "14px", fontWeight: "500" },
+                }}
+              />
+            </ListItem>
+            <ListItem  onClick={handleLogout}
+              sx={{ 
+                display: "flex", 
+                alignItems: "center", 
+                gap: 1, 
+                py: 1,
+                cursor: 'pointer',
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.04)'
+                }
+              }}
+            >
+              <Logout fontSize="small" />
+              <ListItemText
+                primary="Déconnexion"
+                sx={{
+                  m: 0,
+                  "& .MuiTypography-root": { fontSize: "14px", fontWeight: "500" },
+                }}
+              />
+            </ListItem>
+          </List>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={isLogoutModalOpen}
+        onClose={handleCancelLogout}
+        aria-labelledby="logout-confirmation-modal"
+        BackdropProps={{
+          style: { backgroundColor: "transparent" },
+        }}
+      >
+        <Box sx={logoutModalStyle}>
+          <Box sx={{ 
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}>
+            <Box sx={{ 
+              width: '48px',
+              height: '48px',
+              bgcolor: '#F1F5F9',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              mb: 2
+            }}>
+              <img src={question} alt="question" />
+            </Box>
+
+            <Typography
+              id="logout-confirmation-title"
+              sx={{ 
+                fontSize: '14px',
+                fontWeight: '400',
+                color: '#151515',
+                textAlign: 'center',
+                mb: 3
+              }}
+            >
+              Êtes-vous sûr.e de vouloir vous déconnecter ?
+            </Typography>
+
+            <Box sx={{ 
+              display: 'flex',
+              gap: 2,
+              width: '100%'
+            }}>
+              <Button
+                onClick={handleCancelLogout}
+                fullWidth
+                variant="outlined"
+                sx={{
+                  textTransform: 'none',
+                  height: '40px',
+                  fontSize: '12px',
+                  fontWeight: '400',
+                  borderColor: '#E2E8F0',
+                  color: '#0C66E6',
+                  '&:hover': {
+                    borderColor: '#CBD5E1',
+                    bgcolor: 'transparent'
+                  }
+                }}
+              >
+                Annuler
+              </Button>
+              <Button
+                onClick={handleConfirmLogout}
+                fullWidth
+                variant="contained"
+                sx={{
+                  textTransform: 'none',
+                  height: '40px',
+                  fontSize: '12px',
+                  fontWeight: '400',
+                  bgcolor: '#0C66E6',
+                  '&:hover': {
+                    bgcolor: '#0C66E6'
+                  }
+                }}
+              >
+                Déconnexion
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </Modal>
     </Drawer>
   );
 };

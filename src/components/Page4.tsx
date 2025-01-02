@@ -1,597 +1,567 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  Menu,
+  FormControl,
+  InputAdornment,
+  InputLabel,
+  List,
+  ListItem,
   MenuItem,
-  Paper,
-  Switch,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Add as Plus,
-  Edit as Pen,
-  MoreHoriz,
-  Delete,
-} from "@mui/icons-material";
-import SideBar from "./SideBar";
+import { LineChart } from "@mui/x-charts";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { ResponsiveContainer, XAxis, YAxis, Bar, BarChart } from "recharts";
 import NavBar from "./NavBar";
-import { IoMdArrowDown } from "react-icons/io";
+import SideBar from "./SideBar";
+import { Search } from "@mui/icons-material";
 
-type User = {
-  lastName: string;
-  firstName: string;
-  email: string;
-  status: "Actif" | "Inactif";
-};
-
-const users: User[] = [
-  {
-    lastName: "Blanchard",
-    firstName: "Mathurin",
-    email: "balthazar.charles@example.org",
-    status: "Actif",
-  },
-  {
-    lastName: "Blanchard",
-    firstName: "Mathurin",
-    email: "balthazar.charles@example.org",
-    status: "Actif",
-  },
-  {
-    lastName: "Nguyen",
-    firstName: "Reine",
-    email: "capucine.henry@example.com",
-    status: "Inactif",
-  },
-  {
-    lastName: "Deschamps",
-    firstName: "Balthazar",
-    email: "aristide.berger@example.net",
-    status: "Inactif",
-  },
-  {
-    lastName: "Marty",
-    firstName: "Serge",
-    email: "gilbert.laurent@example.com",
-    status: "Actif",
-  },
-  {
-    lastName: "Leclerc",
-    firstName: "Yvonne",
-    email: "vianney45@example.net",
-    status: "Inactif",
-  },
-  {
-    lastName: "Leclerc",
-    firstName: "Yvonne",
-    email: "vianney45@example.net",
-    status: "Inactif",
-  },
+const lineData = [
+  5000, 7000, 8000, 9500, 9000, 10000, 9500, 11000, 10000, 12000, 11000, 11500,
+];
+const months = [
+  "JAN",
+  "FEV",
+  "MAR",
+  "AVR",
+  "MAI",
+  "JUI",
+  "JUIL",
+  "AOU",
+  "SEP",
+  "OCT",
+  "NOV",
+  "DEC",
 ];
 
-// First define the permission keys type
-type PermissionKey =
-  | "statistics"
-  | "planning"
-  | "services"
-  | "salaries"
-  | "invoices"
-  | "paidLeave";
+const regions = [
+  { name: "ALPES", value: 12000 },
+  { name: "BFFC", value: 4000 },
+  { name: "BRS", value: 8000 },
+  { name: "CVL", value: 6000 },
+  { name: "COR", value: 9000 },
+  { name: "GES", value: 2000 },
+  { name: "HDF", value: 13000 },
+  { name: "IDF", value: 5000 },
+  { name: "NOR", value: 7000 },
+  { name: "NAQ", value: 4000 },
+  { name: "OCC", value: 6000 },
+  { name: "PDL", value: 11000 },
+  { name: "PACA", value: 12000 },
+];
 
-// Define the interface for each permission item
-interface PermissionItem {
-  label: string;
-  key: PermissionKey;
-}
+const rankingData = [
+  { id: 1, name: "Île-de-France" },
+  { id: 2, name: "Auvergne-Rhône" },
+  { id: 3, name: "Bourgogne-Fr" },
+  { id: 4, name: "Occitanie" },
+  { id: 5, name: "Nouvelle-Aquitaine" },
+  { id: 6, name: "Bretagne" },
+];
 
 export default function Page4() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [selectedUser, setSelectedUser] = React.useState<User | null>(null);
-  // Add this state at the top with other states
-  const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
-  
+  const [selectedDate, setSelectedDate] = useState<string>(
+    "Aujourd’hui - 19 Sep 2024"
+  );
+  const [selectedFilter, setSelectedFilter] = useState<string>("parRegion"); // State to track selected filter
+  const [selectedSublist, setSelectedSublist] = useState<string>(
+    "Nombre de prestations"
+  );
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
+  const nurses = [
+    "Aphélie Sanchez",
+    "Auguste Lacroix",
+    "Eugène Morel",
+    "Suzanne Carpentier",
+    "Timothée Caron",
+  ];
 
-  const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    user: User
-  ) => {
-    setAnchorEl(event.currentTarget);
-    setSelectedUser(user);
+  // Filter options based on the search term
+  const filteredNurses = nurses.filter((nurse) =>
+    nurse.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleChange = (event: any) => {
+    setSelectedValue(event.target.value);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-    setSelectedUser(null);
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedDate(event.target.value);
   };
 
-  // Add new function to handle final deletion
-const handleConfirmDelete = () => {
-  console.log('Deleting user:', selectedUser);
-  setDeleteDialogOpen(false);
-};
-
-  const handleModify = () => {
-    // Handle modify action
-    console.log("Modifying user:", selectedUser);
-    handleClose();
-  };
-
-  const handleDelete = () => {
-    setDeleteDialogOpen(true);
-    handleClose(); // Close the menu
-  };
-
-  // Add these state declarations in your Page6 component
-  const [createAccountOpen, setCreateAccountOpen] = React.useState(false);
-  const [formData, setFormData] = React.useState({
-    lastName: "",
-    firstName: "",
-    email: "",
-  });
-  const [permissions, setPermissions] = React.useState({
-    statistics: true,
-    planning: false,
-    services: false,
-    salaries: false,
-    invoices: false,
-    paidLeave: false,
-  });
-
-  // Add these handlers in your Page6 component
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handlePermissionChange =
-    (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setPermissions((prev) => ({
-        ...prev,
-        [name]: event.target.checked,
-      }));
+  const formatDate = (date: string): string => {
+    if (!date) return "";
+    const dateObj = new Date(date);
+    const options: Intl.DateTimeFormatOptions = {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
     };
+    const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(
+      dateObj
+    );
+    return formattedDate.replace(/ /g, "-"); // Replace spaces with dashes
+  };
+
+  const handleFilterClick = (filter: string) => {
+    setSelectedFilter(filter); // Update the filter based on the button clicked
+  };
 
   return (
     <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
       {/* Sidebar */}
-      <SideBar />
+      <SideBar
+        selectedSublist={selectedSublist}
+        setSelectedSublist={setSelectedSublist}
+      />
 
       {/* Main content */}
       <Box sx={{ flex: 1 }}>
-        {/* Top bar */}
         <NavBar />
 
-        {/* Page content */}
         <Box
           sx={{
-            p: 4,
+            p: "20px",
             backgroundColor: "white",
             flex: 1,
-            height: "calc(100vh - 80px)",
+            height: "calc(100vh - 60px)",
+            overflow: "auto",
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <Box>
-              <Typography variant="h5" gutterBottom>
-                Gestion administrateur
+              <Typography
+                variant="h5"
+                gutterBottom
+                sx={{ fontSize: "24px", fontWeight: "600" }}
+              >
+                Nombre de prestations
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 Veuillez retrouver ici l'ensemble des comptes administrateurs
               </Typography>
             </Box>
+            <div>
+              {/* Date Picker */}
+              <div
+                className="relative flex flex-col items-center border border-gray-300 rounded px-2 py-1"
+                style={{ width: "208px", height: "40px" }}
+              >
+                {/* Custom date display */}
+                <div
+                  onClick={() => document.getElementById("date-input")?.click()} // Trigger the hidden input
+                  className="cursor-pointer pl-8 py-1 w-full text-gray-700"
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "500",
+                    position: "relative",
+                  }}
+                >
+                  {/* Display formatted date */}
+                  {selectedDate ? formatDate(selectedDate) : "Select a date"}
+
+                  {/* Calendar Icon */}
+                  <FaRegCalendarAlt
+                    className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500"
+                    style={{ fontSize: "16px" }}
+                  />
+                </div>
+
+                {/* Hidden input for date selection */}
+                <input
+                  type="date"
+                  id="date-input"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  className="hidden" // Hide the default input
+                />
+              </div>
+            </div>
+          </Box>
+
+          {/* Filter Buttons */}
+          <Box
+            sx={{
+              mt: "20px",
+              mb: 1,
+              display: "flex",
+              gap: 2,
+              boxSizing: "border-box",
+              borderBottom: "1px solid #E2E8F0",
+            }}
+          >
             <Button
-              variant="contained"
-              startIcon={<Plus />}
-              sx={{ height: 40 }}
-              onClick={() => setCreateAccountOpen(true)}
+              sx={{
+                fontSize: "14px",
+                fontWeight: "500",
+                color:
+                  selectedFilter === "parRegion"
+                    ? "primary.main"
+                    : "text.secondary",
+                borderBottom: selectedFilter === "parRegion" ? 2 : 0,
+                borderColor: "primary.main",
+                textTransform: "capitalize",
+                typography: "body2",
+              }}
+              onClick={() => handleFilterClick("parRegion")}
             >
-              Créer un compte
+              Par région
+            </Button>
+            <Button
+              sx={{
+                fontSize: "14px",
+                fontWeight: "500",
+                color:
+                  selectedFilter === "parInfirmiere"
+                    ? "primary.main"
+                    : "text.secondary",
+                borderBottom: selectedFilter === "parInfirmiere" ? 2 : 0,
+                borderColor: "primary.main",
+                textTransform: "capitalize",
+                typography: "body2",
+              }}
+              onClick={() => handleFilterClick("parInfirmiere")}
+            >
+              Par infirmière
             </Button>
           </Box>
 
-          <TableContainer
-            component={Paper}
-            elevation={0}
-            sx={{ boxShadow: "none" ,}}
-            
-          >
-            <Table>
-              <TableHead sx={{ bgcolor: "#F6F7F9" , height:'40px'}}>
-                <TableRow >
-                  <TableCell sx={{display:'flex',color:'#818EA0'}}>Nom <IoMdArrowDown size={24}/></TableCell>
-                  <TableCell sx={{color:'#818EA0'}}>Prénom</TableCell>
-                  <TableCell sx={{color:'#818EA0'}}>Adresse email</TableCell>
-                  <TableCell sx={{color:'#818EA0'}}>Statut de compte</TableCell>
-                  <TableCell width={50}></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {users.map((user) => (
-                  <TableRow key={user.email}>
-                    <TableCell>{user.lastName}</TableCell>
-                    <TableCell>{user.firstName}</TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>
-                      <Box
-                        sx={{
-                          display: "inline-block",
-                          px: '20px',
-                          py: '4px',
-                          fontSize:'14px',fontWeight:'500',
-                          borderRadius: 1,
-                          bgcolor:
-                            user.status === "Actif" ? "#E5F2FF" : "#FFE5E5",
-                          color:
-                            user.status === "Actif" ? "#0C66E6" : "#FF4D4D",
-                        }}
-                      >
-                        {user.status}
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <IconButton onClick={(e) => handleClick(e, user)}>
-                        <MoreHoriz />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-
-          {/* Action Menu */}
-          <Menu
-            id="action-menu"
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-            transformOrigin={{ horizontal: "right", vertical: "top" }}
-            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            slotProps={{
-              paper: {
-                elevation: 0,
-                sx: {
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.08))",
-                  mt: 1,
-                  minWidth: 180,
-                  borderRadius: "16px", // Add border radius here
-                  "& .MuiMenuItem-root": {
-                    px: 2,
-                    // py: 1,
-                    borderRadius: "2px",
-                    "&:hover": {
-                      backgroundColor: "rgba(0, 0, 0, 0.04)",
-                    },
-                  },
-                },
-              },
-            }}
-          >
-            <MenuItem onClick={handleModify} sx={{ gap: 1 }}>
-              <Pen sx={{ fontSize: "16px" }} />
-              Modifier
-            </MenuItem>
-            <MenuItem onClick={handleDelete} sx={{ color: "#FF4D4D", gap: 1 }}>
-              <Delete sx={{ fontSize: "16px" }} />
-              Supprimer
-            </MenuItem>
-          </Menu>
-
-          {/* Add this JSX in your return statement */}
-          <Dialog
-            open={createAccountOpen}
-            onClose={() => setCreateAccountOpen(false)}
-            maxWidth="sm"
-            fullWidth
-            PaperProps={{
-              sx: {
-                borderRadius: "16px",
-                height: "960px",
-                maxWidth: "464px",
-                marginLeft: "1200px",
-                overflow: "hidden",
-                paddingX: "8px",
-              },
-            }}
-          >
-            <DialogTitle
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                fontSize: "24px",
-                p: 3,
-                pb: "1px",
-              }}
-            >
-              <Typography
-                variant="h6"
-                sx={{ fontWeight: "600", fontSize: "24px", mb: "2px" }}
-              >
-                Gestion de compte
-              </Typography>
-              <IconButton onClick={() => setCreateAccountOpen(false)}>
-                X
-              </IconButton>
-            </DialogTitle>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ px: 3, mb: 2, mt: 0, fontSize: "14px", fontWeight: "400" }}
-            >
-              Veuillez compléter les informations ci-dessous afin de créer un
-              nouveau compte
-            </Typography>
-
-            <DialogContent sx={{ px: 3, py: "4px" }}>
-              {/* Input Fields Section */}
+          {/* Conditional rendering of nurse selection */}
+          {selectedFilter === "parInfirmiere" &&
+          selectedSublist === "Nombre de prestations" ? (
+            // Show the "Par infirmière" section
+            <Box>
               <Box
                 sx={{
+                  marginTop: "200px",
+                  marginX: "auto",
                   display: "flex",
-                  flexDirection: "column",
-                  marginTop: "5px",
-                  gap: "12px", // Reduced gap between input fields and Pages accessibles (Change 1)
-                  mb: "4px", // Adjusted bottom margin for the input section
+                  height: "40px",
+                  width: "436px",
+                  color: "#818EA0",
                 }}
               >
-                <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "4px" }}
-                >
-                  <Box sx={{ display: "flex" }}>
-                    <Typography variant="body2">Nom</Typography>
-                    <Typography variant="body2" sx={{ color: "#818EA0" }}>
-                      (obligatoire)
-                    </Typography>
-                  </Box>
-                  <TextField
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    fullWidth
-                    size="small"
-                  />
-                </Box>
-
-                <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "4px" }}
-                >
-                  <Box sx={{ display: "flex" }}>
-                    <Typography variant="body2">Prénom</Typography>
-                    <Typography variant="body2" sx={{ color: "#818EA0" }}>
-                      (obligatoire)
-                    </Typography>
-                  </Box>
-                  <TextField
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    fullWidth
-                    size="small"
-                  />
-                </Box>
-
-                <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "4px" }}
-                >
-                  <Typography variant="body2">Adresse mail</Typography>
-                  <TextField
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    fullWidth
-                    size="small"
-                  />
-                </Box>
+                Veuillez sélectionner une infirmière parmi la liste ci-dessous.
               </Box>
-
-              {/* Pages Accessibles Section */}
-              <Typography
-                variant="subtitle1"
-                sx={{ fontWeight: "500", fontSize: "18px", mb: "4px" }}
-              >
-                Pages accessibles
-              </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ fontWeight: "400", fontSize: "14px", mb: "8px" }}
-              >
-                Vous pouvez activer les différentes fonctionnalités pour
-                l'utilisateur ci-dessous
-              </Typography>
-
-              {/* Switches Section */}
-              <Box
+              <FormControl
                 sx={{
+                  marginX: "auto",
                   display: "flex",
-                  flexDirection: "column",
-                  height: "224px",
-                  borderRadius: 2,
-                  backgroundColor: "#FFF",
-                  px: 2,
-                  mb: "8px",
+                  height: "40px",
+                  width: "327px",
+                  borderRadius: "6px",
                 }}
               >
-                {[
-                  { label: "Statistiques", key: "statistics" as PermissionKey },
-                  { label: "Planning", key: "planning" as PermissionKey },
-                  { label: "Prestations", key: "services" as PermissionKey },
-                  { label: "Salaires", key: "salaries" as PermissionKey },
-                  { label: "Factures", key: "invoices" as PermissionKey },
-                  { label: "Congés payés", key: "paidLeave" as PermissionKey },
-                ].map((item: PermissionItem) => (
+                <InputLabel
+                  id="demo-simple-select-label"
+                  sx={{ fontSize: "14px", fontWeight: 500, color: "#151515" }}
+                >
+                  Sélectionner une infirmière parmi la liste
+                </InputLabel>
+                <Select
+                  value={selectedValue}
+                  onChange={(e) => setSelectedValue(e.target.value)}
+                  displayEmpty
+                  sx={{
+                    width: "100%",
+                    "& .MuiMenuItem-root": {
+                      fontSize: "14px",
+                      fontWeight: "500",
+                    },
+                  }}
+                >
+                  {/* Search bar as the first option */}
+                  <MenuItem disableRipple>
+                    <TextField
+                      placeholder="Reseacher"
+                      variant="outlined"
+                      fullWidth
+                      size="small"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <Search />
+                          </InputAdornment>
+                        ),
+                      }}
+                      sx={{
+                        fontSize: "14px",
+                        "& .MuiOutlinedInput-root": {
+                          borderRadius: "4px",
+                        },
+                      }}
+                    />
+                  </MenuItem>
+                  {/* Dynamic filtered options */}
+                  {filteredNurses.map((nurse, index) => (
+                    <MenuItem key={index} value={nurse}>
+                      {nurse}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+          ) : (
+            // Main content for 'Par région'
+            <Box>
+              <Box sx={{ display: "flex", gap: 2, mb: "10px" }}>
+                <Box
+                  sx={{
+                    flex: 2,
+                    p: 2,
+                    bgcolor: "background.paper",
+                    width: "728px",
+                    height: "280px",
+                    top: "273px",
+                    left: "336px",
+                    borderRadius: "8px 0px 0px 0px",
+                    border: "1px solid #E2E8F0",
+                  }}
+                >
                   <Box
-                    key={item.key}
                     sx={{
                       display: "flex",
                       justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
+                      mb: 1,
                     }}
                   >
-                    {/* Label Section */}
-                    <Box sx={{ flex: 1, textAlign: "left" }}>
-                      <Typography
-                        variant="body2"
-                        sx={{ fontSize: "14px", fontWeight: 500 }}
-                      >
-                        {item.label}
-                      </Typography>
-                    </Box>
-
-                    {/* Switch Section */}
-                    <Box sx={{ flexShrink: 0 }}>
-                      <Switch
-                        checked={permissions[item.key]}
-                        onChange={() => handlePermissionChange(item.key)}
-                      />
-                    </Box>
-                  </Box>
-                ))}
-              </Box>
-
-              {/* Buttons */}
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  borderTop: "1px solid #E9EEF6",
-                  pt: 3,
-                  mt: 1,
-                }}
-              >
-                <Button
-                  color="error"
-                  sx={{
-                    textTransform: "none",
-                    fontWeight: "bold",
-                    borderRadius: "8px",
-                  }}
-                  onClick={() => setCreateAccountOpen(false)}
-                >
-                  Supprimer
-                </Button>
-                <Box sx={{ display: "flex", gap: 2 }}>
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      textTransform: "none",
-                      fontWeight: "bold",
-                      borderRadius: "8px",
-                      borderColor: "#E2E8F0",
-                    }}
-                    onClick={() => setCreateAccountOpen(false)}
-                  >
-                    Annuler
-                  </Button>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      textTransform: "none",
-                      borderRadius: "8px",
-                      fontWeight: "bold",
-                      backgroundColor: "#E2E8F0",
-                      ":hover": { backgroundColor: "#E2E8F0" },
-                    }}
-                  >
-                    Confirmer
-                  </Button>
-                </Box>
-              </Box>
-            </DialogContent>
-          </Dialog>
-
-          <Dialog
-                      open={deleteDialogOpen}
-                      onClose={() => setDeleteDialogOpen(false)}
-                      PaperProps={{
-                        sx: {
-                          borderRadius: 2,
-                          maxWidth: '400px',
-                          position: 'fixed',
-                          bottom: 20,
-                          right: 20,
-                        }
-                      }}
-                      sx={{
-                        '& .MuiBackdrop-root': {
-                          backgroundColor: 'rgba(0, 0, 0, 0.2)', // Adjust opacity here (default is 0.5)
-                        }
+                    <Typography fontWeight="bold">Total</Typography>
+                    <select
+                      style={{
+                        padding: "4px 8px",
+                        borderRadius: "4px",
+                        border: "1px solid #E2E8F0",
+                        fontSize: "12px",
+                        fontWeight: "500",
                       }}
                     >
-                      <DialogContent sx={{ pt: 3 }}>
-                        <Typography variant="h6" sx={{ mb: 1 }}>
-                          Suppression
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Vous êtes sur le point de supprimer un profil administrateur.
-                          Confirmez-vous cette action ?
-                        </Typography>
-                        <Box sx={{ 
-                          display: 'flex', 
-                          justifyContent: 'flex-end',
-                          gap: 2,
-                          mt: 3 
-                        }}>
-                          <Button 
-                            variant="outlined" 
-                            onClick={() => setDeleteDialogOpen(false)}
-                            sx={{ textTransform: 'none' }}
-                          >
-                            Annuler
-                          </Button>
-                          <Button 
-                            variant="contained" 
-                            color="error"
-                            onClick={handleConfirmDelete}
-                            sx={{ textTransform: 'none' }}
-                          >
-                            Supprimer
-                          </Button>
-                        </Box>
-                      </DialogContent>
-                    </Dialog>
+                      <option>12 derniers mois</option>
+                    </select>
+                  </Box>
+                  <Box sx={{ height: "20px" }}>
+                    <LineChart
+                      series={[
+                        {
+                          data: lineData,
+                          color: "#0066FF",
+                          showMark: false,
+                          curve: "natural",
+                        },
+                      ]}
+                      xAxis={[
+                        {
+                          data: months,
+                          scaleType: "point",
+                          tickSize: 0,
+                          tickLabelStyle: { fontSize: 10, color: "#818EA0" },
+                        },
+                      ]}
+                      yAxis={[
+                        {
+                          min: 0,
+                          max: 17000,
+                          tickSize: 0,
+                          tickLabelStyle: { fontSize: 10 },
+                        },
+                      ]}
+                      height={180} // Reduced height
+                      margin={{ top: 10, bottom: 20, left: 40, right: 10 }}
+                    />
+                  </Box>
+                </Box>
 
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              mt: 2,
-              px: 2,
-            }}
-          >
-            <Typography variant="body2" color="text.secondary">
-              1-10 sur 240
-            </Typography>
-            <Box
-              sx={{ display: "flex", gap: 1, height: "24px", width: "108px" }}
-            >
-              <IconButton size="small">
-                <ChevronLeft />
-              </IconButton>
-              1/27
-              <IconButton size="small">
-                <ChevronRight />
-              </IconButton>
+                <Box
+                  sx={{
+                    flex: 1,
+                    p: 2,
+                    bgcolor: "background.paper",
+                    borderRadius: 1,
+                    width: "328px",
+                    height: "280px",
+                    border: "1px solid #E2E8F0",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      mb: 1,
+                      height: "47px",
+                    }}
+                  >
+                    <Typography
+                      fontWeight="bold"
+                      sx={{ fontSize: "16px", fontWeight: "500" }}
+                    >
+                      Classement
+                    </Typography>
+                    <select
+                      style={{
+                        width: "136px",
+                        height: "32px",
+                        padding: "4px 4px",
+                        borderRadius: "4px",
+                        border: "1px solid #E2E8F0",
+                        fontSize: "12px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      <option>Réservées</option>
+                      <option>Réalisées</option>
+                      <option>Annulées</option>
+                    </select>
+                  </Box>
+                  <List
+                    sx={{
+                      p: 0,
+                      overflow: "hidden",
+                      "& .MuiListItem-root": { minHeight: "32px", py: 0.5 },
+                    }}
+                  >
+                    {rankingData.map((region) => (
+                      <ListItem
+                        key={region.id}
+                        sx={{
+                          gap: "10px",
+                          padding: "4px 8px",
+                          "&:hover": { bgcolor: "rgba(0, 0, 0, 0.04)" },
+                          borderRadius: 1,
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            height: "24px",
+                            width: "28px",
+                            color: "text.secondary",
+                            backgroundColor: "#F2F4F7",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            fontSize: "14px",
+                            fontWeight: "500",
+                          }}
+                        >
+                          {region.id}
+                        </Typography>
+                        <Typography sx={{ fontSize: "14px" }}>
+                          {region.name}
+                        </Typography>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
+              </Box>
+
+              <Box
+                sx={{
+                  mb: "4px",
+                  width: "1300px",
+                  height: "300px",
+                  borderRadius: "8px",
+                  border: "1px solid #E2E8F0",
+                  padding: 2,
+                }}
+              >
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Typography fontWeight="bold" sx={{ fontSize: "16px" }}>
+                    Prestations par régions
+                  </Typography>
+                  <Box sx={{ width: 300 }}>
+                    <Select
+                      value={selectedValue}
+                      onChange={handleChange}
+                      displayEmpty
+                      renderValue={(selected) =>
+                        selected ? selected : "Sélectionner une région"
+                      }
+                      fullWidth
+                      MenuProps={{
+                        PaperProps: {
+                          style: {
+                            maxHeight: 200, // Adjust as needed
+                            width: 300,
+                          },
+                        },
+                        MenuListProps: {
+                          onMouseDown: (e) => e.preventDefault(), // Prevents menu from closing when clicking inside
+                        },
+                      }}
+                      sx={{
+                        width: "192px",
+                        height: "35px",
+                        padding: "4px 8px",
+                        borderRadius: "6px",
+                        border: "1px solid #E2E8F0",
+                        fontSize: "12px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      {/* Search bar */}
+                      <MenuItem disableRipple>
+                        <TextField
+                          placeholder="Rechercher une région"
+                          variant="outlined"
+                          fullWidth
+                          size="small"
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm state on input change
+                          sx={{
+                            fontSize: "14px",
+                            backgroundColor: "transparent", // Remove the gray background
+                            "& .MuiOutlinedInput-root": {
+                              backgroundColor: "transparent", // Ensure background is transparent
+                              borderRadius: "4px",
+                              height: "30px",
+                            },
+                          }}
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <Search />
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </MenuItem>
+
+                      {/* Dynamic filtered options */}
+                      {filteredNurses.map((nurse, index) => (
+                        <MenuItem key={index} value={nurse}>
+                          {nurse}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </Box>
+                </Box>
+                <Box sx={{ height: "250px", width: "100%" }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={regions}
+                      margin={{ top: 20, right: 30, left: 20 }}
+                    >
+                      <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+                      <YAxis tick={{ fontSize: 10 }} />
+                      <Bar dataKey="value" fill="#0066FF" barSize={20} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </Box>
+              </Box>
             </Box>
-          </Box>
+          )}
         </Box>
       </Box>
     </Box>
