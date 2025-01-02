@@ -12,6 +12,7 @@ import AccessAdministration from "./components/Access administration/AccessAdmin
 import Page4 from "./components/Page4";
 import CarteParRegion from "./components/Statistiques/CarteParRegion";
 import NombrePrestations from "./components/Statistiques/NombrePrestations";
+import NoteDeSatisfaction from "./components/Statistiques/NoteDeSatisfaction";
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
         <Route path='/statistiques/prestations' element={<NombrePrestations />} />
         <Route path='/statistiques/argent' element={<Page4 />} />
         <Route path="/statistiques/carte" element={<CarteParRegion />} />
-        <Route path="/statistiques/satisfaction" element={<Page4 />} />
+        <Route path="/statistiques/satisfaction" element={<NoteDeSatisfaction />} />
         <Route path="/planning" element={<Planning />} />
         <Route path="/presentation" element={<Presentation />} />
         <Route path="/Salaires" element={<Salaires />} />
