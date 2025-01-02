@@ -15,7 +15,6 @@ import {
   Typography,
 } from "@mui/material";
 import { LineChart } from "@mui/x-charts";
-import { FaRegCalendarAlt } from "react-icons/fa";
 import { ResponsiveContainer, XAxis, YAxis, Bar, BarChart } from "recharts";
 import NavBar from "../NavBar";
 import SideBar from "../SideBar";
@@ -87,6 +86,7 @@ export default function ArgentGenere() {
     const [selectedDepartment, setSelectedDepartment] = useState("");
     const [selectedRegion, setSelectedRegion] = useState("");
     const [selectedService, setSelectedService] = useState("");
+    
 
     const nurses = [
         "Aphélie Sanchez",
@@ -272,10 +272,7 @@ export default function ArgentGenere() {
   return (
     <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
       {/* Sidebar */}
-      <SideBar
-        selectedSublist={selectedSublist}
-        setSelectedSublist={setSelectedSublist}
-      />
+      <SideBar />
 
       {/* Main content */}
       <Box sx={{ flex: 1 }}>
@@ -568,7 +565,10 @@ export default function ArgentGenere() {
                                     fontWeight: "500",
                                   }}
                                 >
-                                  <option>12 derniers mois</option>
+                                  <option value="dernier-mois">Dernier mois</option>
+                                  <option value="3-derniers-mois">3 Derniers mois</option>
+                                  <option value="6-derniers-mois">6 Derniers mois</option>
+                                  <option value="12-derniers-mois">12 Derniers mois</option>
                                 </select>
                               </Box>
                               <Box sx={{ height: "20px" }}>

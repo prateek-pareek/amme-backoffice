@@ -234,7 +234,7 @@ const Planning = ({ initialDate = new Date() }: PlanningProps) => {
                 gutterBottom
                 sx={{ fontSize: "24px", fontWeight: "600" }}
               >
-                Nombre de prestations
+                Gestion du planning
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 Veuillez retrouver ici l'ensemble des comptes administrateurs

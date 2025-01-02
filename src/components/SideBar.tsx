@@ -21,7 +21,7 @@ import { GoGraph, GoHome } from "react-icons/go";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { SlPlane } from "react-icons/sl";
 import { IoIosArrowDown } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PersonOutline, Settings, Logout } from "@mui/icons-material";
 
 interface SublistItem {
@@ -45,29 +45,42 @@ interface SidebarProps {
 
 const SideBar: React.FC<SidebarProps> = ({ selectedSublist, setSelectedSublist }) => {
   const [isSublistOpen, setIsSublistOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const toggleSublist = () => {
     setIsSublistOpen(!isSublistOpen);
   };
 
   const handleItemClick = (
+    event: React.MouseEvent, 
     itemText: string,
     hasSublist: boolean,
+    link?: string,
     sublist?: SublistItem[]
   ) => {
+    event.preventDefault();
+  event.stopPropagation();
+    // If clicking on a non-Statistics item, close the sublist
+    if (itemText !== "Statistiques") {
+      setIsSublistOpen(false);
+    }
+
     setSelectedItem(itemText);
+
     if (hasSublist) {
-      toggleSublist();
-      if (!isSublistOpen && sublist && sublist.length > 0) {
-        setSelectedSublist &&
-        setSelectedSublist(sublist[0].text);
-      } else {setSelectedSublist &&
-        setSelectedSublist(null);
+      // Toggle sublist only if clicking on Statistics
+      if (itemText === "Statistiques") {
+        setIsSublistOpen(!isSublistOpen);
+        if (!isSublistOpen && sublist && sublist.length > 0) {
+          setSelectedSublist && setSelectedSublist(sublist[0].text);
+        }
       }
+    } else if (link) {
+      navigate(link);
     }
   };
 
@@ -213,7 +226,7 @@ const SideBar: React.FC<SidebarProps> = ({ selectedSublist, setSelectedSublist }
                 color: selectedItem === item.text ? "#0C66E6" : "#151515",
                 "&:hover": { bgcolor: "rgba(12, 102, 230, 0.1)" },
               }}
-              onClick={() => handleItemClick(item.text, !!item.hasSublist)}
+              onClick={(e) => handleItemClick(e, item.text, !!item.hasSublist, item.link, item.sublist)}
             >
               <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, flex: 1 }}>
                 {item.icon}

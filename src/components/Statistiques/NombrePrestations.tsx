@@ -243,8 +243,6 @@ export default function NombrePrestations() {
     <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
       {/* Sidebar */}
       <SideBar
-        selectedSublist={selectedSublist}
-        setSelectedSublist={setSelectedSublist}
       />
 
       {/* Main content */}
