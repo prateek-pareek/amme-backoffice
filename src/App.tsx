@@ -9,8 +9,9 @@ import Salaires from "./components/Salaires/Salaires";
 import Factures from "./components/Factures/Factures";
 import Conges from "./components/Conges/Conges";
 import AccessAdministration from "./components/Access administration/AccessAdministration";
-import Statistiques from "./components/Statistiques/Statistiques";
 import Page4 from "./components/Page4";
+import CarteParRegion from "./components/Statistiques/CarteParRegion";
+import NombrePrestations from "./components/Statistiques/NombrePrestations";
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
           element={<AccessAdministration />}
         />
         <Route path="/statistiques" element={<Page4 />} />
+        <Route path='/statistiques/prestations' element={<NombrePrestations />} />
+        <Route path='/statistiques/argent' element={<Page4 />} />
+        <Route path="/statistiques/carte" element={<CarteParRegion />} />
+        <Route path="/statistiques/satisfaction" element={<Page4 />} />
         <Route path="/planning" element={<Planning />} />
         <Route path="/presentation" element={<Presentation />} />
         <Route path="/Salaires" element={<Salaires />} />

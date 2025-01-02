@@ -26,6 +26,7 @@ import { PersonOutline, Settings, Logout } from "@mui/icons-material";
 
 interface SublistItem {
   text: string;
+  link?: string;
 }
 
 interface SidebarItem {
@@ -119,10 +120,10 @@ const SideBar: React.FC<SidebarProps> = ({ selectedSublist, setSelectedSublist }
       link: "/statistiques",
       hasSublist: true,
       sublist: [
-        { text: "Nombre de prestations" },
-        { text: "Argent généré" },
-        { text: "Carte par région" },
-        { text: "Note de satisfaction" },
+        { text: "Nombre de prestations", link: "/statistiques/prestations" },
+        { text: "Argent généré", link: "/statistiques/argent" },
+        { text: "Carte par région", link: "/statistiques/carte" },
+        { text: "Note de satisfaction", link: "/statistiques/satisfaction" },
       ],
     },
     { text: "Planning", icon: <FaRegCalendarAlt size="20px" />, link: "/planning" },
@@ -266,6 +267,16 @@ const SideBar: React.FC<SidebarProps> = ({ selectedSublist, setSelectedSublist }
             {item.hasSublist && isSublistOpen && (
               <List sx={{ pl: 2, borderLeft: "2px solid #E9EEF6", ml: 3, py: 0 }}>
                 {item.sublist?.map((subitem) => (
+                   <Link
+                   to={subitem.link || ""}
+                   style={{
+                     textDecoration: "none",
+                     color: "inherit",
+                     display: 'block',
+                     width: '100%'
+                    }}
+                    key={subitem.text}
+                 >
                   <ListItem
                     key={subitem.text}
                     sx={{
@@ -288,6 +299,7 @@ const SideBar: React.FC<SidebarProps> = ({ selectedSublist, setSelectedSublist }
                       }}
                     />
                   </ListItem>
+                  </Link>
                 ))}
               </List>
             )}
