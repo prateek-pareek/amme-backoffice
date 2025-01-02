@@ -10,6 +10,7 @@ import Factures from "./components/Factures/Factures";
 import Conges from "./components/Conges/Conges";
 import AccessAdministration from "./components/Access administration/AccessAdministration";
 import Statistiques from "./components/Statistiques/Statistiques";
+import Page4 from "./components/Page4";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
           path="/access-administration"
           element={<AccessAdministration />}
         />
-        <Route path="/statistiques" element={<Statistiques />} />
+        <Route path="/statistiques" element={<Page4 />} />
         <Route path="/planning" element={<Planning />} />
         <Route path="/presentation" element={<Presentation />} />
         <Route path="/Salaires" element={<Salaires />} />
