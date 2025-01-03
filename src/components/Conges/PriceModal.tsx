@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, InputAdornment, Modal, TextField, Typography } from "@mui/material";
+import { Box, Button, FormControl, FormLabel, InputAdornment, Modal, TextField, Typography } from "@mui/material";
 
 type Conges = {
   employe: string;
@@ -24,12 +24,13 @@ export default function PriceModal({ row, onClose, onApprove }: PriceModalProps)
           position: 'fixed',
           bottom: '5%',
           right: '5%',
-          
+          height:'34%',
           width: '464px',
           bgcolor: 'background.paper',
           borderRadius: 2,
           boxShadow: 24,
-          p: 2,
+          p: "16px 20px",
+          // backdropFilter: 'blur(0)',
         }}
       >
         {/* Header */}
@@ -38,7 +39,7 @@ export default function PriceModal({ row, onClose, onApprove }: PriceModalProps)
           sx={{
             fontSize: '18px',
             fontWeight: 600,
-            mb: 2
+            mb: 1
           }}
         >
           Prix au km remboursé
@@ -49,50 +50,48 @@ export default function PriceModal({ row, onClose, onApprove }: PriceModalProps)
           sx={{
             fontSize: '14px',
             color: 'text.secondary',
-            mb: 3
+            mb: 2
           }}
         >
           Vous pouvez modifier le prix au kilomètre remboursé à partir d'ici.
         </Typography>
 
         {/* Price Input */}
-        <Box sx={{ mb: 4 }}>
-          <Typography
-            component="label"
-            sx={{
-              fontSize: '14px',
-              fontWeight: 500,
-              mb: 1,
-              display: 'block'
-            }}
-          >
-            Prix
-          </Typography>
-          <TextField
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            type="number"
-            inputProps={{
-              step: '0.01',
-              min: '0',
-            }}
-            sx={{
-              width: '150px',
-              '& .MuiOutlinedInput-root': {
-                borderRadius: 1.5,
-              }
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Typography sx={{ fontSize: '14px', color: 'text.secondary' }}>
-                    par km remboursé
-                  </Typography>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Box>
+        <FormControl sx={{mb:4}}>
+      <FormLabel
+        component="legend"
+        sx={{
+          fontSize: '14px',
+          fontWeight: 400,
+          mb: 1,
+          display: 'block',
+          color:'#151515'
+        }}
+      >
+        Prix 
+      </FormLabel>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <TextField
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          type="number"
+          inputProps={{
+            step: '0.01',
+            min: '0',
+          }}
+          sx={{
+            width: '96px',
+            height: '44px',
+            '& .MuiOutlinedInput-root': {
+              borderRadius: 1.5,
+            },
+          }}
+        />
+        <Typography sx={{ fontSize: '14px', color: '#151515', fontWeight:'400', ml: 1, mt:2 }}>
+          par km remboursé
+        </Typography>
+      </Box>
+    </FormControl>
 
         {/* Action Buttons */}
         <Box
@@ -109,7 +108,7 @@ export default function PriceModal({ row, onClose, onApprove }: PriceModalProps)
               textTransform: 'none',
               borderRadius: 1.5,
               color: '#151515',
-              borderColor: '#151515',
+              borderColor: '#E2E8F0',
               '&:hover': {
                 borderColor: '#151515',
                 backgroundColor: 'rgba(21, 21, 21, 0.04)'
@@ -122,6 +121,8 @@ export default function PriceModal({ row, onClose, onApprove }: PriceModalProps)
             variant="contained"
             // onClick={onclose}
             sx={{
+              fontSize:'14px',
+              fontWeight:'500',
               textTransform: 'none',
               borderRadius: 1.5,
               bgcolor: '#0C66E6',

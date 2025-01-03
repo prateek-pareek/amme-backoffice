@@ -85,7 +85,7 @@ export default function Salaires() {
 
   return (
     <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
-      <SideBar />
+      
       <Box sx={{ flex: 1 }}>
         <NavBar />
         <Box 

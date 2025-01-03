@@ -191,7 +191,7 @@ export default function NoteDeSatisfaction() {
 
     return (
         <Box sx={{ display: "flex", bgcolor: "white", minHeight: "100vh" }}>
-            <SideBar />
+            {/* <SideBar /> */}
             <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                 <NavBar />
                 <Box sx={{ p: 2, flex: 1, overflowY: 'auto',  [theme.breakpoints.up('md')]: {p:4} }}>

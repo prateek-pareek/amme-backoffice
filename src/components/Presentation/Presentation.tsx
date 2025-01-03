@@ -90,7 +90,7 @@ export default function Presentation() {
 
   return (
     <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
-      <SideBar />
+     
       <Box sx={{ flex: 1 }}>
         <NavBar />
         <Box sx={{ p: 4, backgroundColor: "white", flex: 1 ,height: "calc(100vh - 80px)", }}>

@@ -80,10 +80,10 @@ export default function CarteParRegion() {
 
     return (
         <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
-            <SideBar
+            {/* <SideBar
                 selectedSublist={selectedSublist}
                 setSelectedSublist={setSelectedSublist}
-            />
+            /> */}
             <Box sx={{ flex: 1 }}>
                 <NavBar />
                 <Box

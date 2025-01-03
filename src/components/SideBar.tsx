@@ -43,11 +43,14 @@ interface SidebarProps {
   setSelectedSublist?: Dispatch<SetStateAction<string | null>>
 }
 
-const SideBar: React.FC<SidebarProps> = ({ selectedSublist, setSelectedSublist }) => {
+const SideBar: React.FC<SidebarProps> = () => {
   const [isSublistOpen, setIsSublistOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [selectedSublist, setSelectedSublist] = useState<string>(
+          "Nombre de prestations"
+      );
   const profileRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
@@ -64,10 +67,10 @@ const SideBar: React.FC<SidebarProps> = ({ selectedSublist, setSelectedSublist }
   ) => {
     event.preventDefault();
   event.stopPropagation();
-    // If clicking on a non-Statistics item, close the sublist
-    if (itemText !== "Statistiques") {
-      setIsSublistOpen(false);
-    }
+    // // If clicking on a non-Statistics item, close the sublist
+    // if (itemText !== "Statistiques") {
+    //   setIsSublistOpen(false);
+    // }
 
     setSelectedItem(itemText);
 
@@ -75,9 +78,9 @@ const SideBar: React.FC<SidebarProps> = ({ selectedSublist, setSelectedSublist }
       // Toggle sublist only if clicking on Statistics
       if (itemText === "Statistiques") {
         setIsSublistOpen(!isSublistOpen);
-        if (!isSublistOpen && sublist && sublist.length > 0) {
-          setSelectedSublist && setSelectedSublist(sublist[0].text);
-        }
+        // if (!isSublistOpen && sublist && sublist.length > 0) {
+        //   setSelectedSublist && setSelectedSublist(sublist[0].text);
+        // }
       }
     } else if (link) {
       navigate(link);
@@ -130,7 +133,6 @@ const SideBar: React.FC<SidebarProps> = ({ selectedSublist, setSelectedSublist }
     {
       text: "Statistiques",
       icon: <GoGraph size="20px" />,
-      link: "/statistiques",
       hasSublist: true,
       sublist: [
         { text: "Nombre de prestations", link: "/statistiques/prestations" },
@@ -198,7 +200,7 @@ const SideBar: React.FC<SidebarProps> = ({ selectedSublist, setSelectedSublist }
         },
       }}
     >
-      <Box sx={{ p: 1.5, display: "flex", alignItems: "center", gap: "8px", ml: "16px", marginTop: "32px" }}>
+      <Box sx={{  display: "flex", alignItems: "center", gap: "8px", ml: "24px", marginTop: "32px" }}>
         <Box
           sx={{
             bgcolor: "#0C66E6",
@@ -215,14 +217,15 @@ const SideBar: React.FC<SidebarProps> = ({ selectedSublist, setSelectedSublist }
         <Typography sx={{ fontSize: "14px", fontWeight: "600" }}>AMME</Typography>
       </Box>
 
-      <List sx={{ px: "12px", mt: "50px", fontSize: "14px", fontWeight: "500" }}>
+      <List sx={{ px: "12px", mt: "50px", fontSize: "14px", fontWeight: "500", py:'4px' }}>
         {sidebarItems.map((item) => (
           <React.Fragment key={item.text}>
             <ListItem
               sx={{
                 borderRadius: 1,
-                py: "12px",
-                minHeight: "36px",
+                py: "10px",
+                minHeight: "30px",
+                cursor:'pointer',
                 color: selectedItem === item.text ? "#0C66E6" : "#151515",
                 "&:hover": { bgcolor: "rgba(12, 102, 230, 0.1)" },
               }}
@@ -268,7 +271,7 @@ const SideBar: React.FC<SidebarProps> = ({ selectedSublist, setSelectedSublist }
                       minWidth: "20px",
                       fontSize: "14px",
                       fontWeight: "500",
-                      textAlign: "center",
+                      textAlign: "right",
                     }}
                   >
                     {item.count}
@@ -322,7 +325,7 @@ const SideBar: React.FC<SidebarProps> = ({ selectedSublist, setSelectedSublist }
 
       <Box
         ref={profileRef}
-        sx={{ mt: "auto", p: 1.5, borderTop: "1px solid #E9EEF6", display: "flex", alignItems: "center", gap: 1.5, cursor: "pointer" }}
+        sx={{ mt: "auto", width:'264px',height:'57px', p: 1.5, border: "1px solid #E9EEF6", display: "flex", alignItems: "center", gap: 1.5, cursor: "pointer" , backgroundColor:'#F6F7F9', ml:'8px', mb:'10px', borderRadius:'8px'}}
         onClick={handleProfileClick}
       >
         <img src={profile} alt="Profile" style={{ width: 40, height: 40, borderRadius: "50%" }} />

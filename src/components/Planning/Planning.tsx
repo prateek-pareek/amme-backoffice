@@ -208,8 +208,8 @@ const Planning = ({ initialDate = new Date() }: PlanningProps) => {
   };
 
   return (
-    <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
-      <SideBar />
+    <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh", overflow:'hidden' }}>
+      
       <Box sx={{ flex: 1 }}>
         <NavBar />
         <Box
@@ -217,7 +217,7 @@ const Planning = ({ initialDate = new Date() }: PlanningProps) => {
             p: "20px",
             backgroundColor: "white",
             flex: 1,
-            height: "calc(100vh - 60px)",
+            height: "calc(100vh - 80px)",
             overflow: "auto",
           }}
         >
@@ -242,21 +242,22 @@ const Planning = ({ initialDate = new Date() }: PlanningProps) => {
             </Box>
             <div>
               {/* Normal Button */}
+              {selectedValue &&
               <Button
-                variant="contained"
-                onClick={() => setIsScheduleModalOpen(true)}
-                sx={{
-                  backgroundColor: "#0C66E6",
-                  color: "white",
-                  padding: "8px 16px",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  borderRadius: "4px",
-                  textTransform: "none",
-                }}
-              >
-                Modifier les horaires
-              </Button>
+              variant="contained"
+              onClick={() => setIsScheduleModalOpen(true)}
+              sx={{
+                backgroundColor: "#0C66E6",
+                color: "white",
+                padding: "8px 16px",
+                fontSize: "14px",
+                fontWeight: "500",
+                borderRadius: "4px",
+                textTransform: "none",
+              }}
+            >
+              Modifier les horaires
+            </Button>}
 <ScheduleModal 
   isOpen={isScheduleModalOpen} 
   onClose={() => setIsScheduleModalOpen(false)}
@@ -282,7 +283,7 @@ const Planning = ({ initialDate = new Date() }: PlanningProps) => {
                 sx={{
                   marginX: "auto",
                   display: "flex",
-                  height: "40px",
+                  height: "30px",
                   width: "327px",
                   borderRadius: "6px",
                 }}
@@ -303,6 +304,7 @@ const Planning = ({ initialDate = new Date() }: PlanningProps) => {
                     "& .MuiMenuItem-root": {
                       fontSize: "14px",
                       fontWeight: "500",
+                      
                     },
                   }}
                 >
@@ -325,6 +327,7 @@ const Planning = ({ initialDate = new Date() }: PlanningProps) => {
                         fontSize: "14px",
                         "& .MuiOutlinedInput-root": {
                           borderRadius: "4px",
+                          
                         },
                       }}
                     />

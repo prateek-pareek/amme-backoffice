@@ -116,54 +116,54 @@ export default function Factures() {
 
   return (
     <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
-      <SideBar />
+      {/* <SideBar /> */}
       <Box sx={{ flex: 1 }}>
         <NavBar />
         <Box
           sx={{
-            p: 4,
+            p: 2,
             backgroundColor: "white",
             flex: 1,
             height: "calc(100vh - 80px)",
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb:2 }}>
             <Box>
-              <Typography variant="h5" sx={{ fontWeight: 600, mb: 1, mt: -1 }}>
-                Gestion des salaires
+              <Typography variant="h5" sx={{ fontWeight: 600, mb: 0, mt: 1 }}>
+              Factures
               </Typography>
               <Typography variant="body2" sx={{ color: "#818EA0", mb: 3 }}>
-                Veuillez retrouver ici l’ensemble des comptes administrateurs
+              Veuillez retrouver ici l’ensemble des comptes administrateurs
               </Typography>
             </Box>
             
           </Box>
 
-          <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
+          <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
             {/* Search Bar */}
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
-                width: "284px",
+                width: "25%",
                 height: "40px",
                 border: "1px solid #E2E8F0",
-                borderRadius: 2,
+                borderRadius: '6px',
                 p: 2,
               }}
             >
               <Search sx={{ color: "text.secondary" }} />
               <InputBase
-                sx={{ ml: 1, flex: 1 }}
-                placeholder="Rechercher un employé ..."
+                sx={{ ml: 1, flex: 1, p:'12px 12px' }}
+                placeholder="Rechercher un employé "
               />
             </Box>
 
             {/* Calendar */}
             <Box
               sx={{
-                width: "284px",
-                height: "30px",
+                width: "25%",
+                height: "40px",
               }}
             >
               <Calendar />
@@ -174,10 +174,9 @@ export default function Factures() {
               display: "flex",
               justifyContent: "space-between",
                 alignItems: "center", cursor: "pointer",
-                width: "160px",
+                width: "15%",
                 height: "40px",
                 border: "1px solid #E2E8F0",
-                ml:2,
                 borderRadius: 2,
                 p: 2,
                 fontSize:'14px', fontWeight:'400',
@@ -189,7 +188,7 @@ export default function Factures() {
             </Box>
           </Box>
 
-          {/* Action Menu */}
+          {/* Action Menu of type da facture dropdown*/}
           <Menu
             id="action-menu"
             anchorEl={anchorEl}
@@ -285,7 +284,7 @@ export default function Factures() {
                         fontWeight: "500",
                       }}
                     >
-                      Type de facture <PiSortAscendingLight size={18} />
+                      Type de facture  
                     </Box>
                   </TableCell>
 
@@ -300,7 +299,7 @@ export default function Factures() {
                         fontWeight: "500",
                       }}
                     >
-                      Statut <PiSortAscendingLight size={18} />
+                      Statut 
                     </Box>
                   </TableCell>
 

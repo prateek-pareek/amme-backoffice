@@ -15,7 +15,7 @@ const Page1: React.FC = () => {
       </div>
 
       {/* Title */}
-      <h2 className="mb-6 text-2xl font-semibold text-left text-gray-800">
+      <h2 className="mb-6 text-[24px] font-semibold text-left text-black">
         Connexion
       </h2>
 
@@ -25,7 +25,7 @@ const Page1: React.FC = () => {
         <div className="mb-4">
           <label
             htmlFor="email"
-            className="block mb-1 text-sm font-medium text-gray-700"
+            className="block  text-[14px] font-normal text-black"
           >
             Adresse email
           </label>
@@ -41,7 +41,7 @@ const Page1: React.FC = () => {
         <div className="mb-4">
           <label
             htmlFor="password"
-            className="block mb-1 text-sm font-medium text-gray-700"
+            className="block text-[14pxx] font-normal text-black"
           >
             Mot de passe
           </label>
@@ -62,7 +62,7 @@ const Page1: React.FC = () => {
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
-                stroke="currentColor"
+                stroke="#E2E8F0"
                 className="w-6 h-6"
               >
                 <path
@@ -90,12 +90,12 @@ const Page1: React.FC = () => {
             />
             <label
               htmlFor="remember"
-              className="ml-2 text-sm text-gray-600"
+              className="ml-2 text-sm text-black text-[14px] font-normal"
             >
               Rester connecté
             </label>
           </div>
-          <a href="#" className="text-sm text-blue-600 hover:underline">
+          <a href="#" className="text-[14px] font-normal text-[#0C66E6] hover:underline">
             Mot de passe oublié ?
           </a>
         </div>
@@ -104,7 +104,7 @@ const Page1: React.FC = () => {
         <Link to='/access-administration'>
         <button
           type="submit"
-          className="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mt-6"
+          className="w-full px-4 py-2 text-white bg-[#0C66E6] rounded-[4px] hover:bg-blue-700  mt-6 text-[16px] font-medium "
         >
           Se connecter
         </button>

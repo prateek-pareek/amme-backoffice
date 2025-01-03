@@ -30,6 +30,7 @@ import {
 import SideBar from "../SideBar";
 import NavBar from "../NavBar";
 import { IoMdArrowDown } from "react-icons/io";
+import { PiSortAscendingLight } from "react-icons/pi";
 
 type User = {
   lastName: string;
@@ -170,8 +171,7 @@ export default function AccessAdministration() {
 
   return (
     <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
-      {/* Sidebar */}
-      <SideBar />
+     
 
       {/* Main content */}
       <Box sx={{ flex: 1 }}>
@@ -180,11 +180,13 @@ export default function AccessAdministration() {
 
         {/* Page content */}
         <Box
-          sx={{
-            p: 4,
+           sx={{
+            position: 'relative',
+            p: 3,
             backgroundColor: "white",
-            flex: 1,
-            height: "calc(100vh - 80px)",
+            height: "calc(100vh - 70px)",
+            display: 'flex',
+            flexDirection: 'column'
           }}
         >
           <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
@@ -211,24 +213,24 @@ export default function AccessAdministration() {
             elevation={0}
             sx={{ boxShadow: "none" }}
           >
-            <Table>
-              <TableHead sx={{ bgcolor: "#F6F7F9", height: "40px" }}>
-                <TableRow>
-                  <TableCell sx={{ display: "flex", color: "#818EA0" }}>
-                    Nom <IoMdArrowDown size={24} />
+            <Table size="small">
+              <TableHead sx={{ bgcolor: "#F6F7F9" }}>
+                <TableRow >
+                  <TableCell sx={{ display: "flex", color: "#818EA0" , fontSize: "14px", ml:'20px' }}>
+                    Nom <PiSortAscendingLight size={24} />
                   </TableCell>
-                  <TableCell sx={{ color: "#818EA0" }}>Prénom</TableCell>
-                  <TableCell sx={{ color: "#818EA0" }}>Adresse email</TableCell>
+                  <TableCell sx={{ color: "#818EA0",  }}>Prénom</TableCell>
+                  <TableCell sx={{ color: "#818EA0",  }}>Adresse email</TableCell>
                   <TableCell sx={{ color: "#818EA0" }}>
                     Statut de compte
                   </TableCell>
                   <TableCell width={50}></TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody sx={{py:'4px'}}>
                 {users.map((user) => (
                   <TableRow key={user.email}>
-                    <TableCell>{user.lastName}</TableCell>
+                    <TableCell sx={{ display: "flex",  fontSize: "14px", ml:'20px', p:'20px'}}>{user.lastName}</TableCell>
                     <TableCell>{user.firstName}</TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell>
@@ -260,7 +262,7 @@ export default function AccessAdministration() {
             </Table>
           </TableContainer>
 
-          {/* Action Menu */}
+          {/* Action Menu for modifier suprimer*/}
           <Menu
             id="action-menu"
             anchorEl={anchorEl}
@@ -302,16 +304,15 @@ export default function AccessAdministration() {
           <Dialog
             open={createAccountOpen}
             onClose={() => setCreateAccountOpen(false)}
-            maxWidth="sm"
             fullWidth
             PaperProps={{
               sx: {
                 borderRadius: "16px",
-                height: "98%",
-                maxWidth: "464px",
-                marginLeft: "1200px",
+                height: "96%",
+                width: 500,
+                marginLeft: "1050px",
                 overflow: "hidden",
-                paddingX: "8px",
+                paddingX: "4px 8px",
               },
             }}
           >
@@ -321,13 +322,15 @@ export default function AccessAdministration() {
                 justifyContent: "space-between",
                 alignItems: "center",
                 fontSize: "24px",
-                p: 3,
-                pb: "1px",
+                py: 2,
+                px:3,
+
+                pb: "0px",
               }}
             >
               <Typography
                 variant="h6"
-                sx={{ fontWeight: "600", fontSize: "24px", mb: "2px" }}
+                sx={{ fontWeight: "600", fontSize: "24px", mb: "0px" }}
               >
                 Création de compte
               </Typography>
@@ -352,11 +355,11 @@ export default function AccessAdministration() {
                   flexDirection: "column",
                   marginTop: "5px",
                   gap: "12px", // Reduced gap between input fields and Pages accessibles (Change 1)
-                  mb: "4px", // Adjusted bottom margin for the input section
+                  mb: "8px", // Adjusted bottom margin for the input section
                 }}
               >
                 <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "4px" }}
+                  sx={{ display: "flex", flexDirection: "column", gap: "0px" }}
                 >
                   <Box sx={{ display: "flex" }}>
                     <Typography variant="body2">Nom</Typography>
@@ -369,12 +372,15 @@ export default function AccessAdministration() {
                     value={formData.lastName}
                     onChange={handleInputChange}
                     fullWidth
-                    size="small"
+                    // size="small"
+                    InputProps={{
+                      sx: { height: '35px' }, // Custom height for input
+                    }}
                   />
                 </Box>
 
                 <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "4px" }}
+                  sx={{ display: "flex", flexDirection: "column", gap: "0px" }}
                 >
                   <Box sx={{ display: "flex" }}>
                     <Typography variant="body2">Prénom</Typography>
@@ -387,12 +393,15 @@ export default function AccessAdministration() {
                     value={formData.firstName}
                     onChange={handleInputChange}
                     fullWidth
-                    size="small"
+                    // size="small"
+                    InputProps={{
+                      sx: { height: '35px' }, // Custom height for input
+                    }}
                   />
                 </Box>
 
                 <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "4px" }}
+                  sx={{ display: "flex", flexDirection: "column", gap: "0px" }}
                 >
                   <Typography variant="body2">Adresse mail</Typography>
                   <TextField
@@ -400,7 +409,10 @@ export default function AccessAdministration() {
                     value={formData.email}
                     onChange={handleInputChange}
                     fullWidth
-                    size="small"
+                    // size="small"
+                    InputProps={{
+                      sx: { height: '35px' }, // Custom height for input
+                    }}
                   />
                 </Box>
               </Box>
@@ -408,14 +420,14 @@ export default function AccessAdministration() {
               {/* Pages Accessibles Section */}
               <Typography
                 variant="subtitle1"
-                sx={{ fontWeight: "500", fontSize: "18px", mb: "4px" }}
+                sx={{ fontWeight: "500", fontSize: "18px", mb: "0px" }}
               >
                 Pages accessibles
               </Typography>
               <Typography
                 variant="body2"
                 color="text.secondary"
-                sx={{ fontWeight: "400", fontSize: "14px", mb: "8px" }}
+                sx={{ fontWeight: "400", fontSize: "14px", mb: "6px" }}
               >
                 Vous pouvez activer les différentes fonctionnalités pour
                 l'utilisateur ci-dessous
@@ -477,8 +489,8 @@ export default function AccessAdministration() {
                   display: "flex",
                   justifyContent: "flex-end",
                   borderTop: "1px solid #E9EEF6",
-                  pt: 3,
-                  mt: 1,
+                  pt: 1,
+                  // mt: 1,
                 }}
               >
                 
@@ -578,10 +590,10 @@ export default function AccessAdministration() {
               sx: {
                 borderRadius: "16px",
                 height: "98%",
-                maxWidth: "464px",
-                marginLeft: "1200px",
+                width: 500,
+                marginLeft: "1050px",
                 overflow: "hidden",
-                paddingX: "8px",
+                paddingX: "4px 8px",
               },
             }}
           >
@@ -591,13 +603,14 @@ export default function AccessAdministration() {
                 justifyContent: "space-between",
                 alignItems: "center",
                 fontSize: "24px",
-                p: 3,
-                pb: "1px",
+                py: 2,
+                px:3,
+                pb: "0px",
               }}
             >
               <Typography
                 variant="h6"
-                sx={{ fontWeight: "600", fontSize: "24px", mb: "2px" }}
+                sx={{ fontWeight: "600", fontSize: "24px", mb: "0px" }}
               >
                 Gestion de compte
               </Typography>
@@ -626,7 +639,7 @@ export default function AccessAdministration() {
                 }}
               >
                 <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "4px" }}
+                  sx={{ display: "flex", flexDirection: "column", gap: "0px" }}
                 >
                   <Box sx={{ display: "flex" }}>
                     <Typography variant="body2">Nom</Typography>
@@ -639,12 +652,15 @@ export default function AccessAdministration() {
                     value={formData.lastName}
                     onChange={handleInputChange}
                     fullWidth
-                    size="small"
+                    // size="small"
+                    InputProps={{
+                      sx: { height: '35px' }, // Custom height for input
+                    }}
                   />
                 </Box>
 
                 <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "4px" }}
+                  sx={{ display: "flex", flexDirection: "column", gap: "0px" }}
                 >
                   <Box sx={{ display: "flex" }}>
                     <Typography variant="body2">Prénom</Typography>
@@ -657,12 +673,15 @@ export default function AccessAdministration() {
                     value={formData.firstName}
                     onChange={handleInputChange}
                     fullWidth
-                    size="small"
+                    // size="small"
+                    InputProps={{
+                      sx: { height: '35px' }, // Custom height for input
+                    }}
                   />
                 </Box>
 
                 <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "4px" }}
+                  sx={{ display: "flex", flexDirection: "column", gap: "0px" }}
                 >
                   <Typography variant="body2">Adresse mail</Typography>
                   <TextField
@@ -670,7 +689,10 @@ export default function AccessAdministration() {
                     value={formData.email}
                     onChange={handleInputChange}
                     fullWidth
-                    size="small"
+                    // size="small"
+                    InputProps={{
+                      sx: { height: '35px' }, // Custom height for input
+                    }}
                   />
                 </Box>
               </Box>
@@ -678,14 +700,14 @@ export default function AccessAdministration() {
               {/* Pages Accessibles Section */}
               <Typography
                 variant="subtitle1"
-                sx={{ fontWeight: "500", fontSize: "18px", mb: "4px" }}
+                sx={{ fontWeight: "500", fontSize: "18px", mb: "0px" }}
               >
                 Pages accessibles
               </Typography>
               <Typography
                 variant="body2"
                 color="text.secondary"
-                sx={{ fontWeight: "400", fontSize: "14px", mb: "8px" }}
+                sx={{ fontWeight: "400", fontSize: "14px", mb: "6px" }}
               >
                 Vous pouvez activer les différentes fonctionnalités pour
                 l'utilisateur ci-dessous
@@ -745,23 +767,13 @@ export default function AccessAdministration() {
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "flex-end",
                   borderTop: "1px solid #E9EEF6",
-                  pt: 3,
-                  mt: 1,
+                  pt: 1,
+                  // mt: 1,
                 }}
               >
-                <Button
-                  color="error"
-                  sx={{
-                    textTransform: "none",
-                    fontWeight: "bold",
-                    borderRadius: "8px",
-                  }}
-                  onClick={() => setModifyDialogOpen(false)}
-                >
-                  Supprimer
-                </Button>
+                
                 <Box sx={{ display: "flex", gap: 2 }}>
                   <Button
                     variant="outlined"
@@ -770,8 +782,10 @@ export default function AccessAdministration() {
                       fontWeight: "bold",
                       borderRadius: "8px",
                       borderColor: "#E2E8F0",
+                      color:'#151515',
+                      fontSize:'14px', 
                     }}
-                    onClick={() => setModifyDialogOpen(false)}
+                    onClick={() => setCreateAccountOpen(false)}
                   >
                     Annuler
                   </Button>
@@ -784,21 +798,24 @@ export default function AccessAdministration() {
                       backgroundColor: "#E2E8F0",
                       ":hover": { backgroundColor: "#E2E8F0" },
                     }}
-                    onClick={()=> setModifyDialogOpen(false)}
                   >
-                    Confirmer
+                    Créer le compte
                   </Button>
                 </Box>
               </Box>
             </DialogContent>
           </Dialog>
 
+          {/* table footer */}
           <Box
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              mt: 2,
+              alignItems: "center",
+              mt: 'auto', // Pushes the box to the bottom
+              py: 2, // Add vertical padding
               px: 2,
+              borderTop: '1px solid #E9EEF6', 
             }}
           >
             <Typography variant="body2" color="text.secondary">
@@ -808,11 +825,11 @@ export default function AccessAdministration() {
               sx={{ display: "flex", gap: 1, height: "24px", width: "108px" }}
             >
               <IconButton size="small">
-                <ChevronLeft />
+                <ChevronLeft sx={{border:'1px solid #E2E8F0', borderRadius:'4px'}}/>
               </IconButton>
               1/27
               <IconButton size="small">
-                <ChevronRight />
+                <ChevronRight sx={{border:'1px solid #E2E8F0', borderRadius:'4px'}}/>
               </IconButton>
             </Box>
           </Box>

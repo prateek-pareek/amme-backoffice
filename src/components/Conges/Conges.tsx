@@ -78,12 +78,12 @@ export default function Conges() {
 
   return (
     <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
-      <SideBar  />
+    
       <Box sx={{ flex: 1 }}>
         <NavBar />
         <Box
           sx={{
-            p: 4,
+            p: 2,
             backgroundColor: "white",
             flex: 1,
             height: "calc(100vh - 80px)",
@@ -196,11 +196,79 @@ export default function Conges() {
             <Table>
               <TableHead sx={{ bgcolor: "#F6F7F9" }}>
                 <TableRow>
-                  <TableCell>Nom de l’employé</TableCell>
-                  <TableCell>Date de début</TableCell>
-                  <TableCell>Date de fin</TableCell>
-                  <TableCell>Statut</TableCell>
-                  <TableCell>Action</TableCell>
+                  <TableCell>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        color: "#818EA0",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Nom de l’employé
+                      <PiSortAscendingLight size={18} />
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        color: "#818EA0",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Date de début
+                      <PiSortAscendingLight size={18} />
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        color: "#818EA0",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Date de fin
+                      <PiSortAscendingLight size={18} />
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        color: "#818EA0",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Statut
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        color: "#818EA0",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Action
+                    </Box>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -262,9 +330,9 @@ export default function Conges() {
       {isModalOpen && selectedEmployee && (
         <Modal
           open={true}
-          BackdropProps={{
-            style: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
-          }}
+          // BackdropProps={{
+          //   style: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
+          // }}
         >
           <PriceModal
             row={selectedEmployee} // Pass the selected employee data
