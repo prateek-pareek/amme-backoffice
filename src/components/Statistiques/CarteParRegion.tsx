@@ -16,7 +16,7 @@ import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import NavBar from "../NavBar";
 import SideBar from "../SideBar";
 
-const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/france.json";
+const geoUrl = "https://unpkg.com/world-atlas@2.0.2/countries-110m.json";;
 
 const regionsData = {
     "fr-idf": { name: "Île-de-France", patients: 827, change: 7, id: 1 },

@@ -90,7 +90,8 @@ export default function Salaires() {
         <NavBar />
         <Box 
         sx={{ 
-         p: 4,
+          position:'relative',
+         p: 3,
          backgroundColor: "white",
          flex: 1,
          height: "calc(100vh - 80px)", }}>
@@ -144,7 +145,7 @@ export default function Salaires() {
           </Box>
 
           <TableContainer component={Paper} elevation={0}>
-            <Table>
+            <Table size="medium">
               <TableHead sx={{ bgcolor: "#F6F7F9" }}>
                 <TableRow>
                   <TableCell sx={{ width: "15%" }}>
@@ -256,8 +257,9 @@ export default function Salaires() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              px: 2,
-              mt: 2,
+              mt:'auto',
+              p: 2,
+              borderTop:'1px solid #E9EEF6'
             }}
           >
             <Typography variant="body2" sx={{ color: "#818EA0" }}>

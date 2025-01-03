@@ -1,5 +1,5 @@
-import * as React from "react"
-import {  useState } from "react";
+import * as React from "react";
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -90,14 +90,22 @@ export default function Presentation() {
 
   return (
     <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
-     
       <Box sx={{ flex: 1 }}>
         <NavBar />
-        <Box sx={{ p: 4, backgroundColor: "white", flex: 1 ,height: "calc(100vh - 80px)", }}>
-          <Typography variant="h5" sx={{ fontWeight: 600, mb: 1 }}>
+        <Box
+          sx={{
+            position:'relative',
+            p: 3,
+            backgroundColor: "white",
+            height: "calc(100vh - 70px)",
+            display:'flex',
+            flexDirection:'column'
+          }}
+        >
+          <Typography variant="h5" sx={{ fontWeight: 600}}>
             Prestations
           </Typography>
-          <Typography variant="body2" sx={{ color: "#818EA0", mb: 4 }}>
+          <Typography variant="body2" sx={{ color: "#818EA0", mb: 3 }}>
             Veuillez retrouver ici l'ensemble des comptes administrateurs
           </Typography>
 
@@ -132,11 +140,12 @@ export default function Presentation() {
             </Box>
           </Box>
 
-          <TableContainer component={Paper} elevation={0}>
-            <Table>
+          <TableContainer component={Paper} elevation={0}
+          sx={{ boxShadow: "none" }}>
+            <Table size="medium">
               <TableHead sx={{ bgcolor: "#F6F7F9" }}>
                 <TableRow>
-                  <TableCell sx={{ width: "15%" }}>
+                  <TableCell sx={{ width: "15%", fontSize:'14px',  }}>
                     <Box
                       sx={{
                         display: "flex",
@@ -189,7 +198,7 @@ export default function Presentation() {
                   <TableCell width={100}></TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody sx={{py:'4px'}}>
                 {prestations.map((row, index) => (
                   <TableRow key={index} hover>
                     <TableCell>{row.employe}</TableCell>

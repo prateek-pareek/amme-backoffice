@@ -75,12 +75,12 @@ const CalendarHeader = ({
   const days = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
 
   return (
-    <Box sx={{ display: "flex", alignItems: "center", mb: 2, mt: 4 }}>
+    <Box sx={{ display: "flex", alignItems: "center", mb: 2, mt: 4 , color:'#818EA0'}}>
       <IconButton onClick={onPrevWeek}>
-        <ChevronLeft />
+        <ChevronLeft sx={{border:'1px solid #E2E8F0', borderRadius:'4px'}}/>
       </IconButton>
       <IconButton onClick={onNextWeek}>
-        <ChevronRight />
+        <ChevronRight sx={{border:'1px solid #E2E8F0', borderRadius:'4px'}}/>
       </IconButton>
       <Box
         sx={{
@@ -88,6 +88,7 @@ const CalendarHeader = ({
           flex: 1,
           justifyContent: "space-between",
           px: 2,
+          fontSize:'14px', fontWeight:'500'
         }}
       >
         {weekDates.map((date, index) => (
@@ -290,7 +291,7 @@ const Planning = ({ initialDate = new Date() }: PlanningProps) => {
               >
                 {!selectedValue && (
                   <InputLabel
-                    sx={{ fontSize: "14px", fontWeight: 500, color: "#151515" }}
+                    sx={{ fontSize: "14px", fontWeight: 500, color: "#151515", marginBottom: "2px"}}
                   >
                     Sélectionner une infirmière parmi la liste
                   </InputLabel>
@@ -301,6 +302,7 @@ const Planning = ({ initialDate = new Date() }: PlanningProps) => {
                   displayEmpty
                   sx={{
                     width: "100%",
+                    height:'50px',
                     "& .MuiMenuItem-root": {
                       fontSize: "14px",
                       fontWeight: "500",
@@ -344,9 +346,10 @@ const Planning = ({ initialDate = new Date() }: PlanningProps) => {
             <Box>
               <FormControl
                 sx={{
-                  height: "30px",
+                  height: "20px",
                   width: "200px",
                   borderRadius: "6px",
+                  marginTop:'30px'
                 }}
               >
                 <Select
@@ -355,6 +358,7 @@ const Planning = ({ initialDate = new Date() }: PlanningProps) => {
                   sx={{
                     fontSize: "14px",
                     fontWeight: "500",
+                    height:'30px'
                   }}
                 >
                   {nurses.map((nurse, index) => (
@@ -371,7 +375,7 @@ const Planning = ({ initialDate = new Date() }: PlanningProps) => {
                 onNextWeek={handleNextWeek}
               />
 
-              <Box sx={{ overflowY: "auto", maxHeight: "calc(100vh - 250px)" }}>
+              <Box sx={{ overflowY: "auto", maxHeight: "calc(100vh - 250px)",  }}>
                 {timeSlots.slice(6, 10).map((time) => (
                   <TimeSlot
                     key={time}
