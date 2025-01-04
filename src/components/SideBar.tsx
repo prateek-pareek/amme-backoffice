@@ -133,6 +133,7 @@ const SideBar: React.FC<SidebarProps> = () => {
     {
       text: "Statistiques",
       icon: <GoGraph size="20px" />,
+      link: "/statistiques/prestations",
       hasSublist: true,
       sublist: [
         { text: "Nombre de prestations", link: "/statistiques/prestations" },

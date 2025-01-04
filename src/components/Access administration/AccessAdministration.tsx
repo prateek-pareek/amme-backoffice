@@ -199,68 +199,85 @@ export default function AccessAdministration() {
               </Typography>
             </Box>
             <Button
-              variant="contained"
               startIcon={<Plus />}
-              sx={{ height: 40 }}
+              sx={{ color:'white',height: 40, backgroundColor:"#0C66E6" , fontSize:'16px', fontWeight:'500', textTransform:'none',px:'24px'}}
               onClick={() => setCreateAccountOpen(true)}
             >
               Créer un compte
             </Button>
           </Box>
 
-          <TableContainer
-            component={Paper}
-            elevation={0}
-            sx={{ boxShadow: "none" }}
-          >
-            <Table size="small">
-              <TableHead sx={{ bgcolor: "#F6F7F9" }}>
-                <TableRow >
-                  <TableCell sx={{ display: "flex", color: "#818EA0" , fontSize: "14px", ml:'20px' }}>
-                    Nom <PiSortAscendingLight size={24} />
-                  </TableCell>
-                  <TableCell sx={{ color: "#818EA0",  }}>Prénom</TableCell>
-                  <TableCell sx={{ color: "#818EA0",  }}>Adresse email</TableCell>
-                  <TableCell sx={{ color: "#818EA0" }}>
-                    Statut de compte
-                  </TableCell>
-                  <TableCell width={50}></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody sx={{py:'4px'}}>
-                {users.map((user) => (
-                  <TableRow key={user.email}>
-                    <TableCell sx={{ display: "flex",  fontSize: "14px", ml:'20px', p:'20px'}}>{user.lastName}</TableCell>
-                    <TableCell>{user.firstName}</TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>
-                      <Box
-                        sx={{
-                          display: "inline-block",
-                          px: "20px",
-                          py: "4px",
-                          fontSize: "14px",
-                          fontWeight: "500",
-                          borderRadius: 1,
-                          bgcolor:
-                            user.status === "Actif" ? "#D1E4FF" : "#FFD0D0",
-                          color:
-                            user.status === "Actif" ? "#0C66E6" : "#C53434",
-                        }}
-                      >
-                        {user.status}
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <IconButton onClick={(e) => handleClick(e, user)}>
-                        <MoreHoriz />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <TableContainer component={Paper} elevation={0} sx={{ boxShadow: "none" }}>
+  <Table size="small">
+    <TableHead sx={{ bgcolor: "#F6F7F9",  }}>
+      <TableRow sx={{}}>
+        {/* First column */}
+        <TableCell sx={{ width: "16.67%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none",}}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: "8px" , ml: "20px"}}>
+            Nom <PiSortAscendingLight size={24} />
+          </Box>
+        </TableCell>
+
+        {/* Second and third columns */}
+        <TableCell sx={{ width: "16.67%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500',borderBottom: "none", }}>Prénom</TableCell>
+        <TableCell sx={{ width: "16.67%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500',borderBottom: "none", }}>Adresse email</TableCell>
+
+        {/* Space column */}
+        <TableCell sx={{ width: "20%", bgcolor: "transparent",borderBottom: "none", }}></TableCell>
+
+        {/* Last 2 columns */}
+        <TableCell sx={{ width: "15%", color: "#818EA0" ,  fontSize: "14px" ,fontWeight:'500',textAlign:'right',borderBottom: "none",}}>Statut de compte</TableCell>
+        <TableCell sx={{ width: "15%" , textAlign:'right', fontSize: "14px" ,fontWeight:'500',borderBottom: "none",}}></TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody sx={{ py: "4px" }}>
+      {users.map((user) => (
+        <TableRow key={user.email}>
+          {/* First column */}
+          <TableCell sx={{ width: "16.67%%", fontSize: "14px",fontWeight:'500',  p: "20px",borderBottom:'1px solid #F6F7F9'  }}>
+            <Box sx={{ display: "flex", alignItems: "center",ml: "20px", gap: "8px", }}>
+              {user.lastName}
+            </Box>
+          </TableCell>
+
+          {/* Second and third columns */}
+          <TableCell sx={{ width: "16.67%%",fontSize: "14px",fontWeight:'500',borderBottom:'1px solid #F6F7F9' }}>{user.firstName}</TableCell>
+          <TableCell sx={{ width: "16.67%%",fontSize: "14px",fontWeight:'500',borderBottom:' 1px solid#F6F7F9' }}>{user.email}</TableCell>
+
+          {/* Space column */}
+          <TableCell sx={{ width: "20%", bgcolor: "transparent" ,borderBottom:'1px solid #F6F7F9'}}></TableCell>
+
+          {/* Last 2 columns */}
+          <TableCell sx={{ width: "15%" , textAlign:'center',borderBottom:'1px solid #F6F7F9'}}>
+            <Box
+              sx={{
+                display: "inline-block",
+                px: "20px",
+                py: "4px",
+                fontSize: "14px",
+                fontWeight: "500",
+                borderRadius: 1,
+                bgcolor: user.status === "Actif" ? "#D1E4FF" : "#FFD0D0",
+                color: user.status === "Actif" ? "#0C66E6" : "#C53434",
+              }}
+            >
+              {user.status}
+            </Box>
+          </TableCell>
+          <TableCell sx={{ width: "15%" , textAlign:'right',fontSize: "14px",fontWeight:'500',borderBottom:'1px solid #F6F7F9'}}>
+            <IconButton onClick={(e) => handleClick(e, user)}>
+              <MoreHoriz />
+            </IconButton>
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  </Table>
+</TableContainer>
+
+
+
+
 
           {/* Action Menu for modifier suprimer*/}
           <Menu

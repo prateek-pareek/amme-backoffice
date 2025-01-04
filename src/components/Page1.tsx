@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import logoIcon from "../assets/logo.svg";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Page1: React.FC = () => {
   return (
@@ -41,7 +41,7 @@ const Page1: React.FC = () => {
         <div className="mb-4">
           <label
             htmlFor="password"
-            className="block text-[14pxx] font-normal text-black"
+            className="block text-[14px] font-normal text-black"
           >
             Mot de passe
           </label>
@@ -95,19 +95,22 @@ const Page1: React.FC = () => {
               Rester connecté
             </label>
           </div>
-          <a href="#" className="text-[14px] font-normal text-[#0C66E6] hover:underline">
+          <a
+            href="#"
+            className="text-[14px] font-normal text-[#0C66E6] hover:underline"
+          >
             Mot de passe oublié ?
           </a>
         </div>
 
         {/* Submit Button */}
-        <Link to='/access-administration'>
-        <button
-          type="submit"
-          className="w-full px-4 py-2 text-white bg-[#0C66E6] rounded-[4px] hover:bg-blue-700  mt-6 text-[16px] font-medium "
-        >
-          Se connecter
-        </button>
+        <Link to="/access-administration">
+          <button
+            type="submit"
+            className="w-full px-4 py-2 text-white bg-[#0C66E6] rounded-[4px] hover:bg-blue-700  mt-6 text-[16px] font-medium "
+          >
+            Se connecter
+          </button>
         </Link>
       </form>
     </div>

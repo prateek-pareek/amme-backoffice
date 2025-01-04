@@ -38,7 +38,7 @@ function App() {
 
             {/* Routes with sidebar */}
             <Route path="/access-administration" element={<AccessAdministration />} />
-            <Route path="/statistiques" element={<Page4 />} />
+            <Route path="/statistiques" element={<NombrePrestations />} />
             <Route path="/statistiques/prestations" element={<NombrePrestations />} />
             <Route path="/statistiques/argent" element={<ArgentGenere />} />
             <Route path="/statistiques/carte" element={<CarteParRegion />} />

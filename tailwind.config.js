@@ -7,6 +7,9 @@ export default {
   ],
   theme: {
   	extend: {
+			fontFamily: {
+        sans: ['Inter', 'sans-serif'], // Ensures Inter is the default sans font
+      },
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
