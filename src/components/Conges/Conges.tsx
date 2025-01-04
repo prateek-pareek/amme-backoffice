@@ -83,24 +83,22 @@ export default function Conges() {
         <NavBar />
         <Box
           sx={{
-            p: 2,
+            position:'relative',
+            px: 3, py:2,
             backgroundColor: "white",
-            flex: 1,
-            height: "calc(100vh - 80px)",
+            height: "calc(100vh - 70px)",
+            display:'flex',
+            flexDirection:'column'
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
-            <Box>
-              <Typography variant="h5" sx={{ fontWeight: 600, mb: 1, mt: -1 }}>
+              <Typography variant="h5" sx={{fontSize:'24px', fontWeight: '600', mb:'8px'}}>
                 Gestion des congés
               </Typography>
-              <Typography variant="body2" sx={{ color: "#818EA0", mb: 3 }}>
+              <Typography variant="body2" sx={{ color: "#818EA0" , fontSize:'14px', fontWeight:'400', mb:3}}>
                 Veuillez retrouver ici l’ensemble des comptes administrateurs
               </Typography>
-            </Box>
-          </Box>
 
-          <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid container spacing={2} sx={{ mb: 1 }}>
             <Grid item xs={3}>
               <Box
                 sx={{
@@ -108,7 +106,7 @@ export default function Conges() {
                   bgcolor: "white",
                   border: "1px solid #E2E8F0",
                   borderRadius: 1,
-                  height: "142px",
+                  height: "130px",
                 }}
               >
                 <Typography
@@ -129,7 +127,7 @@ export default function Conges() {
                   bgcolor: "white",
                   border: "1px solid #E2E8F0",
                   borderRadius: 1,
-                  height: "142px",
+                  height: "130px",
                 }}
               >
                 <Typography
@@ -150,7 +148,7 @@ export default function Conges() {
                   bgcolor: "white",
                   border: "1px solid #E2E8F0",
                   borderRadius: 1,
-                  height: "142px",
+                  height: "130px",
                 }}
               >
                 <Typography
@@ -171,7 +169,7 @@ export default function Conges() {
                   bgcolor: "white",
                   border: "1px solid #E2E8F0",
                   borderRadius: 1,
-                  height: "142px",
+                  height: "130px",
                 }}
               >
                 <Typography
@@ -188,82 +186,67 @@ export default function Conges() {
           </Grid>
 
           <Typography
-            sx={{ fontSize: "18px", fontWeight: "600", mb: 2, mt: 4 }}
+            sx={{ fontSize: "18px", fontWeight: "600", mb: 1, mt: 4 }}
           >
             Demandes
           </Typography>
-          <TableContainer component={Paper} elevation={0}>
-            <Table>
+          <TableContainer component={Paper} elevation={0} sx={{ boxShadow: "none" }}>
+            <Table size="small">
               <TableHead sx={{ bgcolor: "#F6F7F9" }}>
                 <TableRow>
-                  <TableCell>
+                  <TableCell  sx={{ width: "20%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none", }}>
                     <Box
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         gap: 1,
-                        color: "#818EA0",
-                        fontSize: "14px",
-                        fontWeight: "500",
                       }}
                     >
                       Nom de l’employé
                       <PiSortAscendingLight size={18} />
                     </Box>
                   </TableCell>
-                  <TableCell>
+                  <TableCell  sx={{ width: "17%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none", }}>
                     <Box
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         gap: 1,
-                        color: "#818EA0",
-                        fontSize: "14px",
-                        fontWeight: "500",
                       }}
                     >
                       Date de début
                       <PiSortAscendingLight size={18} />
                     </Box>
                   </TableCell>
-                  <TableCell>
+                  <TableCell  sx={{ width: "17%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none", }}>
                     <Box
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         gap: 1,
-                        color: "#818EA0",
-                        fontSize: "14px",
-                        fontWeight: "500",
                       }}
                     >
                       Date de fin
                       <PiSortAscendingLight size={18} />
                     </Box>
                   </TableCell>
-                  <TableCell>
+                  <TableCell  sx={{ width: "17%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none", }}>
                     <Box
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         gap: 1,
-                        color: "#818EA0",
-                        fontSize: "14px",
-                        fontWeight: "500",
                       }}
                     >
                       Statut
                     </Box>
                   </TableCell>
-                  <TableCell>
+                  <TableCell  sx={{ width: "29%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none", }}>
                     <Box
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         gap: 1,
-                        color: "#818EA0",
-                        fontSize: "14px",
-                        fontWeight: "500",
                       }}
                     >
                       Action
@@ -271,14 +254,14 @@ export default function Conges() {
                   </TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody sx={{py:'4px'}}>
                 {congesData.map((row, index) => (
                   <TableRow key={index} hover>
-                    <TableCell>{row.employe}</TableCell>
-                    <TableCell>{row.dateDebut}</TableCell>
-                    <TableCell>{row.dateFin}</TableCell>
-                    <TableCell>{row.status}</TableCell>
-                    <TableCell>
+                    <TableCell sx={{ width: "20%%", fontSize: "14px",fontWeight:'500',  p: "18px",borderBottom:'1px solid #F6F7F9'  }}>{row.employe}</TableCell>
+                    <TableCell sx={{ width: "17%%", fontSize: "14px",fontWeight:'500',  p: "18px",borderBottom:'1px solid #F6F7F9'  }}>{row.dateDebut}</TableCell>
+                    <TableCell sx={{ width: "17%%", fontSize: "14px",fontWeight:'500',  p: "18px",borderBottom:'1px solid #F6F7F9'  }}>{row.dateFin}</TableCell>
+                    <TableCell sx={{ width: "17%%", fontSize: "14px",fontWeight:'500',  p: "18px",borderBottom:'1px solid #F6F7F9'  }}>{row.status}</TableCell>
+                    <TableCell sx={{ width: "29%%", fontSize: "14px",fontWeight:'500',  p: "18px",borderBottom:'1px solid #F6F7F9'  }}>
                       {row.status === "En attente" ? (
                         <Box sx={{ display: "flex", gap: 1 }}>
                           <Button

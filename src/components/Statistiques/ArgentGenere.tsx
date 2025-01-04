@@ -326,8 +326,6 @@ export default function ArgentGenere() {
 
   return (
     <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
-      {/* Sidebar */}
-      {/* <SideBar /> */}
 
       {/* Main content */}
       <Box sx={{ flex: 1 }}>
@@ -335,12 +333,12 @@ export default function ArgentGenere() {
 
         <Box
           sx={{
-            position: "relative",
-            p: 3,
+            position:'relative',
+            px: 3, py:2,
             backgroundColor: "white",
-            height: "calc(100vh - 60px)",
-            display: "flex",
-            flexDirection: "column",
+            height: "calc(100vh - 70px)",
+            display:'flex',
+            flexDirection:'column'
           }}
         >
           <Box
@@ -353,15 +351,13 @@ export default function ArgentGenere() {
             <Box>
               <Typography
                 variant="h5"
-                gutterBottom
-                sx={{ fontSize: "24px", fontWeight: "600" }}
+                sx={{ fontSize: "24px", fontWeight: "600" ,mb:'8px'}}
               >
                 Argent généré
               </Typography>
               <Typography
                 variant="body2"
-                color="#818EA0"
-                sx={{ fontSize: "16px", fontWeight: "400" }}
+                sx={{color: "#818EA0" , fontSize:'14px', fontWeight:'400', mb:1 }}
               >
                 Veuillez retrouver ici l'ensemble des comptes administrateurs
               </Typography>
@@ -374,7 +370,7 @@ export default function ArgentGenere() {
               ) : selectedFilter === "parInfirmiere" && selectedValue ? (
                 <FormControl
                   sx={{
-                    width: "327px",
+                    width: "258px",
                     height: "40px",
                   }}
                 >

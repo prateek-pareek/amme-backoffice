@@ -62,13 +62,13 @@ const factures: Factures[] = [
     factureType: "Remboursé",
     status: "En attente",
   },
-  {
-    factureNo: "#001",
-    employe: "Trajan Gerard",
-    mois: "24 Sep 2024",
-    factureType: "Abonnement",
-    status: "Remboursé",
-  },
+  // {
+  //   factureNo: "#001",
+  //   employe: "Trajan Gerard",
+  //   mois: "24 Sep 2024",
+  //   factureType: "Abonnement",
+  //   status: "Remboursé",
+  // },
   {
     factureNo: "#001",
     employe: "Cyprien Lemoine",
@@ -121,40 +121,41 @@ export default function Factures() {
         <NavBar />
         <Box
           sx={{
-            p: 2,
+            position:'relative',
+            px: 3, py:2,
             backgroundColor: "white",
-            flex: 1,
-            height: "calc(100vh - 80px)",
+            height: "calc(100vh - 70px)",
+            display:'flex',
+            flexDirection:'column'
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb:2 }}>
-            <Box>
-              <Typography variant="h5" sx={{ fontWeight: 600, mb: 0, mt: 1 }}>
+        
+         
+              <Typography variant="h5" sx={{fontSize:'24px', fontWeight: '600', mb:'8px'}}>
               Factures
               </Typography>
-              <Typography variant="body2" sx={{ color: "#818EA0", mb: 3 }}>
+              <Typography variant="body2" sx={{ color: "#818EA0" , fontSize:'14px', fontWeight:'400', mb:5}}>
               Veuillez retrouver ici l’ensemble des comptes administrateurs
               </Typography>
-            </Box>
             
-          </Box>
+         
 
-          <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
+          <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
             {/* Search Bar */}
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
-                width: "25%",
+                width: "28%",
                 height: "40px",
                 border: "1px solid #E2E8F0",
                 borderRadius: '6px',
-                p: 2,
+                padding:'11px 12px'
               }}
             >
-              <Search sx={{ color: "text.secondary" }} />
+              <Search sx={{ color: "#818EA0" }} />
               <InputBase
-                sx={{ ml: 1, flex: 1, p:'12px 12px' }}
+                sx={{ml: 1, flex: 1 , fontSize:'14px', fontWeight:'500' }}
                 placeholder="Rechercher un employé "
               />
             </Box>
@@ -174,7 +175,7 @@ export default function Factures() {
               display: "flex",
               justifyContent: "space-between",
                 alignItems: "center", cursor: "pointer",
-                width: "15%",
+                width: "14%",
                 height: "40px",
                 border: "1px solid #E2E8F0",
                 borderRadius: 2,
@@ -224,103 +225,78 @@ export default function Factures() {
             </MenuItem>
           </Menu>
 
-          <TableContainer component={Paper} elevation={0}>
-            <Table>
+          <TableContainer component={Paper} elevation={0} sx={{ boxShadow: "none" }}>
+            <Table size="small">
               <TableHead sx={{ bgcolor: "#F6F7F9" }}>
                 <TableRow>
-                  <TableCell sx={{ width: "15%" }}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        color: "#818EA0",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      N° facture <PiSortAscendingLight size={18} />
-                    </Box>
+                  <TableCell sx={{ width: "10%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none", }}>
+                      N° facture 
                   </TableCell>
 
-                  <TableCell sx={{ width: "15%" }}>
+                  <TableCell sx={{ width: "15%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none", }}>
                     <Box
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         gap: 1,
-                        color: "#818EA0",
-                        fontSize: "14px",
-                        fontWeight: "500",
                       }}
                     >
                       Employé <PiSortAscendingLight size={18} />
                     </Box>
                   </TableCell>
 
-                  <TableCell sx={{ width: "15%" }}>
+                  <TableCell sx={{ width: "15%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none", }}>
                     <Box
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         gap: 1,
-                        color: "#818EA0",
-                        fontSize: "14px",
-                        fontWeight: "500",
                       }}
                     >
                       Mois <PiSortAscendingLight size={18} />
                     </Box>
                   </TableCell>
 
-                  <TableCell sx={{ width: "15%" }}>
+                  <TableCell sx={{ width: "15%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none", }}>
                     <Box
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         gap: 1,
-                        color: "#818EA0",
-                        fontSize: "14px",
-                        fontWeight: "500",
                       }}
                     >
                       Type de facture  
                     </Box>
                   </TableCell>
 
-                  <TableCell sx={{ width: "15%" }}>
+                  <TableCell sx={{ width: "15%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none", }}>
                     <Box
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         gap: 1,
-                        color: "#818EA0",
-                        fontSize: "14px",
-                        fontWeight: "500",
                       }}
                     >
                       Statut 
                     </Box>
                   </TableCell>
 
-                  <TableCell width={100}></TableCell>
+                  <TableCell sx={{ width: "30%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none", }}></TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody sx={{py:'4px'}}>
                 {factures.map((row, index) => (
                   <TableRow key={index} hover>
-                    <TableCell>{row.factureNo}</TableCell>
-                    <TableCell>{row.employe}</TableCell>
-                    <TableCell>{row.mois}</TableCell>
-                    <TableCell>{row.factureType}</TableCell>
-                    <TableCell>
+                    <TableCell sx={{ width: "10%%", fontSize: "14px",fontWeight:'500',  p: "18px",borderBottom:'1px solid #F6F7F9'  }}>{row.factureNo}</TableCell>
+                    <TableCell sx={{ width: "15%%", fontSize: "14px",fontWeight:'500',  p: "18px",borderBottom:'1px solid #F6F7F9'  }}>{row.employe}</TableCell>
+                    <TableCell sx={{ width: "15%%", fontSize: "14px",fontWeight:'500',  p: "18px",borderBottom:'1px solid #F6F7F9'  }}>{row.mois}</TableCell>
+                    <TableCell sx={{ width: "15%%", fontSize: "14px",fontWeight:'500',  p: "18px",borderBottom:'1px solid #F6F7F9'  }}>{row.factureType}</TableCell>
+                    <TableCell sx={{ width: "15%%", fontSize: "14px",fontWeight:'500',  p: "18px",borderBottom:'1px solid #F6F7F9'  }}>
                       <Box
                         sx={{
                           display: "inline-block",
-                          px: "20px",
+                          px: "18px",
                           py: "4px",
-                          fontSize: "14px",
-                          fontWeight: "500",
                           borderRadius: 1,
                           bgcolor:
                             row.status === "Refusé"
@@ -344,15 +320,22 @@ export default function Factures() {
                       </Box>
                     </TableCell>
                     <TableCell
-                      sx={{ display: "flex", justifyContent: "flex-end" }}
+                      sx={{ position: "relative", // Ensure the button can be positioned absolutely
+                        width: "30%",
+                        borderBottom: "1px solid #F6F7F9",
+                        p: "18px", }}
                     >
                       <Button
-                        variant="contained"
-                        size="small"
-                        sx={{
-                          textTransform: "none",
-                          bgcolor: "#0066FF",
-                          "&:hover": { bgcolor: "#0052CC" },
+                         variant="contained"
+                         size="small"
+                         sx={{
+                           position: "absolute", // Absolutely position the button
+                           right: "20px", // Adjust spacing from the right
+                           top: "50%", // Position the button at 50% height of the parent
+                           transform: "translateY(-50%)", // Center the button vertically
+                           textTransform: "none",
+                           bgcolor: "#0C66E6",
+                           "&:hover": { bgcolor: "#0052CC" },
                         }}
                         onClick={() => handleOpenModal(row)}
                       >
@@ -371,7 +354,9 @@ export default function Factures() {
               justifyContent: "space-between",
               alignItems: "center",
               px: 2,
-              mt: 2,
+              py:1,
+              borderTop:'1px solid #E9EEF6',
+              mt: 'auto',
             }}
           >
             <Typography variant="body2" sx={{ color: "#818EA0" }}>
@@ -379,11 +364,11 @@ export default function Factures() {
             </Typography>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <IconButton size="small">
-                <ChevronLeft />
+                <ChevronLeft sx={{border:'1px solid #E2E8F0', borderRadius:'4px'}}/>
               </IconButton>
               <Typography>1/27</Typography>
               <IconButton size="small">
-                <ChevronRight />
+                <ChevronRight sx={{border:'1px solid #E2E8F0', borderRadius:'4px'}}/>
               </IconButton>
             </Box>
           </Box>

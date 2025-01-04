@@ -360,11 +360,11 @@ export default function NombrePrestations() {
         <Box
           sx={{
             position:'relative',
-            p: 3,
+            px: 3, py:2,
             backgroundColor: "white",
-            height: "calc(100vh - 60px)",
-            display: "flex",
-            flexDirection: "column",
+            height: "calc(100vh - 70px)",
+            display:'flex',
+            flexDirection:'column'
           }}
         >
           <Box
@@ -374,17 +374,18 @@ export default function NombrePrestations() {
               alignItems: "center",
             }}
           >
-            <Box>
+              <Box>
               <Typography
                 variant="h5"
-                sx={{ fontSize: "24px", fontWeight: "600" }}
+                sx={{ fontSize:'24px', fontWeight: '600', mb:'8px'}}
               >
                 Nombre de prestations
               </Typography>
-              <Typography variant="body2" color="#818EA0"  sx={{ fontSize: "16px", fontWeight:'400' }}>
+              <Typography variant="body2" sx={{ color: "#818EA0" , fontSize:'14px', fontWeight:'400', mb:1 }}>
                 Veuillez retrouver ici l'ensemble des comptes administrateurs
               </Typography>
-            </Box>
+              </Box>
+              
 
             {/* calendar */}
             <div>

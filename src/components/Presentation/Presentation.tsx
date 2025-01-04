@@ -109,7 +109,7 @@ export default function Presentation() {
             Veuillez retrouver ici l'ensemble des comptes administrateurs
           </Typography>
 
-          <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
+          <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
             {/* Search Bar */}
             <Box
               sx={{
@@ -217,7 +217,7 @@ export default function Presentation() {
       top: "50%", // Position the button at 50% height of the parent
       transform: "translateY(-50%)", // Center the button vertically
       textTransform: "none",
-      bgcolor: "#0066FF",
+      bgcolor: "#0C66E6",
       "&:hover": { bgcolor: "#0052CC" },
     }}
     onClick={() => handleOpenModal(row)}
@@ -248,11 +248,11 @@ export default function Presentation() {
             </Typography>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <IconButton size="small">
-                <ChevronLeft />
+                <ChevronLeft sx={{border:'1px solid #E2E8F0', borderRadius:'4px'}}/>
               </IconButton>
               <Typography>1/27</Typography>
               <IconButton size="small">
-                <ChevronRight />
+                <ChevronRight sx={{border:'1px solid #E2E8F0', borderRadius:'4px'}}/>
               </IconButton>
             </Box>
           </Box>
