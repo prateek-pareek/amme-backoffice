@@ -134,7 +134,7 @@ const DateRangePicker: React.FC = () => {
       {/* Trigger Button */}
       <div
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 p-2 border rounded-md cursor-pointer hover:bg-gray-50"
+        className="flex items-center gap-2 p-2 border rounded-md cursor-pointer hover:bg-gray-50 text-[14px] font-medium"
         style={{height:'40px', width:'300px'}}
       >
         <Calendar className="h-4 w-4 text-[#151515]" />

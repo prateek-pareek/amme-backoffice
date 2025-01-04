@@ -54,12 +54,12 @@ const prestations: Prestation[] = [
     date: "13/04/2024",
     heure: "11:15 min",
   },
-  {
-    employe: "Trajan Gerard",
-    patient: "Maxime Blanchard",
-    date: "30/08/2024",
-    heure: "07:50 min",
-  },
+  // {
+  //   employe: "Trajan Gerard",
+  //   patient: "Maxime Blanchard",
+  //   date: "30/08/2024",
+  //   heure: "07:50 min",
+  // },
   {
     employe: "Cyprien Lemoine",
     patient: "Maxime Blanchard",
@@ -95,17 +95,17 @@ export default function Presentation() {
         <Box
           sx={{
             position:'relative',
-            p: 3,
+            px: 3, py:2,
             backgroundColor: "white",
             height: "calc(100vh - 70px)",
             display:'flex',
             flexDirection:'column'
           }}
         >
-          <Typography variant="h5" sx={{ fontWeight: 600}}>
+          <Typography variant="h5" sx={{ fontSize:'24px', fontWeight: '600', mb:'8px'}}>
             Prestations
           </Typography>
-          <Typography variant="body2" sx={{ color: "#818EA0", mb: 3 }}>
+          <Typography variant="body2" sx={{ color: "#818EA0" , fontSize:'14px', fontWeight:'400', mb:5}}>
             Veuillez retrouver ici l'ensemble des comptes administrateurs
           </Typography>
 
@@ -118,13 +118,13 @@ export default function Presentation() {
                 width: "333px",
                 height: "40px",
                 border: "1px solid #E2E8F0",
-                borderRadius: 2,
-                p: 2,
+                borderRadius: '6px',
+                padding:'11px 12px'
               }}
             >
-              <Search sx={{ color: "text.secondary" }} />
+              <Search sx={{ color: "#818EA0" }} />
               <InputBase
-                sx={{ ml: 1, flex: 1 }}
+                sx={{ ml: 1, flex: 1 , fontSize:'14px', fontWeight:'500',}}
                 placeholder="Rechercher un infirmier, un patient ..."
               />
             </Box>
@@ -133,94 +133,99 @@ export default function Presentation() {
             <Box
               sx={{
                 width: "333px",
-                height: "30px",
+                height: "40px",
               }}
             >
               <Calendar />
             </Box>
           </Box>
 
+            {/* table section */}
           <TableContainer component={Paper} elevation={0}
           sx={{ boxShadow: "none" }}>
-            <Table size="medium">
+            <Table size="small">
               <TableHead sx={{ bgcolor: "#F6F7F9" }}>
                 <TableRow>
-                  <TableCell sx={{ width: "15%", fontSize:'14px',  }}>
+                  <TableCell sx={{ width: "15%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none", }}>
                     <Box
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         gap: 1,
-                        color: "#818EA0",
-                        fontSize: "14px",
-                        fontWeight: "500",
                       }}
                     >
                       Employé <PiSortAscendingLight size={18} />
                     </Box>
                   </TableCell>
-                  <TableCell sx={{ width: "15%" }}>
+                  <TableCell sx={{ width: "15%",color: "#818EA0", fontSize: "14px" ,fontWeight:'500',borderBottom: "none", }}>
                     <Box
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         gap: 1,
-                        color: "#818EA0",
                       }}
                     >
                       Patient <PiSortAscendingLight size={18} />
                     </Box>
                   </TableCell>
-                  <TableCell sx={{ width: "15%" }}>
+                  <TableCell sx={{ width: "20%",color: "#818EA0", fontSize: "14px" ,fontWeight:'500',borderBottom: "none", }}>
                     <Box
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         gap: 1,
-                        color: "#818EA0",
                       }}
                     >
                       Date d'intervention <PiSortAscendingLight size={18} />
                     </Box>
                   </TableCell>
-                  <TableCell sx={{ width: "15%" }}>
+                  <TableCell sx={{ width: "20%",color: "#818EA0", fontSize: "14px" ,fontWeight:'500',borderBottom: "none", }}>
                     <Box
                       sx={{
                         display: "flex",
                         alignItems: "center",
                         gap: 1,
-                        color: "#818EA0",
                       }}
                     >
                       Heure d'intervention <PiSortAscendingLight size={18} />
                     </Box>
                   </TableCell>
-                  <TableCell width={100}></TableCell>
+                  <TableCell  sx={{ width: "30%", bgcolor: "transparent",borderBottom: "none", }}></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody sx={{py:'4px'}}>
                 {prestations.map((row, index) => (
                   <TableRow key={index} hover>
-                    <TableCell>{row.employe}</TableCell>
-                    <TableCell>{row.patient}</TableCell>
-                    <TableCell>{row.date}</TableCell>
-                    <TableCell>{row.heure}</TableCell>
+                    <TableCell sx={{ width: "15%%", fontSize: "14px",fontWeight:'500',  p: "20px",borderBottom:'1px solid #F6F7F9'  }}>{row.employe}</TableCell>
+                    <TableCell sx={{ width: "15%%", fontSize: "14px",fontWeight:'500',  p: "20px",borderBottom:'1px solid #F6F7F9'  }}>{row.patient}</TableCell>
+                    <TableCell sx={{ width: "20%%", fontSize: "14px",fontWeight:'500',  p: "20px",borderBottom:'1px solid #F6F7F9'  }}>{row.date}</TableCell>
+                    <TableCell sx={{ width: "20%%", fontSize: "14px",fontWeight:'500',  p: "20px",borderBottom:'1px solid #F6F7F9'  }}>{row.heure}</TableCell>
                     <TableCell
-                      sx={{ display: "flex", justifyContent: "flex-end" }}
-                    >
-                      <Button
-                        variant="contained"
-                        size="small"
-                        sx={{
-                          textTransform: "none",
-                          bgcolor: "#0066FF",
-                          "&:hover": { bgcolor: "#0052CC" },
-                        }}
-                        onClick={() => handleOpenModal(row)}
-                      >
-                        Détails
-                      </Button>
-                    </TableCell>
+  sx={{
+    position: "relative", // Ensure the button can be positioned absolutely
+    width: "30%",
+    borderBottom: "1px solid #F6F7F9",
+    p: "20px",
+  }}
+>
+  <Button
+    variant="contained"
+    size="small"
+    sx={{
+      position: "absolute", // Absolutely position the button
+      right: "20px", // Adjust spacing from the right
+      top: "50%", // Position the button at 50% height of the parent
+      transform: "translateY(-50%)", // Center the button vertically
+      textTransform: "none",
+      bgcolor: "#0066FF",
+      "&:hover": { bgcolor: "#0052CC" },
+    }}
+    onClick={() => handleOpenModal(row)}
+  >
+    Détails
+  </Button>
+</TableCell>
+
                   </TableRow>
                 ))}
               </TableBody>
@@ -233,7 +238,9 @@ export default function Presentation() {
               justifyContent: "space-between",
               alignItems: "center",
               px: 2,
-              mt: 2,
+              py:1,
+              borderTop:'1px solid #E9EEF6',
+              mt: 'auto',
             }}
           >
             <Typography variant="body2" sx={{ color: "#818EA0" }}>
