@@ -41,127 +41,183 @@ function NavBar() {
 
   return (
     <AppBar position="static" color="inherit" elevation={0}>
-      <Toolbar
-        sx={{
-          gap: 2,
-          minHeight: "80px",
-          boxSizing: "border-box",
-          borderBottom: "1px solid #E2E8F0",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            width: 400,
-            border: "1px solid #E2E8F0",
-            borderRadius: 2,
-            px: 2,
-          }}
-        >
-          <Search sx={{ color: "text.secondary" }} />
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder="Rechercher un nom, prénom, adresse mail..."
-          />
-        </Box>
-        <Box sx={{ ml: "auto", display: "flex", alignItems: "center", gap: 2 }}>
-          <IconButton onClick={handleNotificationClick}>
-            <Badge badgeContent={1} color="error">
-              <Notifications />
-            </Badge>
-          </IconButton>
-          <img
-            src={profile}
-            alt="Profile"
-            style={{ width: 40, height: 40, borderRadius: "50%" }}
-          />
-        </Box>
-      </Toolbar>
-
-      {/* Notification Popover */}
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        sx={{ mt: 1}}
-      >
-        <Box sx={{ width: '327px', maxHeight: '284px', overflow: "auto", p: 2  ,borderRadius:'8px'}}>
-        <Box
-  sx={{
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    mb: 1,
-  }}
->
-  <Typography variant="h6" sx={{fontWeight:"600" ,fontSize:"16px"}}>
-    Notifications
-  </Typography>
-  <Typography
-    variant="body2"
-    fontSize="12px"
-    color="primary"
-    sx={{ cursor: "pointer" }}
-    onClick={() => console.log("Mark all as read")}
+  <Toolbar
+    sx={{
+      gap: "1rem",
+      minHeight: "5rem", // Using rem for height
+      boxSizing: "border-box",
+      borderBottom: "1px solid #E2E8F0",
+    }}
   >
-    Marquer tout comme lu
-  </Typography>
-</Box>
-          <List>
-            {notifications.map((notification, index) => (
-              <ListItem key={index} sx={{ p: 1 }}>
-                <ListItemAvatar>
-                  <Avatar
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        width: "32%", // Responsive width
+        height: "2.5rem", // Adjusted to rem
+        border: "1px solid #E2E8F0",
+        borderRadius: "0.375rem", // Responsive border radius
+        padding: "0.75rem", // Adjusted padding
+      }}
+    >
+      <Search sx={{ color: "#818EA0" }} />
+      <InputBase
+        sx={{
+          ml: "0.5rem",
+          flex: 1,
+          fontSize: "0.875rem", // Using rem for font size
+          fontWeight: "500",
+        }}
+        placeholder="Rechercher un nom, prénom, adresse mail..."
+      />
+    </Box>
+    <Box sx={{ ml: "auto", display: "flex", alignItems: "center", gap: "1rem" }}>
+      <IconButton onClick={handleNotificationClick}>
+      <Badge 
+      overlap="circular" 
+      anchorOrigin={{ 
+        vertical: 'top', 
+        horizontal: 'right' 
+      }} 
+      badgeContent={<span style={{ backgroundColor: 'red', width: 8, height: 8, borderRadius: '50%' }} />} 
+    >
+      <Notifications />
+    </Badge>
+      </IconButton>
+      <div style={{ position: 'relative' }}>
+      <img
+        src={profile}
+        alt="Profile"
+        style={{
+          width: '2.5rem',
+          height: '2.5rem',
+          borderRadius: '50%',
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 2,
+          right: 2,
+          width: '0.5rem', // Adjust size as needed
+          height: '0.5rem',
+          borderRadius: '50%',
+          backgroundColor: 'green',
+        }}
+      />
+    </div>
+    </Box>
+  </Toolbar>
+
+  {/* Notification Popover */}
+  <Popover
+    id={id}
+    open={open}
+    anchorEl={anchorEl}
+    onClose={handleClose}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "right",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "right",
+    }}
+    sx={{ mt: "0rem" }}
+  >
+    <Box
+      sx={{
+        width: "20rem", // Adjusted width
+        maxHeight: "18rem", // Adjusted height
+        overflow: "auto",
+        padding: "1rem", // Adjusted padding
+        borderRadius: "0.5rem",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: "0.5rem",
+        }}
+      >
+        <Typography
+          variant="h6"
+          sx={{ fontWeight: "500", fontSize: "0.875rem" }}
+        >
+          Notifications
+        </Typography>
+        <Typography
+          variant="body2"
+          fontSize="0.75rem"
+          color="primary"
+          sx={{ cursor: "pointer" }}
+          onClick={() => console.log("Mark all as read")}
+        >
+          Marquer tout comme lu
+        </Typography>
+      </Box>
+      <List>
+        {notifications.map((notification, index) => (
+          <ListItem key={index} sx={{ padding: "0.4rem" }}>
+            <ListItemAvatar>
+              <Avatar
+                sx={{
+                  bgcolor: "#0C66E6",
+                  fontSize: "0.875rem", // Using rem for font size
+                  fontWeight: "500",
+                }}
+              >
+                {notification.name
+                  .split(" ")
+                  .map((word) => word[0])
+                  .join("")}
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText
+              primary={
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography fontSize='0.875rem' fontWeight="500">
+                    {notification.name}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
                     sx={{
-                      bgcolor: "#0C66E6",
-                      fontSize: "14px",
-                      fontWeight: "500",
+                      marginLeft: "auto",
+                      whiteSpace: "nowrap",
+                      fontSize: "0.625rem", // Using rem for font size
+                      fontWeight: "400",
                     }}
                   >
-                    {notification.name
-                      .split(" ")
-                      .map((word) => word[0])
-                      .join("")}
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-  primary={
-    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <Typography variant="body1" fontWeight="500">
-        {notification.name}
-      </Typography>
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        sx={{ marginLeft: "auto", whiteSpace: "nowrap",fontSize:'10px', fontWeight:'400' }}
-      >
-        {notification.timestamp}
-      </Typography>
+                    {notification.timestamp}
+                  </Typography>
+                </Box>
+              }
+              secondary={
+                <Typography
+                  component="span"
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  {notification.message}
+                </Typography>
+              }
+            />
+          </ListItem>
+        ))}
+      </List>
     </Box>
-  }
-  secondary={
-    <Typography component="span" variant="body2" color="text.secondary">
-      {notification.message}
-    </Typography>
-  }
-/>
+  </Popover>
+</AppBar>
 
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      </Popover>
-    </AppBar>
   );
 }
 

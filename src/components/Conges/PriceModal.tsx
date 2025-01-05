@@ -19,56 +19,55 @@ export default function PriceModal({ row, onClose, onApprove }: PriceModalProps)
 
   return (
  
-      <Box
-        sx={{
-          position: 'fixed',
-          bottom: '5%',
-          right: '5%',
-          height:'34%',
-          width: '464px',
-          bgcolor: 'background.paper',
-          borderRadius: 2,
-          boxShadow: 24,
-          p: "16px 20px",
-          // backdropFilter: 'blur(0)',
-        }}
-      >
-        {/* Header */}
-        <Typography
-          variant="h6"
-          sx={{
-            fontSize: '18px',
-            fontWeight: 600,
-            mb: 1
-          }}
-        >
-          Prix au km remboursé
-        </Typography>
-
-        {/* Description */}
-        <Typography
-          sx={{
-            fontSize: '14px',
-            color: 'text.secondary',
-            mb: 2
-          }}
-        >
-          Vous pouvez modifier le prix au kilomètre remboursé à partir d'ici.
-        </Typography>
-
-        {/* Price Input */}
-        <FormControl sx={{mb:4}}>
+    <Box
+    sx={{
+      position: 'fixed',
+      bottom: '1rem', // 736px -> 46rem
+      right: '1rem', // 948px -> 59.25rem
+      width: '29rem', // 464px -> 29rem
+      height: '16.5rem', // 264px -> 16.5rem
+      gap: '0.625rem', // 10px -> 0.625rem
+      bgcolor: 'background.paper',
+      borderRadius: '1rem', // 16px 0px 0px 0px -> 1rem 0 0 0
+      boxShadow: 12,
+      p: '1.25rem ', // Converted earlier
+    }}
+  >
+    {/* Header */}
+    <Typography
+      variant="h6"
+      sx={{
+        fontSize: '1.125rem', // 18px -> 1.125rem
+        fontWeight: 600,
+        mb: '0.5rem', // 1px -> 0.0625rem
+      }}
+    >
+      Prix au km remboursé
+    </Typography>
+  
+    {/* Description */}
+    <Typography
+      sx={{
+        fontSize: '0.8rem', // 14px -> 0.875rem
+        color: 'text.secondary',
+        mb: '1.5rem', // 2px -> 0.125rem
+      }}
+    >
+      Vous pouvez modifier le prix au kilomètre remboursé à partir d'ici.
+    </Typography>
+  
+    {/* Price Input */}
+    <FormControl > {/* 16px -> 1rem */}
       <FormLabel
         component="legend"
         sx={{
-          fontSize: '14px',
+          fontSize: '0.875rem', // 14px -> 0.875rem
           fontWeight: 400,
-          mb: 1,
           display: 'block',
-          color:'#151515'
+          color: '#151515',
         }}
       >
-        Prix 
+        Prix
       </FormLabel>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <TextField
@@ -80,60 +79,72 @@ export default function PriceModal({ row, onClose, onApprove }: PriceModalProps)
             min: '0',
           }}
           sx={{
-            width: '96px',
-            height: '44px',
+            width: '6rem', // 96px -> 6rem
+            height: '2rem', // 44px -> 2.75rem
             '& .MuiOutlinedInput-root': {
-              borderRadius: 1.5,
+              borderRadius: '0.375rem', // 1.5px -> 0.09375rem
             },
           }}
         />
-        <Typography sx={{ fontSize: '14px', color: '#151515', fontWeight:'400', ml: 1, mt:2 }}>
+        <Typography
+          sx={{
+            fontSize: '0.875rem', // 14px -> 0.875rem
+            color: '#151515',
+            fontWeight: 400,
+            ml: '0.625rem', // 1px -> 0.0625rem
+            mt: 'auto', // 2px -> 0.125rem
+          }}
+        >
           par km remboursé
         </Typography>
       </Box>
     </FormControl>
-
-        {/* Action Buttons */}
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            gap: 2
-          }}
-        >
-          <Button
-            variant="outlined"
-            onClick={onClose}
-            sx={{
-              textTransform: 'none',
-              borderRadius: 1.5,
-              color: '#151515',
-              borderColor: '#E2E8F0',
-              '&:hover': {
-                borderColor: '#151515',
-                backgroundColor: 'rgba(21, 21, 21, 0.04)'
-              }
-            }}
-          >
-            Annuler
-          </Button>
-          <Button
-            variant="contained"
-            // onClick={onclose}
-            sx={{
-              fontSize:'14px',
-              fontWeight:'500',
-              textTransform: 'none',
-              borderRadius: 1.5,
-              bgcolor: '#0C66E6',
-              '&:hover': {
-                bgcolor: '#0952B9'
-              }
-            }}
-          >
-            Appliquer
-          </Button>
-        </Box>
-      </Box>
+  
+    {/* Action Buttons */}
+    <Box
+      sx={{
+        position:'absolute',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        gap: '0.625rem', // 10px -> 0.625rem
+        right:'1.5rem',
+        bottom:'1.5rem'
+      }}
+    >
+      <Button
+        variant="outlined"
+        onClick={onClose}
+        sx={{
+          textTransform: 'none',
+          borderRadius: '0.5rem', // 1.5px -> 0.09375rem
+          color: '#151515',
+          borderColor: '#E2E8F0',
+          '&:hover': {
+            borderColor: '#151515',
+            backgroundColor: 'rgba(21, 21, 21, 0.04)',
+          },
+        }}
+      >
+        Annuler
+      </Button>
+      <Button
+        variant="contained"
+        sx={{
+          fontSize: '0.875rem', // 14px -> 0.875rem
+          fontWeight: 500,
+          textTransform: 'none',
+          borderRadius: '0.5rem', // 1.5px -> 0.09375rem
+          bgcolor: '#0C66E6',
+          '&:hover': {
+            bgcolor: '#0952B9',
+          },
+        }}
+      >
+        Appliquer
+      </Button>
+    </Box>
+  </Box>
+  
+  
   );
 }
