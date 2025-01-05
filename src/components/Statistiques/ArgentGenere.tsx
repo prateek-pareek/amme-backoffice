@@ -543,68 +543,69 @@ export default function ArgentGenere() {
           {/*parInfirmiere section */}
           {selectedFilter === "parInfirmiere" && !selectedValue && (
             <Box>
-              <Box
-                sx={{
-                  marginTop: "200px",
-                  marginX: "auto",
-                  display: "flex",
-                  height: "40px",
-                  width: "436px",
-                  color: "#818EA0",
-                  justifyContent: "center",
-                }}
-              >
-                Veuillez sélectionner une infirmière parmi la liste ci-dessous.
-              </Box>
-              <FormControl
-                sx={{
-                  marginX: "auto",
-                  display: "flex",
-                  height: "40px",
-                  width: "327px",
-                  borderRadius: "6px",
-                }}
-              >
-                <Select
-                  value={selectedValue}
-                  onChange={handleChange}
-                  displayEmpty
-                  renderValue={(selected) =>
-                    selected || "Sélectionner une infirmière"
-                  }
-                  sx={{
-                    width: "100%",
-                    "& .MuiMenuItem-root": {
-                      fontSize: "14px",
-                      fontWeight: "500",
-                    },
-                  }}
-                >
-                  <MenuItem disableRipple>
-                    <TextField
-                      placeholder="Rechercher"
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Search />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </MenuItem>
-                  {filteredNurses.map((nurse, index) => (
-                    <MenuItem key={index} value={nurse}>
-                      {nurse}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+            <Box
+              sx={{
+                marginTop: "12.5rem", // 200px / 16
+                marginX: "auto",
+                display: "flex",
+                height: "2.5rem", // 40px / 16
+                width: "29rem", // 436px / 16
+                color: "#818EA0",
+                justifyContent: "center",
+              }}
+            >
+              Veuillez sélectionner une infirmière parmi la liste ci-dessous.
             </Box>
+            <FormControl
+              sx={{
+                marginX: "auto",
+                display: "flex",
+                height: "2.5rem", // 40px / 16
+                width: "20.44rem", // 327px / 16
+                borderRadius: "0.375rem", // 6px / 16
+              }}
+            >
+              <Select
+                value={selectedValue}
+                onChange={handleChange}
+                displayEmpty
+                renderValue={(selected) =>
+                  selected || "Sélectionner une infirmière"
+                }
+                sx={{
+                  width: "100%",
+                  "& .MuiMenuItem-root": {
+                    fontSize: "0.875rem", // 14px / 16
+                    fontWeight: "500",
+                  },
+                }}
+              >
+                <MenuItem disableRipple>
+                  <TextField
+                    placeholder="Rechercher"
+                    variant="outlined"
+                    fullWidth
+                    size="small"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Search />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </MenuItem>
+                {filteredNurses.map((nurse, index) => (
+                  <MenuItem key={index} value={nurse}>
+                    {nurse}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          
           )}
           {selectedFilter === "parInfirmiere" && renderPriceData()}
 
@@ -955,69 +956,69 @@ export default function ArgentGenere() {
 
           {selectedFilter === "parTypeDePrestation" && !selectedValue && (
             <Box>
-              <Box
-                sx={{
-                  marginTop: "200px",
-                  marginX: "auto",
-                  display: "flex",
-                  height: "40px",
-                  width: "436px",
-                  color: "#818EA0",
-                  justifyContent: "center",
-                }}
-              >
-                Veuillez sélectionner une infirmière parmi la liste ci-dessous.
-              </Box>
-              <FormControl
-                sx={{
-                  marginX: "auto",
-                  display: "flex",
-                  height: "40px",
-                  width: "420px",
-                  borderRadius: "6px",
-                }}
-              >
-                <Select
-                  value={selectedValue}
-                  onChange={handleChange}
-                  displayEmpty
-                  renderValue={(selected) =>
-                    selected ||
-                    "Sélectionner un type de prestation parmi la liste"
-                  }
-                  sx={{
-                    width: "100%",
-                    "& .MuiMenuItem-root": {
-                      fontSize: "14px",
-                      fontWeight: "500",
-                    },
-                  }}
-                >
-                  <MenuItem disableRipple>
-                    <TextField
-                      placeholder="Rechercher"
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Search />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </MenuItem>
-                  {filteredServices.map((service, index) => (
-                    <MenuItem key={index} value={service}>
-                      {service}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+            <Box
+              sx={{
+                marginTop: "12.5rem", // 200px / 16
+                marginX: "auto",
+                display: "flex",
+                height: "2.5rem", // 40px / 16
+                width: "29rem", // 436px / 16
+                color: "#818EA0",
+                justifyContent: "center",
+              }}
+            >
+              Veuillez sélectionner une infirmière parmi la liste ci-dessous.
             </Box>
+            <FormControl
+              sx={{
+                marginX: "auto",
+                display: "flex",
+                height: "2.5rem", // 40px / 16
+                width: "26.25rem", // 420px / 16
+                borderRadius: "0.375rem", // 6px / 16
+              }}
+            >
+              <Select
+                value={selectedValue}
+                onChange={handleChange}
+                displayEmpty
+                renderValue={(selected) =>
+                  selected || "Sélectionner un type de prestation parmi la liste"
+                }
+                sx={{
+                  width: "100%",
+                  "& .MuiMenuItem-root": {
+                    fontSize: "0.875rem", // 14px / 16
+                    fontWeight: "500",
+                  },
+                }}
+              >
+                <MenuItem disableRipple>
+                  <TextField
+                    placeholder="Rechercher"
+                    variant="outlined"
+                    fullWidth
+                    size="small"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Search />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </MenuItem>
+                {filteredServices.map((service, index) => (
+                  <MenuItem key={index} value={service}>
+                    {service}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          
           )}
 
           {selectedFilter === "parTypeDePrestation" && renderPriceData()}

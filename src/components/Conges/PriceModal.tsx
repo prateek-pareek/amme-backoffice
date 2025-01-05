@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, FormControl, FormLabel, InputAdornment, Modal, TextField, Typography } from "@mui/material";
+import { Box, Button, FormControl, FormLabel, InputAdornment, Modal, ModalManager, TextField, Typography } from "@mui/material";
 
 type Conges = {
   employe: string;
@@ -19,7 +19,8 @@ export default function PriceModal({ row, onClose, onApprove }: PriceModalProps)
 
   return (
  
-    <Box
+    
+      <Box
     sx={{
       position: 'fixed',
       bottom: '1rem', // 736px -> 46rem
@@ -31,6 +32,7 @@ export default function PriceModal({ row, onClose, onApprove }: PriceModalProps)
       borderRadius: '1rem', // 16px 0px 0px 0px -> 1rem 0 0 0
       boxShadow: 12,
       p: '1.25rem ', // Converted earlier
+      
     }}
   >
     {/* Header */}
@@ -144,6 +146,7 @@ export default function PriceModal({ row, onClose, onApprove }: PriceModalProps)
       </Button>
     </Box>
   </Box>
+  
   
   
   );

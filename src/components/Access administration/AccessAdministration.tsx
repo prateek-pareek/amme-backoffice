@@ -82,6 +82,12 @@ const users: User[] = [
     email: "vianney45@example.net",
     status: "Inactif",
   },
+  // {
+  //   lastName: "Leclerc",
+  //   firstName: "Yvonne",
+  //   email: "vianney45@example.net",
+  //   status: "Inactif",
+  // },
 ];
 
 // First define the permission keys type
@@ -138,6 +144,7 @@ export default function AccessAdministration() {
 
   // Add these state declarations in your Page6 component
   const [createAccountOpen, setCreateAccountOpen] = React.useState(false);
+
   const [formData, setFormData] = React.useState({
     lastName: "",
     firstName: "",
@@ -170,7 +177,7 @@ export default function AccessAdministration() {
     };
 
   return (
-    <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
+    <Box sx={{ display: "flex", bgcolor: "#F6F7F9", height: "100vh" }}>
      
 
       {/* Main content */}
@@ -184,12 +191,12 @@ export default function AccessAdministration() {
             position: 'relative',
             p: 4,
             backgroundColor: "white",
-            height: "calc(100vh - 70px)",
+            height: "calc(100vh - 4.375rem)",
             display: 'flex',
             flexDirection: 'column'
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 5 }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 5 , }}>
             <Box>
               <Typography variant="h5" gutterBottom sx={{ fontWeight:'600'}}>
                 Gestion administrateur
@@ -207,7 +214,7 @@ export default function AccessAdministration() {
             </Button>
           </Box>
 
-          <TableContainer component={Paper} elevation={0} sx={{ boxShadow: "none" }}>
+          <TableContainer component={Paper} elevation={0} sx={{ boxShadow: "none", height:'80%' }}>
   <Table size="small">
     <TableHead sx={{ bgcolor: "#F6F7F9",  }}>
       <TableRow >
@@ -234,7 +241,7 @@ export default function AccessAdministration() {
       {users.map((user) => (
         <TableRow key={user.email}>
           {/* First column */}
-          <TableCell sx={{ width: "16.67%", fontSize: "0.875rem",fontWeight:'500',  p: "1rem",borderBottom:'1px solid #F6F7F9'  }}>
+          <TableCell sx={{ width: "16.67%", fontSize: "0.875rem",fontWeight:'500',  p: "1.2rem",borderBottom:'1px solid #F6F7F9'  }}>
             <Box sx={{ display: "flex", alignItems: "center",ml: "1.25rem", gap: "0.5rem", }}>
               {user.lastName}
             </Box>
@@ -324,24 +331,29 @@ export default function AccessAdministration() {
             fullWidth
             PaperProps={{
               sx: {
-                position:'fixed',
-                right:'0.5rem',
-                borderRadius: "1rem",
-                height: "60rem",
-                width: '29rem', //500px
-                overflow: "hidden", //4px 8px
+                position: "fixed",
+      top: "0.5rem",
+      right: "0.5rem",
+      borderRadius: "1rem",
+      height: "95%",
+      width: "29rem", //500px
+      margin: "15px",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "start",
               },
             }}
           >
+            <Box sx={{height:'8rem'}}>
             <DialogTitle
               sx={{
                 display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                fontSize: "1.5rem", //24px
-                px:'1.5rem', //24px
-                pb: "0rem",
-                mb: "0rem" 
+        justifyContent: "space-between",
+        alignItems: "center",
+        fontSize: "1.5rem", //24px
+        px: "1.5rem", //24px
+        pb: "0rem",
+        mb: "0rem",
               }}
             >
               <Typography
@@ -364,8 +376,19 @@ export default function AccessAdministration() {
               nouveau compte
             </Typography>
             </Box>
+            </Box>
 
-            <DialogContent sx={{ px: '1.5rem', py: "0.25rem" }}>
+            <Box
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      flexGrow: 1,
+      overflowY: "auto",
+      px: "1.5rem",
+      py: "0.25rem",
+      gap: "1.5rem",
+    }}
+  >
               {/* Input Fields Section */}
               <Box
                 sx={{
@@ -373,7 +396,7 @@ export default function AccessAdministration() {
                   flexDirection: "column",
                   marginTop: "0.3125rem", //5px
                   gap: "0.75rem", // Reduced gap between input fields and Pages accessibles (Change 1) //12px
-                  mb: "0.5rem", // Adjusted bottom margin for the input section //8px
+                  mb: "0.5rem",
                 }}
               >
                 <Box
@@ -436,6 +459,7 @@ export default function AccessAdministration() {
               </Box>
 
               {/* Pages Accessibles Section */}
+              <Box>
               <Typography
                 variant="subtitle1"
                 sx={{ fontWeight: "500", fontSize: "1.125rem", mb: "0rem" }} //18px
@@ -500,15 +524,19 @@ export default function AccessAdministration() {
                   </Box>
                 ))}
               </Box>
+              </Box>
+            </Box>
 
-              {/* Buttons */}
-              <Box
+            {/* Buttons */}
+            <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
                   borderTop: "1px solid #E9EEF6",
-                  pt: '0.625rem', //10px
-                  // mt: 1,
+      p: "1rem", //10px
+      display: "flex",
+      justifyContent: "flex-end",
+      position: "sticky",
+      bottom: 0,
+      backgroundColor: "#FFF",
                 }}
               >
                 
@@ -541,7 +569,6 @@ export default function AccessAdministration() {
                   </Button>
                 </Box>
               </Box>
-            </DialogContent>
           </Dialog>
 
           {/* Delete Account Dialog */}
@@ -624,24 +651,29 @@ export default function AccessAdministration() {
             fullWidth
             PaperProps={{
               sx: {
-                position:'fixed',
-                right:'0.5rem',
-                borderRadius: "1rem",
-                height: "60rem",
-                width: '29rem', //500px
-                overflow: "hidden", //4px 8px
+                position: "fixed",
+      top: "0.5rem",
+      right: "0.5rem",
+      borderRadius: "1rem",
+      height: "95%",
+      width: "29rem", //500px
+      margin: "15px",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "start",
               },
             }}
           >
+            <Box sx={{height:'8rem'}}>
             <DialogTitle
               sx={{
                 display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                fontSize: "1.5rem", //24px
-                py: '1.25rem', //20px
-                px: '1.5rem', //24px
-                pb: "0rem",
+        justifyContent: "space-between",
+        alignItems: "center",
+        fontSize: "1.5rem", //24px
+        px: "1.5rem", //24px
+        pb: "0rem",
+        mb: "0rem",
               }}
             >
               <Typography
@@ -654,6 +686,7 @@ export default function AccessAdministration() {
                 X
               </IconButton>
             </DialogTitle>
+            <Box>
             <Typography
               variant="body2"
               color="text.secondary"
@@ -662,8 +695,18 @@ export default function AccessAdministration() {
               Veuillez compléter les informations ci-dessous afin de créer un
               nouveau compte
             </Typography>
+            </Box>
+            </Box>
 
-            <DialogContent sx={{ px: '1.5rem', py: "0.25rem" }}>
+            <Box sx={{
+      display: "flex",
+      flexDirection: "column",
+      flexGrow: 1,
+      overflowY: "auto",
+      px: "1.5rem",
+      py: "0.25rem",
+      gap: "1.5rem",
+    }}>
               {/* Input Fields Section */}
               <Box
                 sx={{
@@ -671,7 +714,7 @@ export default function AccessAdministration() {
                   flexDirection: "column",
                   marginTop: "0.3125rem", //5px
                   gap: "0.75rem", // Reduced gap between input fields and Pages accessibles (Change 1) //12px
-                  mb: "0.25rem", // Adjusted bottom margin for the input section //4px
+                  mb: "0.5rem", // Adjusted bottom margin for the input section //4px
                 }}
               >
                 <Box
@@ -733,7 +776,9 @@ export default function AccessAdministration() {
                 </Box>
               </Box>
 
-              {/* Pages Accessibles Section */}
+                    
+                {/* Pages Accessibles Section */}
+              <Box>
               <Typography
                 variant="subtitle1"
                 sx={{ fontWeight: "500", fontSize: "1.125rem", mb: "0rem" }} //18px
@@ -798,17 +843,35 @@ export default function AccessAdministration() {
                   </Box>
                 ))}
               </Box>
+              </Box>
 
               {/* Buttons */}
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
                   borderTop: "1px solid #E9EEF6",
-                  pt: '0.625rem', //10px
-                  // mt: 1,
-                }}
+      p: "1rem", //10px
+      display: "flex",
+      justifyContent: "space-between",
+      position: "sticky",
+      bottom: 0,
+      backgroundColor: "#FFF",}}
               >
+                <Box>
+                <Button
+                    variant="outlined"
+                    sx={{
+                      textTransform: "none",
+                      fontWeight: "bold",
+                      borderRadius: "0.5rem", //8px
+                      borderColor: "#E2E8F0",
+                      color:'#C53434',
+                      fontSize:'0.875rem', //14px
+                    }}
+                    onClick={() => setModifyDialogOpen(false)}
+                  >
+                    Supprimer
+                  </Button>
+                </Box>
                 
                 <Box sx={{ display: "flex", gap: 2 }}>
                   <Button
@@ -835,11 +898,11 @@ export default function AccessAdministration() {
                       ":hover": { backgroundColor: "#E2E8F0" },
                     }}
                   >
-                    Enregistrer
+                    Confirmer
                   </Button>
                 </Box>
               </Box>
-            </DialogContent>
+            </Box>
           </Dialog>
 
           {/* table footer */}
@@ -852,6 +915,7 @@ export default function AccessAdministration() {
               py: '1rem', // Add vertical padding //20px
               px: '1.25rem', // Add horizontal padding //20px
               borderTop: '1px solid #E9EEF6', 
+              height:'7%'
             }}
           >
             <Typography variant="body2" sx={{ color: "#818EA0" }}>

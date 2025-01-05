@@ -33,82 +33,76 @@ const Invoices: React.FC<BenifitsProps> = ({ setState, row, onClose }) => {
 
   return (
     <Modal open={true} onClose={onClose}>
-      <Box
+  <Box
+    sx={{
+      position: "absolute",
+      height: "96%",
+      top: "50%",
+      right: "5%",
+      transform: "translate(10%, -50%)",
+      width: "37.5rem", // 600px
+      bgcolor: "background.paper",
+      boxShadow: 24,
+      borderRadius: "1rem", // 16px
+      p: "1.5625rem", // 25px
+    }}
+  >
+    <Typography variant="h6" sx={{ fontSize: "1.5rem", fontWeight: "600" }}> {/* 24px */}
+      Facture n°
+    </Typography>
+    <Typography
+      sx={{
+        fontSize: "0.875rem", // 14px
+        fontWeight: "400",
+        color: "#818EA0",
+      }}
+    >
+      Veuillez complétez les informations ci-dessous afin de créer un nouveau compte
+    </Typography>
+    <IconButton
+      onClick={onClose}
+      sx={{ position: "absolute", top: "0.625rem", right: "0.625rem" }} // 10px
+    >
+      <Close />
+    </IconButton>
+
+    <Box
+      sx={{
+        position: "absolute",
+        bottom: "1.25rem", // 20px
+        right: "1.25rem", // 20px
+        display: "flex",
+        gap: "0.625rem", // 10px
+      }}
+    >
+      {/* Précédent Button */}
+      <Button
+        variant="contained"
         sx={{
-          position: "absolute",
-          top: "50%",
-          left: "82%",
-          transform: "translate(-50%, -50%)", 
-          width: 500, 
-          height: "95%", // Set height to 'full' to take up all available vertical space
-          bgcolor: "background.paper",
-          boxShadow: 24,
-          p: '15px 25px',
-          borderRadius: 2,
+          bgcolor: "#0C66E6",
+          borderRadius: "0.5rem", // 8px
+          textTransform: "none",
+        }}
+        onClick={handleShareModal}
+      >
+        Partager
+      </Button>
+
+      {/* Suivant Button */}
+      <Button
+        variant="contained"
+        sx={{
+          bgcolor: "#0C66E6",
+          borderRadius: "0.5rem", // 8px
+          textTransform: "none",
         }}
       >
-        <Typography variant="h6" sx={{ fontSize: "24px", fontWeight: "600" }}>
-        Facture n°
-        </Typography>
-        <Typography sx={{fontSize:'14px', fontWeight:'400', color:'#818EA0'}}>
-        Veuillez complétez les informations ci-dessous afin de créer un nouveau compte
-        </Typography>
-        <IconButton
-          onClick={onClose}
-          sx={{ position: "absolute", top: 10, right: 10 }}
-        >
-          <Close />
-        </IconButton>
-       
+        Télécharger
+      </Button>
+    </Box>
+  </Box>
+</Modal>
 
-        
-          <Box
-                      sx={{
-                        position: "absolute",
-                        bottom: "20px",
-                        right: "20px", // Keep the buttons at the bottom right
-                        display: "flex", // Use flexbox to position buttons side by side
-                        gap: "10px", // Add some space between the buttons
-                      }}
-                    >
-                      {/* Précédent Button */}
-                      <Button
-                        variant="contained"
-                        sx={{
-                          bgcolor: "#0C66E6", // Color for "Précédent" button
-                          borderRadius: "8px",
-                          textTransform: "none",
-                        }}
-                        onClick={handleShareModal}
-                      >
-                        Partager
-                      </Button>
-          
-                      {/* Suivant Button */}
-                      <Button
-                        variant="contained"
-                        sx={{
-                          bgcolor: "#0C66E6", // Color for "Suivant" button
-                          borderRadius: "8px",
-                          textTransform: "none",
-                        }}
-                        // onClick={handleSixthModalOpen}
-                      >
-                        Télécharger
-                      </Button>
-                    </Box>
-          
-
-
-          
-          
-          
-       
-
-        
-        
-      </Box>
-    </Modal>
   );
 };
 

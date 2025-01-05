@@ -370,7 +370,7 @@ export default function NombrePrestations() {
             px: 3,
             py: 2,
             backgroundColor: "white",
-            height: "calc(100vh - 70px)",
+            height: "calc(100vh - 4.375rem)",
             display: "flex",
             flexDirection: "column",
           }}
@@ -380,6 +380,7 @@ export default function NombrePrestations() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              // maxHeight:'2rem'
             }}
           >
             <Box>
@@ -560,68 +561,69 @@ export default function NombrePrestations() {
           {/* Initial centered dropdown */}
           {selectedFilter === "parInfirmiere" && !selectedValue && (
             <Box>
-              <Box
-                sx={{
-                  marginTop: "200px",
-                  marginX: "auto",
-                  display: "flex",
-                  height: "40px",
-                  width: "436px",
-                  color: "#818EA0",
-                  justifyContent: "center",
-                }}
-              >
-                Veuillez sélectionner une infirmière parmi la liste ci-dessous.
-              </Box>
-              <FormControl
-                sx={{
-                  marginX: "auto",
-                  display: "flex",
-                  height: "20px",
-                  width: "327px",
-                  borderRadius: "6px",
-                }}
-              >
-                <Select
-                  value={selectedValue}
-                  onChange={handleChange}
-                  displayEmpty
-                  renderValue={(selected) =>
-                    selected || "Sélectionner une infirmière"
-                  }
-                  sx={{
-                    width: "100%",
-                    "& .MuiMenuItem-root": {
-                      fontSize: "14px",
-                      fontWeight: "500",
-                    },
-                  }}
-                >
-                  <MenuItem disableRipple>
-                    <TextField
-                      placeholder="Rechercher"
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Search />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </MenuItem>
-                  {filteredNurses.map((nurse, index) => (
-                    <MenuItem key={index} value={nurse}>
-                      {nurse}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+            <Box
+              sx={{
+                marginTop: "12.5rem", // 200px
+                marginX: "auto",
+                display: "flex",
+                height: "2.5rem", // 40px
+                width: "29rem", 
+                color: "#818EA0",
+                justifyContent: "center",
+              }}
+            >
+              Veuillez sélectionner une infirmière parmi la liste ci-dessous.
             </Box>
+            <FormControl
+              sx={{
+                marginX: "auto",
+                display: "flex",
+                height: "1.25rem", // 20px
+                width: "20.4375rem", // 327px
+                borderRadius: "0.375rem", // 6px
+              }}
+            >
+              <Select
+                value={selectedValue}
+                onChange={handleChange}
+                displayEmpty
+                renderValue={(selected) =>
+                  selected || "Sélectionner une infirmière"
+                }
+                sx={{
+                  width: "100%",
+                  "& .MuiMenuItem-root": {
+                    fontSize: "0.875rem", // 14px
+                    fontWeight: "500",
+                  },
+                }}
+              >
+                <MenuItem disableRipple>
+                  <TextField
+                    placeholder="Rechercher"
+                    variant="outlined"
+                    fullWidth
+                    size="small"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Search />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </MenuItem>
+                {filteredNurses.map((nurse, index) => (
+                  <MenuItem key={index} value={nurse}>
+                    {nurse}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          
           )}
 
           {selectedFilter === "parInfirmiere" && renderNurseData()}
@@ -629,7 +631,7 @@ export default function NombrePrestations() {
           {selectedFilter === "parRegion" && (
             // Main content for 'Par région'
             <Box>
-              <Box sx={{ display: "flex", gap: 1, mb: "5px" }}>
+              <Box sx={{ display: "flex", gap: 1, mb: "5px",  }}>
                 <Box
                   sx={{
                     flex: 2,

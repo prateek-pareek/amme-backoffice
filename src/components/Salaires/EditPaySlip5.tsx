@@ -61,15 +61,15 @@ export default function EditPaySlip5({
         <Box
           sx={{
             position: "absolute",
-            height: "95%",
-            top: "50%",
-            left: "79%",
-            transform: "translate(-50%, -50%)",
-            width: "600px",
-            bgcolor: "background.paper",
-            boxShadow: 24,
-            borderRadius: 2,
-            p: "25px 25px",
+      height: "96%",
+      top: "50%",
+      right: "5%",
+      transform: "translate(10%, -50%)",
+      width: "37.5rem", // 600px
+      bgcolor: "background.paper",
+      boxShadow: 24,
+      borderRadius: "1rem", // 2px
+      p: "1.5625rem", // 25px
           }}
         >
           <Box

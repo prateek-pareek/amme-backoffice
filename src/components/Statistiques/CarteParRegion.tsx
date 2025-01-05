@@ -77,10 +77,10 @@ export default function CarteParRegion() {
             px: 3,
             py: 2,
             backgroundColor: "white",
-            height: "calc(100vh - 70px)",
+            height: "calc(100vh - 4.375rem)",
             display: "flex",
             flexDirection: "column",
-            overflow: "hidden",
+            overflow: "auto",
           }}
         >
           <Box
@@ -91,93 +91,94 @@ export default function CarteParRegion() {
             }}
           >
             <Box>
-              <Typography
-                variant="h5"
-                gutterBottom
-                sx={{ fontSize: "24px", fontWeight: "600", mb: "8px" }}
-              >
-                Carte par région
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: "#818EA0",
-                  fontSize: "14px",
-                  fontWeight: "400",
-                  mb: 1,
-                }}
-              >
-                Veuillez retrouver ici l'ensemble des comptes administrateurs
-              </Typography>
-            </Box>
+  <Typography
+    variant="h5"
+    gutterBottom
+    sx={{ fontSize: "1.5rem", fontWeight: "600", mb: "0.5rem" }} // 24px = 1.5rem, 8px = 0.5rem
+  >
+    Carte par région
+  </Typography>
+  <Typography
+    variant="body2"
+    sx={{
+      color: "#818EA0",
+      fontSize: "0.875rem", // 14px = 0.875rem
+      fontWeight: "400",
+      mb: "0.0625rem", // 1px = 0.0625rem
+    }}
+  >
+    Veuillez retrouver ici l'ensemble des comptes administrateurs
+  </Typography>
+</Box>
+
           </Box>
 
           {/* nav buttons */}
           <Box
-            sx={{
-              mt: "20px",
-              mb: -1,
-              display: "flex",
-              gap: 2,
-              boxSizing: "border-box",
-              borderBottom: "1px solid #E2E8F0",
-            }}
-          >
-            <Button
-              sx={{
-                fontSize: "14px",
-                fontWeight: "500",
-                color:
-                  selectedFilter === "parRegion"
-                    ? "primary.main"
-                    : "text.secondary",
-                borderBottom: selectedFilter === "parRegion" ? 2 : 0,
-                borderColor: "primary.main",
-                textTransform: "none",
-                typography: "body2",
-                paddingY: "2px",
-              }}
-              onClick={() => handleFilterClick("parRegion")}
-            >
-              Par région
-            </Button>
-            <Button
-              sx={{
-                fontSize: "14px",
-                fontWeight: "500",
-                color:
-                  selectedFilter === "parInfirmiere"
-                    ? "primary.main"
-                    : "text.secondary",
-                borderBottom: selectedFilter === "parInfirmiere" ? 2 : 0,
-                borderColor: "primary.main",
-                textTransform: "none",
-                typography: "body2",
-                paddingY: "2px",
-              }}
-              onClick={() => handleFilterClick("parInfirmiere")}
-            >
-              Par infirmière
-            </Button>
-            <Button
-              sx={{
-                fontSize: "14px",
-                fontWeight: "500",
-                color:
-                  selectedFilter === "ParPharmacie"
-                    ? "primary.main"
-                    : "text.secondary",
-                borderBottom: selectedFilter === "ParPharmacie" ? 2 : 0,
-                borderColor: "primary.main",
-                textTransform: "none",
-                typography: "body2",
-                paddingY: "2px",
-              }}
-              onClick={() => handleFilterClick("ParPharmacie")}
-            >
-              Par Pharmacie
-            </Button>
-          </Box>
+  sx={{
+    mt: "1.25rem", // 20px / 16
+    display: "flex",
+    gap: "0.125rem", // 2px / 16
+    boxSizing: "border-box",
+    borderBottom: "1px solid #E2E8F0",
+  }}
+>
+  <Button
+    sx={{
+      fontSize: "0.875rem", // 14px / 16
+      fontWeight: "500",
+      color:
+        selectedFilter === "parRegion"
+          ? "primary.main"
+          : "text.secondary",
+      borderBottom: selectedFilter === "parRegion" ? 2 : 0, // 2px / 16
+      borderColor: "primary.main",
+      textTransform: "none",
+      typography: "body2",
+      paddingY: "0.125rem", // 2px / 16
+    }}
+    onClick={() => handleFilterClick("parRegion")}
+  >
+    Par région
+  </Button>
+  <Button
+    sx={{
+      fontSize: "0.875rem", // 14px / 16
+      fontWeight: "500",
+      color:
+        selectedFilter === "parInfirmiere"
+          ? "primary.main"
+          : "text.secondary",
+      borderBottom: selectedFilter === "parInfirmiere" ? 2 : 0, // 2px / 16
+      borderColor: "primary.main",
+      textTransform: "none",
+      typography: "body2",
+      paddingY: "0.125rem", // 2px / 16
+    }}
+    onClick={() => handleFilterClick("parInfirmiere")}
+  >
+    Par infirmière
+  </Button>
+  <Button
+    sx={{
+      fontSize: "0.875rem", // 14px / 16
+      fontWeight: "500",
+      color:
+        selectedFilter === "ParPharmacie"
+          ? "primary.main"
+          : "text.secondary",
+      borderBottom: selectedFilter === "ParPharmacie" ? 2 : 0, // 2px / 16
+      borderColor: "primary.main",
+      textTransform: "none",
+      typography: "body2",
+      paddingY: "0.125rem", // 2px / 16
+    }}
+    onClick={() => handleFilterClick("ParPharmacie")}
+  >
+    Par Pharmacie
+  </Button>
+</Box>
+
 
           {/* selected filter par region */}
           {selectedFilter === "parRegion" && (

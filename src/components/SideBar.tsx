@@ -68,9 +68,9 @@ const SideBar: React.FC<SidebarProps> = () => {
     event.preventDefault();
   event.stopPropagation();
     // // If clicking on a non-Statistics item, close the sublist
-    // if (itemText !== "Statistiques") {
-    //   setIsSublistOpen(false);
-    // }
+    if (itemText !== "Statistiques" && isSublistOpen) {
+      setIsSublistOpen(false);
+    }
 
     setSelectedItem(itemText);
 
