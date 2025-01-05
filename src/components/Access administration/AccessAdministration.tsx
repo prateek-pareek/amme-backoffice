@@ -182,16 +182,16 @@ export default function AccessAdministration() {
         <Box
            sx={{
             position: 'relative',
-            p: 3,
+            p: 4,
             backgroundColor: "white",
             height: "calc(100vh - 70px)",
             display: 'flex',
             flexDirection: 'column'
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 5 }}>
             <Box>
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h5" gutterBottom sx={{ fontWeight:'600'}}>
                 Gestion administrateur
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -200,7 +200,7 @@ export default function AccessAdministration() {
             </Box>
             <Button
               startIcon={<Plus />}
-              sx={{ color:'white',height: 40, backgroundColor:"#0C66E6" , fontSize:'16px', fontWeight:'500', textTransform:'none',px:'24px'}}
+              sx={{ color:'white',height: '2.5rem', backgroundColor:"#0C66E6" , fontSize:'1rem', fontWeight:'500', textTransform:'none',px:'1.5rem'}}
               onClick={() => setCreateAccountOpen(true)}
             >
               Créer un compte
@@ -210,39 +210,39 @@ export default function AccessAdministration() {
           <TableContainer component={Paper} elevation={0} sx={{ boxShadow: "none" }}>
   <Table size="small">
     <TableHead sx={{ bgcolor: "#F6F7F9",  }}>
-      <TableRow sx={{}}>
+      <TableRow >
         {/* First column */}
-        <TableCell sx={{ width: "16.67%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none",}}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: "8px" , ml: "20px"}}>
-            Nom <PiSortAscendingLight size={24} />
+        <TableCell sx={{ width: "16.67%", color: "#818EA0", fontSize: "0.875rem" ,fontWeight:'500', borderBottom: "none",}}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" , ml: "1.25rem"}}>
+            Nom <IoMdArrowDown size={18} />  
           </Box>
         </TableCell>
 
         {/* Second and third columns */}
-        <TableCell sx={{ width: "16.67%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500',borderBottom: "none", }}>Prénom</TableCell>
-        <TableCell sx={{ width: "16.67%", color: "#818EA0", fontSize: "14px" ,fontWeight:'500',borderBottom: "none", }}>Adresse email</TableCell>
+        <TableCell sx={{ width: "16.67%", color: "#818EA0", fontSize: "0.875rem" ,fontWeight:'500',borderBottom: "none", }}>Prénom</TableCell>
+        <TableCell sx={{ width: "16.67%", color: "#818EA0", fontSize: "0.875rem" ,fontWeight:'500',borderBottom: "none", }}>Adresse email</TableCell>
 
         {/* Space column */}
         <TableCell sx={{ width: "20%", bgcolor: "transparent",borderBottom: "none", }}></TableCell>
 
         {/* Last 2 columns */}
-        <TableCell sx={{ width: "15%", color: "#818EA0" ,  fontSize: "14px" ,fontWeight:'500',textAlign:'right',borderBottom: "none",}}>Statut de compte</TableCell>
-        <TableCell sx={{ width: "15%" , textAlign:'right', fontSize: "14px" ,fontWeight:'500',borderBottom: "none",}}></TableCell>
+        <TableCell sx={{ width: "15%", color: "#818EA0" ,  fontSize: "0.875rem" ,fontWeight:'500',textAlign:'right',borderBottom: "none",}}>Statut de compte</TableCell>
+        <TableCell sx={{ width: "15%" , textAlign:'right', fontSize: "0.875rem" ,fontWeight:'500',borderBottom: "none",}}></TableCell>
       </TableRow>
     </TableHead>
-    <TableBody sx={{ py: "4px" }}>
+    <TableBody sx={{ py: "0.25rem" }}>
       {users.map((user) => (
         <TableRow key={user.email}>
           {/* First column */}
-          <TableCell sx={{ width: "16.67%%", fontSize: "14px",fontWeight:'500',  p: "20px",borderBottom:'1px solid #F6F7F9'  }}>
-            <Box sx={{ display: "flex", alignItems: "center",ml: "20px", gap: "8px", }}>
+          <TableCell sx={{ width: "16.67%", fontSize: "0.875rem",fontWeight:'500',  p: "1.2rem",borderBottom:'1px solid #F6F7F9'  }}>
+            <Box sx={{ display: "flex", alignItems: "center",ml: "1.25rem", gap: "0.5rem", }}>
               {user.lastName}
             </Box>
           </TableCell>
 
           {/* Second and third columns */}
-          <TableCell sx={{ width: "16.67%%",fontSize: "14px",fontWeight:'500',borderBottom:'1px solid #F6F7F9' }}>{user.firstName}</TableCell>
-          <TableCell sx={{ width: "16.67%%",fontSize: "14px",fontWeight:'500',borderBottom:' 1px solid#F6F7F9' }}>{user.email}</TableCell>
+          <TableCell sx={{ width: "16.67%",fontSize: "0.875rem",fontWeight:'500',borderBottom:'1px solid #F6F7F9' }}>{user.firstName}</TableCell>
+          <TableCell sx={{ width: "16.67%",fontSize: "0.875rem",fontWeight:'500',borderBottom:' 1px solid#F6F7F9' }}>{user.email}</TableCell>
 
           {/* Space column */}
           <TableCell sx={{ width: "20%", bgcolor: "transparent" ,borderBottom:'1px solid #F6F7F9'}}></TableCell>
@@ -252,9 +252,9 @@ export default function AccessAdministration() {
             <Box
               sx={{
                 display: "inline-block",
-                px: "20px",
-                py: "4px",
-                fontSize: "14px",
+                px: "1.25rem",
+                py: "0.25rem",
+                fontSize: "0.875rem",
                 fontWeight: "500",
                 borderRadius: 1,
                 bgcolor: user.status === "Actif" ? "#D1E4FF" : "#FFD0D0",
@@ -264,7 +264,7 @@ export default function AccessAdministration() {
               {user.status}
             </Box>
           </TableCell>
-          <TableCell sx={{ width: "15%" , textAlign:'right',fontSize: "14px",fontWeight:'500',borderBottom:'1px solid #F6F7F9'}}>
+          <TableCell sx={{ width: "15%" , textAlign:'right',fontSize: "0.875rem",fontWeight:'500',borderBottom:'1px solid #F6F7F9'}}>
             <IconButton onClick={(e) => handleClick(e, user)}>
               <MoreHoriz />
             </IconButton>
@@ -292,13 +292,13 @@ export default function AccessAdministration() {
                 elevation: 0,
                 sx: {
                   filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.08))",
-                  mt: 1,
-                  minWidth: 180,
-                  borderRadius: "16px", // Add border radius here
+                  mt: 0,
+                  width: '10rem',
+                  borderRadius: "1rem", // Add border radius here
                   "& .MuiMenuItem-root": {
                     px: 2,
                     // py: 1,
-                    borderRadius: "2px",
+                    borderRadius: "0.125rem",
                     "&:hover": {
                       backgroundColor: "rgba(0, 0, 0, 0.04)",
                     },
@@ -307,12 +307,12 @@ export default function AccessAdministration() {
               },
             }}
           >
-            <MenuItem onClick={handleModify} sx={{ gap: 1 }}>
-              <Pen sx={{ fontSize: "16px" }} />
+            <MenuItem onClick={handleModify} sx={{ gap: 1 ,fontSize: "0.9rem", fontWeight:'500'}}>
+              <Pen sx={{ fontSize: "1rem", fontWeight:'500' }} />
               Modifier
             </MenuItem>
-            <MenuItem onClick={handleDelete} sx={{ color: "#C53434", gap: 1 }}>
-              <Delete sx={{ fontSize: "16px" }} />
+            <MenuItem onClick={handleDelete} sx={{ color: "#C53434", gap: 1 ,fontSize: "0.9rem", fontWeight:'500'}}>
+              <Delete sx={{ fontSize: "1rem",  fontWeight:'500' }} />
               Supprimer
             </MenuItem>
           </Menu>
@@ -324,12 +324,12 @@ export default function AccessAdministration() {
             fullWidth
             PaperProps={{
               sx: {
-                borderRadius: "16px",
+                borderRadius: "1rem",
                 height: "96%",
-                width: 500,
-                marginLeft: "1050px",
+                width: '31.25rem', //500px
+                marginLeft: "65.625rem",//1050px
                 overflow: "hidden",
-                paddingX: "4px 8px",
+                paddingX: "0.25rem 0.5rem", //4px 8px
               },
             }}
           >
@@ -338,16 +338,15 @@ export default function AccessAdministration() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                fontSize: "24px",
-                py: 2,
-                px:3,
-
-                pb: "0px",
+                fontSize: "1.5rem", //24px
+                py: '1.25rem', //20px
+                px:'1.5rem', //24px
+                pb: "0rem",
               }}
             >
               <Typography
                 variant="h6"
-                sx={{ fontWeight: "600", fontSize: "24px", mb: "0px" }}
+                sx={{ fontWeight: "600", fontSize: "1.5rem", mb: "0rem" }} //24px
               >
                 Création de compte
               </Typography>
@@ -358,25 +357,25 @@ export default function AccessAdministration() {
             <Typography
               variant="body2"
               color="text.secondary"
-              sx={{ px: 3, mb: 2, mt: 0, fontSize: "14px", fontWeight: "400" }}
+              sx={{ px: '1.5rem', mb: '1.25rem', mt: 0, fontSize: "0.875rem", fontWeight: "400" }} //20px, 14px
             >
               Veuillez compléter les informations ci-dessous afin de créer un
               nouveau compte
             </Typography>
 
-            <DialogContent sx={{ px: 3, py: "4px" }}>
+            <DialogContent sx={{ px: '1.5rem', py: "0.25rem" }}>
               {/* Input Fields Section */}
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  marginTop: "5px",
-                  gap: "12px", // Reduced gap between input fields and Pages accessibles (Change 1)
-                  mb: "8px", // Adjusted bottom margin for the input section
+                  marginTop: "0.3125rem", //5px
+                  gap: "0.75rem", // Reduced gap between input fields and Pages accessibles (Change 1) //12px
+                  mb: "0.5rem", // Adjusted bottom margin for the input section //8px
                 }}
               >
                 <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "0px" }}
+                  sx={{ display: "flex", flexDirection: "column", gap: "0rem" }}
                 >
                   <Box sx={{ display: "flex" }}>
                     <Typography variant="body2">Nom</Typography>
@@ -391,13 +390,13 @@ export default function AccessAdministration() {
                     fullWidth
                     // size="small"
                     InputProps={{
-                      sx: { height: '35px' }, // Custom height for input
+                      sx: { height: '2.1875rem' }, // Custom height for input //35px
                     }}
                   />
                 </Box>
 
                 <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "0px" }}
+                  sx={{ display: "flex", flexDirection: "column", gap: "0rem" }}
                 >
                   <Box sx={{ display: "flex" }}>
                     <Typography variant="body2">Prénom</Typography>
@@ -412,13 +411,13 @@ export default function AccessAdministration() {
                     fullWidth
                     // size="small"
                     InputProps={{
-                      sx: { height: '35px' }, // Custom height for input
+                      sx: { height: '2.1875rem' }, // Custom height for input //35px
                     }}
                   />
                 </Box>
 
                 <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "0px" }}
+                  sx={{ display: "flex", flexDirection: "column", gap: "0rem" }}
                 >
                   <Typography variant="body2">Adresse mail</Typography>
                   <TextField
@@ -428,7 +427,7 @@ export default function AccessAdministration() {
                     fullWidth
                     // size="small"
                     InputProps={{
-                      sx: { height: '35px' }, // Custom height for input
+                      sx: { height: '2.1875rem' }, // Custom height for input //35px
                     }}
                   />
                 </Box>
@@ -437,14 +436,14 @@ export default function AccessAdministration() {
               {/* Pages Accessibles Section */}
               <Typography
                 variant="subtitle1"
-                sx={{ fontWeight: "500", fontSize: "18px", mb: "0px" }}
+                sx={{ fontWeight: "500", fontSize: "1.125rem", mb: "0rem" }} //18px
               >
                 Pages accessibles
               </Typography>
               <Typography
                 variant="body2"
                 color="text.secondary"
-                sx={{ fontWeight: "400", fontSize: "14px", mb: "6px" }}
+                sx={{ fontWeight: "400", fontSize: "0.875rem", mb: "0.375rem" }} //14px, 6px
               >
                 Vous pouvez activer les différentes fonctionnalités pour
                 l'utilisateur ci-dessous
@@ -455,11 +454,11 @@ export default function AccessAdministration() {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  height: "224px",
+                  height: "14rem", //224px
                   borderRadius: 2,
                   backgroundColor: "#FFF",
-                  px: 2,
-                  mb: "8px",
+                  px: '1.25rem', //20px
+                  mb: "0.5rem", //8px
                 }}
               >
                 {[
@@ -483,7 +482,7 @@ export default function AccessAdministration() {
                     <Box sx={{ flex: 1, textAlign: "left" }}>
                       <Typography
                         variant="body2"
-                        sx={{ fontSize: "14px", fontWeight: 500 }}
+                        sx={{ fontSize: "0.875rem", fontWeight: 500 }} //14px
                       >
                         {item.label}
                       </Typography>
@@ -506,7 +505,7 @@ export default function AccessAdministration() {
                   display: "flex",
                   justifyContent: "flex-end",
                   borderTop: "1px solid #E9EEF6",
-                  pt: 1,
+                  pt: '0.625rem', //10px
                   // mt: 1,
                 }}
               >
@@ -517,10 +516,10 @@ export default function AccessAdministration() {
                     sx={{
                       textTransform: "none",
                       fontWeight: "bold",
-                      borderRadius: "8px",
+                      borderRadius: "0.5rem", //8px
                       borderColor: "#E2E8F0",
                       color:'#151515',
-                      fontSize:'14px', 
+                      fontSize:'0.875rem', //14px
                     }}
                     onClick={() => setCreateAccountOpen(false)}
                   >
@@ -530,7 +529,7 @@ export default function AccessAdministration() {
                     variant="contained"
                     sx={{
                       textTransform: "none",
-                      borderRadius: "8px",
+                      borderRadius: "0.5rem", //8px
                       fontWeight: "bold",
                       backgroundColor: "#E2E8F0",
                       ":hover": { backgroundColor: "#E2E8F0" },
@@ -545,57 +544,75 @@ export default function AccessAdministration() {
 
           {/* Delete Account Dialog */}
           <Dialog
-            open={deleteDialogOpen}
-            onClose={() => setDeleteDialogOpen(false)}
-            PaperProps={{
-              sx: {
-                borderRadius: 2,
-                maxWidth: "400px",
-                position: "fixed",
-                bottom: 20,
-                right: 20,
-              },
-            }}
-            sx={{
-              "& .MuiBackdrop-root": {
-                backgroundColor: "rgba(0, 0, 0, 0.2)", // Adjust opacity here (default is 0.5)
-              },
-            }}
-          >
-            <DialogContent sx={{ pt: 3 }}>
-              <Typography variant="h6" sx={{ mb: 1 }}>
-                Suppression
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Vous êtes sur le point de supprimer un profil administrateur.
-                Confirmez-vous cette action ?
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  gap: 2,
-                  mt: 3,
-                }}
-              >
-                <Button
-                  variant="outlined"
-                  onClick={() => setDeleteDialogOpen(false)}
-                  sx={{ textTransform: "none" }}
-                >
-                  Annuler
-                </Button>
-                <Button
-                  variant="contained"
-                  color="error"
-                  onClick={handleConfirmDelete}
-                  sx={{ textTransform: "none" }}
-                >
-                  Supprimer
-                </Button>
-              </Box>
-            </DialogContent>
-          </Dialog>
+  open={deleteDialogOpen}
+  onClose={() => setDeleteDialogOpen(false)}
+  PaperProps={{
+    sx: {
+      position: "fixed",
+      borderRadius: 2,
+      height: "12.8rem", // 205px -> 12.8rem
+      width: "28rem", // 400px -> 28rem
+      bottom: "0.1rem", // 20px -> 1.25rem
+      right: "0.1rem", // 20px -> 1.25rem
+      boxShadow: 1,
+    },
+  }}
+  sx={{
+    "& .MuiBackdrop-root": {
+      backgroundColor: "rgba(0, 0, 0, 0)", // Transparent backdrop
+    },
+  }}
+>
+  <DialogContent sx={{ pt: "1rem" }}>
+    {/* Title */}
+    <Typography variant="h6" sx={{ mb: "0.625rem", fontSize: "1.125rem", fontWeight: "600" }}>
+      Suppression
+    </Typography>
+
+    {/* Description */}
+    <Typography variant="body2" sx={{ fontSize: "0.875rem", fontWeight: "400", color: "#818EA0" }}>
+      Vous êtes sur le point de supprimer un profil administrateur. Confirmez-vous cette action ?
+    </Typography>
+
+    {/* Action Buttons */}
+    <Box
+      sx={{
+        position: "absolute", // Ensures buttons are positioned relative to the DialogContent
+        bottom: "1rem", // Adjust for padding from the bottom
+        right: "1rem", // Adjust for padding from the right
+        display: "flex",
+        justifyContent: "flex-end",
+        gap: "0.625rem", // 10px -> 0.625rem
+      }}
+    >
+      <Button
+        variant="outlined"
+        onClick={() => setDeleteDialogOpen(false)}
+        sx={{
+          textTransform: "none",
+          borderRadius: "0.5rem",
+          color:'#151515',
+          border:'1px solid #E2E8F0',
+        }}
+      >
+        Annuler
+      </Button>
+      <Button
+        variant="contained"
+        color="error"
+        onClick={handleConfirmDelete}
+        sx={{
+          textTransform: "none",
+          borderRadius: "0.5rem",
+          backgroundColor:'#C53434',
+        }}
+      >
+        Supprimer
+      </Button>
+    </Box>
+  </DialogContent>
+</Dialog>
+
 
           {/* Modify Account Dialog */}
           <Dialog
@@ -605,12 +622,12 @@ export default function AccessAdministration() {
             fullWidth
             PaperProps={{
               sx: {
-                borderRadius: "16px",
+                borderRadius: "1rem", //16px
                 height: "98%",
-                width: 500,
-                marginLeft: "1050px",
+                width: '31.25rem', //500px
+                marginLeft: "65.625rem", //1050px
                 overflow: "hidden",
-                paddingX: "4px 8px",
+                paddingX: "0.25rem 0.5rem", //4px 8px
               },
             }}
           >
@@ -619,15 +636,15 @@ export default function AccessAdministration() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                fontSize: "24px",
-                py: 2,
-                px:3,
-                pb: "0px",
+                fontSize: "1.5rem", //24px
+                py: '1.25rem', //20px
+                px: '1.5rem', //24px
+                pb: "0rem",
               }}
             >
               <Typography
                 variant="h6"
-                sx={{ fontWeight: "600", fontSize: "24px", mb: "0px" }}
+                sx={{ fontWeight: "600", fontSize: "1.5rem", mb: "0rem" }} //24px
               >
                 Gestion de compte
               </Typography>
@@ -638,25 +655,25 @@ export default function AccessAdministration() {
             <Typography
               variant="body2"
               color="text.secondary"
-              sx={{ px: 3, mb: 2, mt: 0, fontSize: "14px", fontWeight: "400" }}
+              sx={{ px: '1.5rem', mb: '1.25rem', mt: 0, fontSize: "0.875rem", fontWeight: "400" }} // 20px, 14px
             >
               Veuillez compléter les informations ci-dessous afin de créer un
               nouveau compte
             </Typography>
 
-            <DialogContent sx={{ px: 3, py: "4px" }}>
+            <DialogContent sx={{ px: '1.5rem', py: "0.25rem" }}>
               {/* Input Fields Section */}
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  marginTop: "5px",
-                  gap: "12px", // Reduced gap between input fields and Pages accessibles (Change 1)
-                  mb: "4px", // Adjusted bottom margin for the input section
+                  marginTop: "0.3125rem", //5px
+                  gap: "0.75rem", // Reduced gap between input fields and Pages accessibles (Change 1) //12px
+                  mb: "0.25rem", // Adjusted bottom margin for the input section //4px
                 }}
               >
                 <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "0px" }}
+                  sx={{ display: "flex", flexDirection: "column", gap: "0rem" }}
                 >
                   <Box sx={{ display: "flex" }}>
                     <Typography variant="body2">Nom</Typography>
@@ -671,13 +688,13 @@ export default function AccessAdministration() {
                     fullWidth
                     // size="small"
                     InputProps={{
-                      sx: { height: '35px' }, // Custom height for input
+                      sx: { height: '2.1875rem' }, // Custom height for input //35px
                     }}
                   />
                 </Box>
 
                 <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "0px" }}
+                  sx={{ display: "flex", flexDirection: "column", gap: "0rem" }}
                 >
                   <Box sx={{ display: "flex" }}>
                     <Typography variant="body2">Prénom</Typography>
@@ -692,13 +709,13 @@ export default function AccessAdministration() {
                     fullWidth
                     // size="small"
                     InputProps={{
-                      sx: { height: '35px' }, // Custom height for input
+                      sx: { height: '2.1875rem' }, // Custom height for input //35px
                     }}
                   />
                 </Box>
 
                 <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "0px" }}
+                  sx={{ display: "flex", flexDirection: "column", gap: "0rem" }}
                 >
                   <Typography variant="body2">Adresse mail</Typography>
                   <TextField
@@ -708,7 +725,7 @@ export default function AccessAdministration() {
                     fullWidth
                     // size="small"
                     InputProps={{
-                      sx: { height: '35px' }, // Custom height for input
+                      sx: { height: '2.1875rem' }, // Custom height for input //35px
                     }}
                   />
                 </Box>
@@ -717,14 +734,14 @@ export default function AccessAdministration() {
               {/* Pages Accessibles Section */}
               <Typography
                 variant="subtitle1"
-                sx={{ fontWeight: "500", fontSize: "18px", mb: "0px" }}
+                sx={{ fontWeight: "500", fontSize: "1.125rem", mb: "0rem" }} //18px
               >
                 Pages accessibles
               </Typography>
               <Typography
                 variant="body2"
                 color="text.secondary"
-                sx={{ fontWeight: "400", fontSize: "14px", mb: "6px" }}
+                sx={{ fontWeight: "400", fontSize: "0.875rem", mb: "0.375rem" }} //14px, 6px
               >
                 Vous pouvez activer les différentes fonctionnalités pour
                 l'utilisateur ci-dessous
@@ -735,11 +752,11 @@ export default function AccessAdministration() {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  height: "224px",
+                  height: "14rem", //224px
                   borderRadius: 2,
                   backgroundColor: "#FFF",
-                  px: 2,
-                  mb: "8px",
+                  px: '1.25rem', //20px
+                  mb: "0.5rem", //8px
                 }}
               >
                 {[
@@ -763,7 +780,7 @@ export default function AccessAdministration() {
                     <Box sx={{ flex: 1, textAlign: "left" }}>
                       <Typography
                         variant="body2"
-                        sx={{ fontSize: "14px", fontWeight: 500 }}
+                        sx={{ fontSize: "0.875rem", fontWeight: 500 }} //14px
                       >
                         {item.label}
                       </Typography>
@@ -786,7 +803,7 @@ export default function AccessAdministration() {
                   display: "flex",
                   justifyContent: "flex-end",
                   borderTop: "1px solid #E9EEF6",
-                  pt: 1,
+                  pt: '0.625rem', //10px
                   // mt: 1,
                 }}
               >
@@ -797,12 +814,12 @@ export default function AccessAdministration() {
                     sx={{
                       textTransform: "none",
                       fontWeight: "bold",
-                      borderRadius: "8px",
+                      borderRadius: "0.5rem", //8px
                       borderColor: "#E2E8F0",
                       color:'#151515',
-                      fontSize:'14px', 
+                      fontSize:'0.875rem', //14px
                     }}
-                    onClick={() => setCreateAccountOpen(false)}
+                    onClick={() => setModifyDialogOpen(false)}
                   >
                     Annuler
                   </Button>
@@ -810,13 +827,13 @@ export default function AccessAdministration() {
                     variant="contained"
                     sx={{
                       textTransform: "none",
-                      borderRadius: "8px",
+                      borderRadius: "0.5rem", //8px
                       fontWeight: "bold",
                       backgroundColor: "#E2E8F0",
                       ":hover": { backgroundColor: "#E2E8F0" },
                     }}
                   >
-                    Créer le compte
+                    Enregistrer
                   </Button>
                 </Box>
               </Box>
@@ -830,8 +847,8 @@ export default function AccessAdministration() {
               justifyContent: "space-between",
               alignItems: "center",
               mt: 'auto', // Pushes the box to the bottom
-              py: 2, // Add vertical padding
-              px: 2,
+              py: '1rem', // Add vertical padding //20px
+              px: '1.25rem', // Add horizontal padding //20px
               borderTop: '1px solid #E9EEF6', 
             }}
           >
@@ -839,14 +856,14 @@ export default function AccessAdministration() {
               1-10 sur 240
             </Typography>
             <Box
-              sx={{ display: "flex", gap: 1, height: "24px", width: "108px" }}
+              sx={{ display: "flex", gap: 1, height: "1rem", width: "6.75rem",alignItems:'center' }} //24px, 108px
             >
               <IconButton size="small">
-                <ChevronLeft sx={{border:'1px solid #E2E8F0', borderRadius:'4px'}}/>
+                <ChevronLeft sx={{border:'1px solid #E2E8F0', borderRadius:'0.25rem'}}/>
               </IconButton>
               1/27
               <IconButton size="small">
-                <ChevronRight sx={{border:'1px solid #E2E8F0', borderRadius:'4px'}}/>
+                <ChevronRight sx={{border:'1px solid #E2E8F0', borderRadius:'0.25rem'}}/>
               </IconButton>
             </Box>
           </Box>
