@@ -105,8 +105,10 @@ const CalendarHeader = ({
               borderRadius: 1,
             }}
           >
-            <div>{days[index]}</div>
-            <div>{formatDate(date)}</div>
+            <Box sx={{ display: "flex", flexDirection: "row",justifyContent:'center', alignItems: "center", gap: 0.5,  }}>
+              <Typography variant="body2">{days[index]}</Typography>
+              <Typography variant="body2">{formatDate(date)}</Typography>
+            </Box>
           </Box>
         ))}
       </Box>
@@ -209,186 +211,197 @@ const Planning = ({ initialDate = new Date() }: PlanningProps) => {
   };
 
   return (
-    <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh", overflow:'hidden' }}>
-      
-      <Box sx={{ flex: 1 }}>
-        <NavBar />
-        <Box
-          sx={{
-            p: "20px",
-            backgroundColor: "white",
-            flex: 1,
-            height: "calc(100vh - 80px)",
-            overflow: "auto",
-          }}
-        >
-          <Box
+    <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
+  <Box sx={{ flex: 1 }}>
+    <NavBar />
+    <Box
+      sx={{
+        px: "1.5rem",
+        py: "1rem",
+        backgroundColor: "white",
+        height: "calc(100vh - 4.375rem)",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Box>
+          <Typography
+            variant="h5"
+            sx={{ fontSize: "1.5rem", fontWeight: "600", mb: "0.5rem" }}
+          >
+            Gestion du planning
+          </Typography>
+          <Typography
+            variant="body2"
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
+              color: "#818EA0",
+              fontSize: "0.875rem",
+              fontWeight: "400",
+              mb: "1.5rem",
             }}
           >
-            <Box>
-              <Typography
-                variant="h5"
-                gutterBottom
-                sx={{ fontSize: "24px", fontWeight: "600" }}
-              >
-                Gestion du planning
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Veuillez retrouver ici l'ensemble des comptes administrateurs
-              </Typography>
-            </Box>
-            <div>
-              {/* Normal Button */}
-              {selectedValue &&
-              <Button
+            Veuillez retrouver ici l'ensemble des comptes administrateurs
+          </Typography>
+        </Box>
+        <div>
+          {selectedValue && (
+            <Button
               variant="contained"
               onClick={() => setIsScheduleModalOpen(true)}
               sx={{
-                backgroundColor: "#0C66E6",
                 color: "white",
-                padding: "8px 16px",
-                fontSize: "14px",
+                height: "2.5rem",
+                backgroundColor: "#0C66E6",
+                fontSize: "1rem",
                 fontWeight: "500",
-                borderRadius: "4px",
                 textTransform: "none",
+                px: "1.5rem",
+                borderRadius: "0.25rem",
               }}
             >
               Modifier les horaires
-            </Button>}
-<ScheduleModal 
-  isOpen={isScheduleModalOpen} 
-  onClose={() => setIsScheduleModalOpen(false)}
-/>
-            </div>
-          </Box>
+            </Button>
+          )}
+          <ScheduleModal
+            isOpen={isScheduleModalOpen}
+            onClose={() => setIsScheduleModalOpen(false)}
+          />
+        </div>
+      </Box>
 
-          {!selectedValue ? (
-            <Box>
-              <Box
+      {!selectedValue ? (
+        <Box>
+          <Box
+            sx={{
+              marginTop: "12.5rem", // 200px
+              marginX: "auto",
+              display: "flex",
+              height: "2.5rem", // 40px
+              width: "30rem", // 436px
+              color: "#818EA0",
+            }}
+          >
+            Veuillez sélectionner une infirmière parmi la liste ci-dessous.
+          </Box>
+          <FormControl
+            sx={{
+              marginX: "auto",
+              display: "flex",
+              width: "20.4375rem", // 327px
+              borderRadius: "0.375rem", // 6px
+            }}
+          >
+            {!selectedValue && (
+              <InputLabel
                 sx={{
-                  marginTop: "200px",
-                  marginX: "auto",
-                  display: "flex",
-                  height: "40px",
-                  width: "436px",
-                  color: "#818EA0",
+                  fontSize: "0.875rem",
+                  fontWeight: 500,
+                  color: "#151515",
+                  mb: "0.125rem", // 2px
                 }}
               >
-                Veuillez sélectionner une infirmière parmi la liste ci-dessous.
-              </Box>
-              <FormControl
-                sx={{
-                  marginX: "auto",
-                  display: "flex",
-                  height: "30px",
-                  width: "327px",
-                  borderRadius: "6px",
-                }}
-              >
-                {!selectedValue && (
-                  <InputLabel
-                    sx={{ fontSize: "14px", fontWeight: 500, color: "#151515", marginBottom: "2px"}}
-                  >
-                    Sélectionner une infirmière parmi la liste
-                  </InputLabel>
-                )}
-                <Select
-                  value={selectedValue}
-                  onChange={handleNurseChange}
-                  displayEmpty
+                Sélectionner une infirmière parmi la liste
+              </InputLabel>
+            )}
+            <Select
+              value={selectedValue}
+              onChange={handleNurseChange}
+              displayEmpty
+              sx={{
+                width: "100%",
+                height: "3.125rem", // 50px
+                "& .MuiMenuItem-root": {
+                  fontSize: "0.875rem",
+                  fontWeight: "500",
+                },
+              }}
+            >
+              <MenuItem disableRipple>
+                <TextField
+                  placeholder="Rechercher"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Search />
+                      </InputAdornment>
+                    ),
+                  }}
                   sx={{
-                    width: "100%",
-                    height:'50px',
-                    "& .MuiMenuItem-root": {
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      
+                    fontSize: "0.875rem",
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "0.25rem", // 4px
                     },
                   }}
-                >
-                  <MenuItem disableRipple>
-                    <TextField
-                      placeholder="Rechercher"
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                      value={searchTerm}
-                      onChange={handleSearchChange}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Search />
-                          </InputAdornment>
-                        ),
-                      }}
-                      sx={{
-                        fontSize: "14px",
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: "4px",
-                          
-                        },
-                      }}
-                    />
-                  </MenuItem>
-                  {filteredNurses.map((nurse, index) => (
-                    <MenuItem key={index} value={nurse}>
-                      {nurse}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
-          ) : (
-            <Box>
-              <FormControl
-                sx={{
-                  height: "20px",
-                  width: "200px",
-                  borderRadius: "6px",
-                  marginTop:'30px'
-                }}
-              >
-                <Select
-                  value={selectedValue}
-                  onChange={handleNurseChange}
-                  sx={{
-                    fontSize: "14px",
-                    fontWeight: "500",
-                    height:'30px'
-                  }}
-                >
-                  {nurses.map((nurse, index) => (
-                    <MenuItem key={index} value={nurse}>
-                      {nurse}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
-              <CalendarHeader
-                currentDate={currentDate}
-                onPrevWeek={handlePrevWeek}
-                onNextWeek={handleNextWeek}
-              />
-
-              <Box sx={{ overflowY: "auto", maxHeight: "calc(100vh - 250px)",  }}>
-                {timeSlots.slice(6, 10).map((time) => (
-                  <TimeSlot
-                    key={time}
-                    time={time}
-                    appointments={sampleAppointments[time] || []}
-                  />
-                ))}
-              </Box>
-            </Box>
-          )}
+                />
+              </MenuItem>
+              {filteredNurses.map((nurse, index) => (
+                <MenuItem key={index} value={nurse}>
+                  {nurse}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Box>
-      </Box>
+      ) : (
+        <Box>
+          <FormControl
+            sx={{
+              height: "1.25rem", // 20px
+              width: "12.5rem", // 200px
+              borderRadius: "0.375rem", // 6px
+              marginTop: "1.875rem", // 30px
+            }}
+          >
+            <Select
+              value={selectedValue}
+              onChange={handleNurseChange}
+              sx={{
+                fontSize: "0.875rem",
+                fontWeight: "500",
+                height: "1.875rem", // 30px
+              }}
+            >
+              {nurses.map((nurse, index) => (
+                <MenuItem key={index} value={nurse}>
+                  {nurse}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <CalendarHeader
+            currentDate={currentDate}
+            onPrevWeek={handlePrevWeek}
+            onNextWeek={handleNextWeek}
+          />
+
+          <Box sx={{ overflowY: "auto", maxHeight: "calc(100vh - 15.625rem)" }}>
+            {timeSlots.slice(6, 10).map((time) => (
+              <TimeSlot
+                key={time}
+                time={time}
+                appointments={sampleAppointments[time] || []}
+              />
+            ))}
+          </Box>
+        </Box>
+      )}
     </Box>
+  </Box>
+</Box>
+
   );
 };
 

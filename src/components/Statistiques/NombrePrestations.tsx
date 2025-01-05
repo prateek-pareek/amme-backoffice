@@ -102,21 +102,18 @@ export default function NombrePrestations() {
     "Doubs (25)",
     "Jura (39)",
     "Nièvre (58)",
-    "Haute-Saône (70)"
-  ]
+    "Haute-Saône (70)",
+  ];
 
-  const region =[
+  const region = [
     "Auvergne-Rhône-Alpes",
     "Bourgogne-Franche-Comté",
     "Bretagne",
     "Centre-Val de Loire",
     "Corse",
-  ]
+  ];
 
-  const service = [
-    "Aphélie Sanchez",
-    "Auguste Lacroix"
-  ]
+  const service = ["Aphélie Sanchez", "Auguste Lacroix"];
 
   const filteredNurses = nurses.filter((nurse) =>
     nurse.toLowerCase().includes(searchTerm.toLowerCase())
@@ -124,13 +121,13 @@ export default function NombrePrestations() {
 
   const filteredServices = service.filter((ser) =>
     ser.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  );
 
-    const filteredRegions = region.filter((reg) =>
+  const filteredRegions = region.filter((reg) =>
     reg.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  );
 
-    const filteredDepartments = department.filter((dep) =>
+  const filteredDepartments = department.filter((dep) =>
     dep.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -141,19 +138,18 @@ export default function NombrePrestations() {
 
   const handleChangeRegion = (event: any) => {
     setSelectedRegion(event.target.value);
-    setBarData(initialBarData)
-  }
+    setBarData(initialBarData);
+  };
 
-  const handleChangeDept= (event: any) => {
+  const handleChangeDept = (event: any) => {
     setSelectedDepartment(event.target.value);
-    setBarData(initialBarData)
-  }
+    setBarData(initialBarData);
+  };
 
-  const handleServiceChange= (event: any) => {
+  const handleServiceChange = (event: any) => {
     setSelectedService(event.target.value);
-    setBarData(initialBarData)
-  }
-
+    setBarData(initialBarData);
+  };
 
   // const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   setSelectedDate(event.target.value);
@@ -200,7 +196,12 @@ export default function NombrePrestations() {
                 LACROIX Auguste
               </Typography>
               <Typography
-                sx={{ fontSize: "28px", fontWeight: "500", color: "#0C66E6", mt:'20px' }}
+                sx={{
+                  fontSize: "28px",
+                  fontWeight: "500",
+                  color: "#0C66E6",
+                  mt: "20px",
+                }}
               >
                 150
               </Typography>
@@ -280,7 +281,10 @@ export default function NombrePrestations() {
                 alignItems: "center",
               }}
             >
-              <Typography fontWeight="bold" sx={{ fontSize: "16px", fontWeight:'500' }}>
+              <Typography
+                fontWeight="bold"
+                sx={{ fontSize: "16px", fontWeight: "500" }}
+              >
                 Prestations par infirmière
               </Typography>
               <Box
@@ -288,7 +292,7 @@ export default function NombrePrestations() {
                   width: "250px",
                   display: "flex",
                   justifyContent: "flex-end",
-                  gap:'20px'
+                  gap: "20px",
                 }}
               >
                 <Button
@@ -297,10 +301,9 @@ export default function NombrePrestations() {
                     fontWeight: "500",
                     textTransform: "none",
                     color: "#0C66E6",
-                    padding:'4px 4px'
+                    padding: "4px 4px",
                   }}
                 >
-               
                   Semaine{" "}
                 </Button>
                 <Button
@@ -309,7 +312,7 @@ export default function NombrePrestations() {
                     fontWeight: "500",
                     textTransform: "none",
                     color: "#818EA0",
-                    padding:'2px 2px'
+                    padding: "2px 2px",
                   }}
                 >
                   30 derniers jours{" "}
@@ -317,7 +320,7 @@ export default function NombrePrestations() {
               </Box>
             </Box>
 
-            <Box sx={{ height: "300px",  }}>
+            <Box sx={{ height: "300px" }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={barData}
@@ -325,7 +328,11 @@ export default function NombrePrestations() {
                 >
                   <XAxis
                     dataKey="day"
-                    tick={{ fontSize: '10px', fontWeight: "400", color: "#818EA0" }}
+                    tick={{
+                      fontSize: "10px",
+                      fontWeight: "400",
+                      color: "#818EA0",
+                    }}
                     axisLine={{ stroke: "none" }}
                   />
                   <YAxis
@@ -359,12 +366,13 @@ export default function NombrePrestations() {
 
         <Box
           sx={{
-            position:'relative',
-            px: 3, py:2,
+            position: "relative",
+            px: 3,
+            py: 2,
             backgroundColor: "white",
             height: "calc(100vh - 70px)",
-            display:'flex',
-            flexDirection:'column'
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           <Box
@@ -374,75 +382,81 @@ export default function NombrePrestations() {
               alignItems: "center",
             }}
           >
-              <Box>
+            <Box>
               <Typography
                 variant="h5"
-                sx={{ fontSize:'24px', fontWeight: '600', mb:'8px'}}
+                sx={{ fontSize: "24px", fontWeight: "600", mb: "8px" }}
               >
                 Nombre de prestations
               </Typography>
-              <Typography variant="body2" sx={{ color: "#818EA0" , fontSize:'14px', fontWeight:'400', mb:1 }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "#818EA0",
+                  fontSize: "14px",
+                  fontWeight: "400",
+                  mb: 1,
+                }}
+              >
                 Veuillez retrouver ici l'ensemble des comptes administrateurs
               </Typography>
-              </Box>
-              
+            </Box>
 
             {/* calendar */}
             <div>
               {selectedFilter === "parRegion" ? (
                 <div>
-                {selectedFilter === "parRegion" ? (
-                    <DateRangePicker/>
-
-                ) : selectedFilter==="parInfirmiere" && selectedValue ? (
+                  {selectedFilter === "parRegion" ? (
+                    <DateRangePicker />
+                  ) : selectedFilter === "parInfirmiere" && selectedValue ? (
                     <FormControl
-                        sx={{
-                            width: "327px",
-                            height: "40px",
-                        }}
+                      sx={{
+                        width: "327px",
+                        height: "40px",
+                      }}
                     >
-                        <Select
-                            value={selectedValue}
-                            onChange={handleChange}
-                            displayEmpty
-                            sx={{
-                                height: "40px",
-                                "& .MuiMenuItem-root": {
-                                    fontSize: "14px",
-                                    fontWeight: "500",
-                                }
+                      <Select
+                        value={selectedValue}
+                        onChange={handleChange}
+                        displayEmpty
+                        sx={{
+                          height: "40px",
+                          "& .MuiMenuItem-root": {
+                            fontSize: "14px",
+                            fontWeight: "500",
+                          },
+                        }}
+                        // displayEmpty
+                        renderValue={(selected) =>
+                          selected || "Sélectionner une infirmière"
+                        }
+                      >
+                        <MenuItem disableRipple>
+                          <TextField
+                            placeholder="Rechercher"
+                            variant="outlined"
+                            fullWidth
+                            size="small"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <Search />
+                                </InputAdornment>
+                              ),
                             }}
-                            // displayEmpty
-                            renderValue={(selected) => 
-                                selected || "Sélectionner une infirmière"
-                            }
-                        >
-                            <MenuItem disableRipple>
-                                <TextField
-                                    placeholder="Rechercher"
-                                    variant="outlined"
-                                    fullWidth
-                                    size="small"
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start">
-                                                <Search />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </MenuItem>
-                            {filteredNurses.map((nurse, index) => (
-                                <MenuItem key={index} value={nurse}>
-                                    {nurse}
-                                </MenuItem>
-                            ))}
-                        </Select>
+                          />
+                        </MenuItem>
+                        {filteredNurses.map((nurse, index) => (
+                          <MenuItem key={index} value={nurse}>
+                            {nurse}
+                          </MenuItem>
+                        ))}
+                      </Select>
                     </FormControl>
-                ):null}
-            </div>
+                  ) : null}
+                </div>
               ) : selectedValue ? (
                 <FormControl
                   sx={{
@@ -462,7 +476,6 @@ export default function NombrePrestations() {
                         fontWeight: "500",
                       },
                     }}
-                    
                     renderValue={(selected) =>
                       selected || "Sélectionner une infirmière"
                     }
@@ -518,7 +531,7 @@ export default function NombrePrestations() {
                 borderColor: "primary.main",
                 textTransform: "none",
                 typography: "body2",
-                paddingY:'2px',
+                paddingY: "2px",
               }}
               onClick={() => handleFilterClick("parRegion")}
             >
@@ -536,7 +549,7 @@ export default function NombrePrestations() {
                 borderColor: "primary.main",
                 textTransform: "none",
                 typography: "body2",
-                 paddingY:'2px',
+                paddingY: "2px",
               }}
               onClick={() => handleFilterClick("parInfirmiere")}
             >
@@ -550,12 +563,12 @@ export default function NombrePrestations() {
               <Box
                 sx={{
                   marginTop: "200px",
-                                    marginX: "auto",
-                                    display: "flex",
-                                    height: "40px",
-                                    width: "436px",
-                                    color: "#818EA0",
-                                    justifyContent: "center"
+                  marginX: "auto",
+                  display: "flex",
+                  height: "40px",
+                  width: "436px",
+                  color: "#818EA0",
+                  justifyContent: "center",
                 }}
               >
                 Veuillez sélectionner une infirmière parmi la liste ci-dessous.
@@ -567,7 +580,7 @@ export default function NombrePrestations() {
                   height: "20px",
                   width: "327px",
                   borderRadius: "6px",
-              }}
+                }}
               >
                 <Select
                   value={selectedValue}
@@ -622,7 +635,7 @@ export default function NombrePrestations() {
                     flex: 2,
                     p: 1.5,
                     bgcolor: "background.paper",
-                     width: "520px",
+                    width: "520px",
                     height: "250px",
                     top: "273px",
                     left: "336px",
@@ -637,7 +650,12 @@ export default function NombrePrestations() {
                       mb: 1,
                     }}
                   >
-                    <Typography fontWeight="bold" sx={{ fontSize: "16px", fontWeight:'500' }}>Total</Typography>
+                    <Typography
+                      fontWeight="bold"
+                      sx={{ fontSize: "16px", fontWeight: "500" }}
+                    >
+                      Total
+                    </Typography>
                     <select
                       style={{
                         padding: "4px 8px",
@@ -645,14 +663,13 @@ export default function NombrePrestations() {
                         border: "1px solid #E2E8F0",
                         fontSize: "10px",
                         fontWeight: "500",
-                        height:'22px'
+                        height: "22px",
                       }}
                     >
                       <option value="dernier-mois">Dernier mois</option>
-                                  <option value="3-derniers-mois">3 Derniers mois</option>
-                                  <option value="6-derniers-mois">6 Derniers mois</option>
-                                  <option value="12-derniers-mois">12 Derniers mois</option>
-
+                      <option value="3-derniers-mois">3 Derniers mois</option>
+                      <option value="6-derniers-mois">6 Derniers mois</option>
+                      <option value="12-derniers-mois">12 Derniers mois</option>
                     </select>
                   </Box>
                   <Box sx={{ height: "20px" }}>
@@ -670,7 +687,10 @@ export default function NombrePrestations() {
                           data: months,
                           scaleType: "point",
                           tickSize: 0,
-                          tickLabelStyle: { fontSize: '10px', color: "#818EA0" },
+                          tickLabelStyle: {
+                            fontSize: "10px",
+                            color: "#818EA0",
+                          },
                         },
                       ]}
                       yAxis={[
@@ -678,7 +698,10 @@ export default function NombrePrestations() {
                           min: 0,
                           max: 17000,
                           tickSize: 0,
-                          tickLabelStyle: { fontSize: '10px',color: "#818EA0"},
+                          tickLabelStyle: {
+                            fontSize: "10px",
+                            color: "#818EA0",
+                          },
                         },
                       ]}
                       height={180} // Reduced height
@@ -742,7 +765,7 @@ export default function NombrePrestations() {
                         key={region.id}
                         sx={{
                           gap: "10px",
-                           padding: "4px 8px",
+                          padding: "4px 8px",
                           "&:hover": { bgcolor: "rgba(0, 0, 0, 0.04)" },
                           borderRadius: 1,
                         }}
@@ -762,7 +785,9 @@ export default function NombrePrestations() {
                         >
                           {region.id}
                         </Typography>
-                        <Typography sx={{ fontSize: "14px", fontWeight:'500' }}>
+                        <Typography
+                          sx={{ fontSize: "14px", fontWeight: "500" }}
+                        >
                           {region.name}
                         </Typography>
                       </ListItem>
@@ -774,7 +799,7 @@ export default function NombrePrestations() {
               <Box
                 sx={{
                   mb: "4px",
-                    width: "100%",
+                  width: "100%",
                   height: "250px",
                   borderRadius: "8px",
                   border: "1px solid #E2E8F0",
@@ -782,155 +807,159 @@ export default function NombrePrestations() {
                 }}
               >
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                  <Typography fontWeight="bold" sx={{ fontSize: "16px", fontWeight:'500' }}>
+                  <Typography
+                    fontWeight="bold"
+                    sx={{ fontSize: "16px", fontWeight: "500" }}
+                  >
                     Prestations par régions
                   </Typography>
-                  <Box sx={{ display: "flex", gap: "16px", alignItems: "center" }}>
-    {/* First Select Box */}
-    <Box
-      sx={{
-        width: selectedValue ? "200px" : "250px", // Adjust width conditionally
-        transition: "width 0.3s ease", // Smooth transition
-      }}
-    >
-      <Select
-        value={selectedRegion}
-        onChange={handleChangeRegion}
-        displayEmpty
-        renderValue={(selected) =>
-          selected ? selected : "Sélectionner une région"
-        }
-        fullWidth
-        MenuProps={{
-          PaperProps: {
-            style: {
-              maxHeight: 250,
-              width: 280,
-            },
-          },
-          MenuListProps: {
-            onMouseDown: (e) => e.preventDefault(),
-          },
-        }}
-        sx={{
-          width: "80%",
-          height: "35px",
-          padding: "4px 8px",
-          borderRadius: "6px",
-          border: "1px solid #E2E8F0",
-          fontSize: "12px",
-          fontWeight: "500",
-        }}
-      >
-        {/* Search bar */}
-        <MenuItem disableRipple
-        >
-          <TextField
-            placeholder="Rechercher une région"
-            variant="outlined"
-            fullWidth
-            size="small"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            sx={{
-              fontSize: "14px",
-              fontWeight: "500",
-              backgroundColor: "transparent",
-              "& .MuiOutlinedInput-root": {
-                backgroundColor: "transparent",
-                borderRadius: "4px",
-                height: "30px",
-              },
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </MenuItem>
+                  <Box
+                    sx={{ display: "flex", gap: "16px", alignItems: "center" }}
+                  >
+                    {/* First Select Box */}
+                    <Box
+                      sx={{
+                        width: selectedValue ? "200px" : "250px", // Adjust width conditionally
+                        transition: "width 0.3s ease", // Smooth transition
+                      }}
+                    >
+                      <Select
+                        value={selectedRegion}
+                        onChange={handleChangeRegion}
+                        displayEmpty
+                        renderValue={(selected) =>
+                          selected ? selected : "Sélectionner une région"
+                        }
+                        fullWidth
+                        MenuProps={{
+                          PaperProps: {
+                            style: {
+                              maxHeight: 250,
+                              width: 280,
+                            },
+                          },
+                          MenuListProps: {
+                            onMouseDown: (e) => e.preventDefault(),
+                          },
+                        }}
+                        sx={{
+                          width: "80%",
+                          height: "35px",
+                          padding: "4px 8px",
+                          borderRadius: "6px",
+                          border: "1px solid #E2E8F0",
+                          fontSize: "12px",
+                          fontWeight: "500",
+                        }}
+                      >
+                        {/* Search bar */}
+                        <MenuItem disableRipple>
+                          <TextField
+                            placeholder="Rechercher une région"
+                            variant="outlined"
+                            fullWidth
+                            size="small"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              backgroundColor: "transparent",
+                              "& .MuiOutlinedInput-root": {
+                                backgroundColor: "transparent",
+                                borderRadius: "4px",
+                                height: "30px",
+                              },
+                            }}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <Search />
+                                </InputAdornment>
+                              ),
+                            }}
+                          />
+                        </MenuItem>
 
-        {/* Dynamic filtered options */}
-        {filteredRegions.map((region, index) => (
-          <MenuItem key={index} value={region}>
-            {region}
-          </MenuItem>
-        ))}
-      </Select>
-    </Box>
+                        {/* Dynamic filtered options */}
+                        {filteredRegions.map((region, index) => (
+                          <MenuItem key={index} value={region}>
+                            {region}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </Box>
 
-    {/* Second Search Box (Conditionally Rendered) */}
-    {selectedRegion && (
-      <Box sx={{ width: "210px" }}>
-        <Select
-        value={selectedDepartment}
-        onChange={handleChangeDept}
-        displayEmpty
-        renderValue={(selected) =>
-          selected ? selected : "Sélectionner un département"
-        }
-        fullWidth
-        MenuProps={{
-          PaperProps: {
-            style: {
-              maxHeight: 250,
-              width: 250,
-            },
-          },
-          MenuListProps: {
-            onMouseDown: (e) => e.preventDefault(),
-          },
-        }}
-        sx={{
-          width: "100%",
-          height: "35px",
-          padding: "4px 8px",
-          borderRadius: "6px",
-          border: "1px solid #E2E8F0",
-          fontSize: "12px",
-          fontWeight: "500",
-        }}
-      >
-        {/* Search bar */}
-        <MenuItem disableRipple>
-          <TextField
-            placeholder="Rechercher un département"
-            variant="outlined"
-            fullWidth
-            size="small"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            sx={{
-              fontSize: "14px",
-              backgroundColor: "transparent",
-              "& .MuiOutlinedInput-root": {
-                backgroundColor: "transparent",
-                borderRadius: "4px",
-                height: "30px",
-              },
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </MenuItem>
+                    {/* Second Search Box (Conditionally Rendered) */}
+                    {selectedRegion && (
+                      <Box sx={{ width: "210px" }}>
+                        <Select
+                          value={selectedDepartment}
+                          onChange={handleChangeDept}
+                          displayEmpty
+                          renderValue={(selected) =>
+                            selected ? selected : "Sélectionner un département"
+                          }
+                          fullWidth
+                          MenuProps={{
+                            PaperProps: {
+                              style: {
+                                maxHeight: 250,
+                                width: 250,
+                              },
+                            },
+                            MenuListProps: {
+                              onMouseDown: (e) => e.preventDefault(),
+                            },
+                          }}
+                          sx={{
+                            width: "100%",
+                            height: "35px",
+                            padding: "4px 8px",
+                            borderRadius: "6px",
+                            border: "1px solid #E2E8F0",
+                            fontSize: "12px",
+                            fontWeight: "500",
+                          }}
+                        >
+                          {/* Search bar */}
+                          <MenuItem disableRipple>
+                            <TextField
+                              placeholder="Rechercher un département"
+                              variant="outlined"
+                              fullWidth
+                              size="small"
+                              value={searchTerm}
+                              onChange={(e) => setSearchTerm(e.target.value)}
+                              sx={{
+                                fontSize: "14px",
+                                backgroundColor: "transparent",
+                                "& .MuiOutlinedInput-root": {
+                                  backgroundColor: "transparent",
+                                  borderRadius: "4px",
+                                  height: "30px",
+                                },
+                              }}
+                              InputProps={{
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <Search />
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+                          </MenuItem>
 
-        {/* Dynamic filtered options */}
-        {filteredDepartments.map((dep, index) => (
-          <MenuItem key={index} value={dep}>
-            {dep}
-          </MenuItem>
-        ))}
-      </Select>
-      </Box>
-    )}
-  </Box>
+                          {/* Dynamic filtered options */}
+                          {filteredDepartments.map((dep, index) => (
+                            <MenuItem key={index} value={dep}>
+                              {dep}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </Box>
+                    )}
+                  </Box>
                 </Box>
                 <Box sx={{ height: "200px", width: "100%" }}>
                   <ResponsiveContainer width="100%" height="100%">
@@ -938,9 +967,11 @@ export default function NombrePrestations() {
                       data={regions}
                       margin={{ top: 10, right: 20, left: 10, bottom: 5 }}
                     >
-                      <XAxis dataKey="name" tick={{ fontSize: '10px', fontWeight:'400' }} />
-                      <YAxis tick={{ fontSize: '10px', fontWeight:'400'}}
-                       />
+                      <XAxis
+                        dataKey="name"
+                        tick={{ fontSize: "10px", fontWeight: "400" }}
+                      />
+                      <YAxis tick={{ fontSize: "10px", fontWeight: "400" }} />
                       <Bar dataKey="value" fill="#0066FF" barSize={12} />
                     </BarChart>
                   </ResponsiveContainer>

@@ -262,7 +262,7 @@ export default function ArgentGenere() {
                   width: "250px",
                   display: "flex",
                   justifyContent: "flex-end",
-                  gap:'20px'
+                  gap: "20px",
                 }}
               >
                 <Button
@@ -271,7 +271,7 @@ export default function ArgentGenere() {
                     fontWeight: "500",
                     textTransform: "none",
                     color: "#0C66E6",
-                    padding:'4px 4px'
+                    padding: "4px 4px",
                   }}
                 >
                   Semaine{" "}
@@ -282,7 +282,7 @@ export default function ArgentGenere() {
                     fontWeight: "500",
                     textTransform: "none",
                     color: "#818EA0",
-                    padding:'2px 2px'
+                    padding: "2px 2px",
                   }}
                 >
                   30 derniers jours{" "}
@@ -294,11 +294,15 @@ export default function ArgentGenere() {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={barData}
-                  margin={{ top: 20, right: 0, left: 0 , bottom:5}}
+                  margin={{ top: 20, right: 0, left: 0, bottom: 5 }}
                 >
                   <XAxis
                     dataKey="day"
-                    tick={{ fontSize: '10px', fontWeight: "400", color: "#818EA0" }}
+                    tick={{
+                      fontSize: "10px",
+                      fontWeight: "400",
+                      color: "#818EA0",
+                    }}
                     axisLine={{ stroke: "none" }}
                   />
                   <YAxis
@@ -326,19 +330,19 @@ export default function ArgentGenere() {
 
   return (
     <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
-
       {/* Main content */}
       <Box sx={{ flex: 1 }}>
         <NavBar />
 
         <Box
           sx={{
-            position:'relative',
-            px: 3, py:2,
+            position: "relative",
+            px: 3,
+            py: 2,
             backgroundColor: "white",
             height: "calc(100vh - 70px)",
-            display:'flex',
-            flexDirection:'column'
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           <Box
@@ -351,13 +355,18 @@ export default function ArgentGenere() {
             <Box>
               <Typography
                 variant="h5"
-                sx={{ fontSize: "24px", fontWeight: "600" ,mb:'8px'}}
+                sx={{ fontSize: "24px", fontWeight: "600", mb: "8px" }}
               >
                 Argent généré
               </Typography>
               <Typography
                 variant="body2"
-                sx={{color: "#818EA0" , fontSize:'14px', fontWeight:'400', mb:1 }}
+                sx={{
+                  color: "#818EA0",
+                  fontSize: "14px",
+                  fontWeight: "400",
+                  mb: 1,
+                }}
               >
                 Veuillez retrouver ici l'ensemble des comptes administrateurs
               </Typography>

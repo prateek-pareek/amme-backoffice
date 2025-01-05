@@ -200,7 +200,7 @@ export default function AccessAdministration() {
             </Box>
             <Button
               startIcon={<Plus />}
-              sx={{ color:'white',height: '2.5rem', backgroundColor:"#0C66E6" , fontSize:'1rem', fontWeight:'500', textTransform:'none',px:'1.5rem'}}
+              sx={{ color:'white',height: '2.5rem', backgroundColor:"#0C66E6" , fontSize:'1rem', fontWeight:'500', textTransform:'none',px:'1.5rem',borderRadius:'0.25rem'}}
               onClick={() => setCreateAccountOpen(true)}
             >
               Créer un compte
@@ -234,7 +234,7 @@ export default function AccessAdministration() {
       {users.map((user) => (
         <TableRow key={user.email}>
           {/* First column */}
-          <TableCell sx={{ width: "16.67%", fontSize: "0.875rem",fontWeight:'500',  p: "1.2rem",borderBottom:'1px solid #F6F7F9'  }}>
+          <TableCell sx={{ width: "16.67%", fontSize: "0.875rem",fontWeight:'500',  p: "1rem",borderBottom:'1px solid #F6F7F9'  }}>
             <Box sx={{ display: "flex", alignItems: "center",ml: "1.25rem", gap: "0.5rem", }}>
               {user.lastName}
             </Box>
@@ -324,12 +324,12 @@ export default function AccessAdministration() {
             fullWidth
             PaperProps={{
               sx: {
+                position:'fixed',
+                right:'0.5rem',
                 borderRadius: "1rem",
-                height: "96%",
-                width: '31.25rem', //500px
-                marginLeft: "65.625rem",//1050px
-                overflow: "hidden",
-                paddingX: "0.25rem 0.5rem", //4px 8px
+                height: "60rem",
+                width: '29rem', //500px
+                overflow: "hidden", //4px 8px
               },
             }}
           >
@@ -339,14 +339,14 @@ export default function AccessAdministration() {
                 justifyContent: "space-between",
                 alignItems: "center",
                 fontSize: "1.5rem", //24px
-                py: '1.25rem', //20px
                 px:'1.5rem', //24px
                 pb: "0rem",
+                mb: "0rem" 
               }}
             >
               <Typography
                 variant="h6"
-                sx={{ fontWeight: "600", fontSize: "1.5rem", mb: "0rem" }} //24px
+                sx={{ fontWeight: "600", fontSize: "1.5rem", }} //24px
               >
                 Création de compte
               </Typography>
@@ -354,14 +354,16 @@ export default function AccessAdministration() {
                 X
               </IconButton>
             </DialogTitle>
+            <Box>
             <Typography
               variant="body2"
               color="text.secondary"
-              sx={{ px: '1.5rem', mb: '1.25rem', mt: 0, fontSize: "0.875rem", fontWeight: "400" }} //20px, 14px
+              sx={{ px: '1.5rem', mb: '1rem',  fontSize: "0.875rem", fontWeight: "400" }} //20px, 14px
             >
               Veuillez compléter les informations ci-dessous afin de créer un
               nouveau compte
             </Typography>
+            </Box>
 
             <DialogContent sx={{ px: '1.5rem', py: "0.25rem" }}>
               {/* Input Fields Section */}
@@ -378,8 +380,8 @@ export default function AccessAdministration() {
                   sx={{ display: "flex", flexDirection: "column", gap: "0rem" }}
                 >
                   <Box sx={{ display: "flex" }}>
-                    <Typography variant="body2">Nom</Typography>
-                    <Typography variant="body2" sx={{ color: "#818EA0" }}>
+                    <Typography variant="body2" sx={{ fontWeight:'400'}}>Nom</Typography>
+                    <Typography variant="body2" sx={{ color: "#818EA0" ,  fontWeight:'400'}}>
                       (obligatoire)
                     </Typography>
                   </Box>
@@ -479,7 +481,7 @@ export default function AccessAdministration() {
                     }}
                   >
                     {/* Label Section */}
-                    <Box sx={{ flex: 1, textAlign: "left" }}>
+                    <Box sx={{  textAlign: "left" }}>
                       <Typography
                         variant="body2"
                         sx={{ fontSize: "0.875rem", fontWeight: 500 }} //14px
@@ -622,12 +624,12 @@ export default function AccessAdministration() {
             fullWidth
             PaperProps={{
               sx: {
-                borderRadius: "1rem", //16px
-                height: "98%",
-                width: '31.25rem', //500px
-                marginLeft: "65.625rem", //1050px
-                overflow: "hidden",
-                paddingX: "0.25rem 0.5rem", //4px 8px
+                position:'fixed',
+                right:'0.5rem',
+                borderRadius: "1rem",
+                height: "60rem",
+                width: '29rem', //500px
+                overflow: "hidden", //4px 8px
               },
             }}
           >
@@ -852,7 +854,7 @@ export default function AccessAdministration() {
               borderTop: '1px solid #E9EEF6', 
             }}
           >
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" sx={{ color: "#818EA0" }}>
               1-10 sur 240
             </Typography>
             <Box

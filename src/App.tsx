@@ -24,33 +24,41 @@ function App() {
   const shouldShowSidebar = !noSidebarRoutes.includes(location.pathname);
 
   return (
-    
-      <div style={{ display: "flex", width: "100%" }}>
-        {/* Sidebar */}
-        {shouldShowSidebar && <SideBar />}
-        {/* Main Content */}
-        <div style={{ flex: 1}}>
-          <Routes>
-            {/* Routes without sidebar */}
-            <Route path="/" element={<Page1 />} />
-            <Route path="/page2" element={<Page2 />} />
-            <Route path="/page3" element={<Page3 />} />
+    <div style={{ display: "flex", width: "100%" }}>
+      {/* Sidebar */}
+      {shouldShowSidebar && <SideBar />}
+      {/* Main Content */}
+      <div style={{ flex: 1 }}>
+        <Routes>
+          {/* Routes without sidebar */}
+          <Route path="/" element={<Page1 />} />
+          <Route path="/page2" element={<Page2 />} />
+          <Route path="/page3" element={<Page3 />} />
 
-            {/* Routes with sidebar */}
-            <Route path="/access-administration" element={<AccessAdministration />} />
-            <Route path="/statistiques" element={<NombrePrestations />} />
-            <Route path="/statistiques/prestations" element={<NombrePrestations />} />
-            <Route path="/statistiques/argent" element={<ArgentGenere />} />
-            <Route path="/statistiques/carte" element={<CarteParRegion />} />
-            <Route path="/statistiques/satisfaction" element={<NoteDeSatisfaction />} />
-            <Route path="/planning" element={<Planning />} />
-            <Route path="/presentation" element={<Presentation />} />
-            <Route path="/salaires" element={<Salaires />} />
-            <Route path="/factures" element={<Factures />} />
-            <Route path="/conges-payes" element={<Conges />} />
-          </Routes>
-        </div>
+          {/* Routes with sidebar */}
+          <Route
+            path="/access-administration"
+            element={<AccessAdministration />}
+          />
+          <Route path="/statistiques" element={<NombrePrestations />} />
+          <Route
+            path="/statistiques/prestations"
+            element={<NombrePrestations />}
+          />
+          <Route path="/statistiques/argent" element={<ArgentGenere />} />
+          <Route path="/statistiques/carte" element={<CarteParRegion />} />
+          <Route
+            path="/statistiques/satisfaction"
+            element={<NoteDeSatisfaction />}
+          />
+          <Route path="/planning" element={<Planning />} />
+          <Route path="/presentation" element={<Presentation />} />
+          <Route path="/salaires" element={<Salaires />} />
+          <Route path="/factures" element={<Factures />} />
+          <Route path="/conges-payes" element={<Conges />} />
+        </Routes>
       </div>
+    </div>
   );
 }
 

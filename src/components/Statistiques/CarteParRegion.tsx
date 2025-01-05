@@ -756,15 +756,15 @@ export default function CarteParRegion() {
                   )}
                 </ComposableMap>
               </Box>
-              <Box sx={{ width: "40%", pl: 3 , height:'100%'}}>
+              <Box sx={{ width: "40%", pl: 3, height: "100%" }}>
                 {/* total patient box */}
                 <Box
                   sx={{
                     p: 3,
                     border: "1px solid #E2E8F0",
                     borderRadius: "8px",
-                    mb: '24px',
-                    height:'20%'
+                    mb: "24px",
+                    height: "20%",
                   }}
                 >
                   <Box
@@ -776,7 +776,7 @@ export default function CarteParRegion() {
                   >
                     <Typography
                       variant="h6"
-                      sx={{ fontWeight: '500', fontSize: "16px" }}
+                      sx={{ fontWeight: "500", fontSize: "16px" }}
                     >
                       Total patient
                     </Typography>
@@ -786,8 +786,8 @@ export default function CarteParRegion() {
                         color: "green",
                         display: "flex",
                         alignItems: "center",
-                        fontSize:'10px',
-                        fontWeight: '400',
+                        fontSize: "10px",
+                        fontWeight: "400",
                       }}
                     >
                       <IoIosArrowUp style={{ fontSize: "20px" }} />
@@ -800,7 +800,7 @@ export default function CarteParRegion() {
                   <Typography
                     variant="h4"
                     sx={{
-                      fontWeight: '500',
+                      fontWeight: "500",
                       fontSize: "36px",
                       mb: 2,
                       color: "#0C66E6",
@@ -816,8 +816,8 @@ export default function CarteParRegion() {
                     p: 3,
                     border: "1px solid #E2E8F0",
                     borderRadius: "8px",
-                    mb: '24px',
-                    height:'20%'
+                    mb: "24px",
+                    height: "20%",
                   }}
                 >
                   <Box
@@ -829,7 +829,7 @@ export default function CarteParRegion() {
                   >
                     <Typography
                       variant="h6"
-                      sx={{ fontWeight: '500', fontSize: "16px" }}
+                      sx={{ fontWeight: "500", fontSize: "16px" }}
                     >
                       Région
                     </Typography>
@@ -839,8 +839,8 @@ export default function CarteParRegion() {
                         color: "green",
                         display: "flex",
                         alignItems: "center",
-                        fontSize:'10px',
-                        fontWeight: '400',
+                        fontSize: "10px",
+                        fontWeight: "400",
                       }}
                     >
                       <IoIosArrowUp style={{ fontSize: "20px" }} />
@@ -854,8 +854,8 @@ export default function CarteParRegion() {
                   <Typography
                     variant="h4"
                     sx={{
-                        fontWeight: '500',
-                        fontSize: "36px",
+                      fontWeight: "500",
+                      fontSize: "36px",
                       mb: 2,
                       color: "#0C66E6",
                     }}
@@ -877,7 +877,7 @@ export default function CarteParRegion() {
                 >
                   <Typography
                     variant="h6"
-                    sx={{ fontWeight: '500', fontSize: "16px", mb: 1 }}
+                    sx={{ fontWeight: "500", fontSize: "16px", mb: 1 }}
                   >
                     Classement du nombre de patients par région
                   </Typography>

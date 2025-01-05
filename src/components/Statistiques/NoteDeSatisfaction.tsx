@@ -153,7 +153,7 @@ const RatingStars = ({ rating }) => {
 };
 
 export default function NoteDeSatisfaction() {
-    const [selectedFilter, setSelectedFilter] = useState<string>("Infirmier(s)");
+  const [selectedFilter, setSelectedFilter] = useState<string>("Infirmier(s)");
   const [selectedNurse, setSelectedNurse] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
   const [page, setPage] = useState(1);
@@ -195,16 +195,17 @@ export default function NoteDeSatisfaction() {
   return (
     <Box sx={{ display: "flex", bgcolor: "white", minHeight: "100vh" }}>
       {/* <SideBar /> */}
-      <Box sx={{ flex: 1, }}>
+      <Box sx={{ flex: 1 }}>
         <NavBar />
         <Box
           sx={{
-           position:'relative',
-            px: 3, py:2,
+            position: "relative",
+            px: 3,
+            py: 2,
             backgroundColor: "white",
             height: "calc(100vh - 70px)",
-            display:'flex',
-            flexDirection:'column'
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           {/* Header */}
@@ -221,15 +222,17 @@ export default function NoteDeSatisfaction() {
             <Box>
               <Typography
                 variant="h5"
-                
-                sx={{ fontSize: "24px", fontWeight: "600" ,mb:'8px'}}
+                sx={{ fontSize: "24px", fontWeight: "600", mb: "8px" }}
               >
                 Note de satisfaction
               </Typography>
               <Typography
                 variant="body2"
                 sx={{
-                    color: "#818EA0" , fontSize:'14px', fontWeight:'400', mb:1 
+                  color: "#818EA0",
+                  fontSize: "14px",
+                  fontWeight: "400",
+                  mb: 1,
                 }}
               >
                 Veuillez retrouver ici l'ensemble des notes de satisfaction
@@ -240,10 +243,9 @@ export default function NoteDeSatisfaction() {
               sx={{
                 minWidth: isMobile ? "100%" : "200px",
                 height: "120px",
-                boxShadow:'none',
+                boxShadow: "none",
                 borderRadius: "8px",
-                border: "1px solid #E2E8F0"
-                
+                border: "1px solid #E2E8F0",
               }}
             >
               <CardContent
@@ -261,7 +263,7 @@ export default function NoteDeSatisfaction() {
                     sx={{
                       color: "#151515",
                       fontSize: "16px",
-                      fontWeight:'500',
+                      fontWeight: "500",
                       mb: 1,
                     }}
                   >
@@ -279,7 +281,13 @@ export default function NoteDeSatisfaction() {
                   >
                     <IoIosArrowUp style={{ fontSize: "10px" }} />
                     +12%{" "}
-                    <span style={{ color: "black", marginLeft: "5px" ,fontWeight:'10px',}}>
+                    <span
+                      style={{
+                        color: "black",
+                        marginLeft: "5px",
+                        fontWeight: "10px",
+                      }}
+                    >
                       vs mois dernier
                     </span>
                   </Typography>
@@ -292,7 +300,7 @@ export default function NoteDeSatisfaction() {
                     sx={{
                       color: "#0C66E6",
                       fontSize: "36px",
-                      fontWeight:'500'
+                      fontWeight: "500",
                     }}
                   >
                     {averageRating}
@@ -301,7 +309,7 @@ export default function NoteDeSatisfaction() {
                     sx={{
                       color: "#0C66E6",
                       fontSize: "36px",
-                      fontWeight:'500'
+                      fontWeight: "500",
                     }}
                   >
                     /5
@@ -313,71 +321,74 @@ export default function NoteDeSatisfaction() {
 
           {/* Filters */}
           <Box
-  sx={{
-    display: "flex",
-    flexDirection: isMobile ? "column" : "row",
-    gap: 2,
-  }}
->
-  <Select
-    value={selectedNurse}
-    onChange={(e) => setSelectedNurse(e.target.value)}
-    displayEmpty
-    fullWidth
-    sx={{
-      bgcolor: "white",
-      height: 40,
-      "& .MuiSelect-select": {
-        py: 0, // Adjust padding to align text properly
-        height: "100%", // Ensures the text aligns within the given height
-        display: "flex",
-        alignItems: "center",
-      },
-      flex: isMobile ? "none" : 1,
-    }}
-  >
-    <MenuItem value="">
-      Sélectionner une infirmière parmi la liste
-    </MenuItem>
-    {Array.from(new Set(demoData.map((d) => d.nurse))).map((nurse) => (
-      <MenuItem key={nurse} value={nurse}>
-        {nurse}
-      </MenuItem>
-    ))}
-  </Select>
+            sx={{
+              display: "flex",
+              flexDirection: isMobile ? "column" : "row",
+              gap: 2,
+            }}
+          >
+            <Select
+              value={selectedNurse}
+              onChange={(e) => setSelectedNurse(e.target.value)}
+              displayEmpty
+              fullWidth
+              sx={{
+                bgcolor: "white",
+                height: 40,
+                "& .MuiSelect-select": {
+                  py: 0, // Adjust padding to align text properly
+                  height: "100%", // Ensures the text aligns within the given height
+                  display: "flex",
+                  alignItems: "center",
+                },
+                flex: isMobile ? "none" : 1,
+              }}
+            >
+              <MenuItem value="">
+                Sélectionner une infirmière parmi la liste
+              </MenuItem>
+              {Array.from(new Set(demoData.map((d) => d.nurse))).map(
+                (nurse) => (
+                  <MenuItem key={nurse} value={nurse}>
+                    {nurse}
+                  </MenuItem>
+                )
+              )}
+            </Select>
 
-  <Select
-    value={selectedRegion}
-    onChange={(e) => setSelectedRegion(e.target.value)}
-    displayEmpty
-    fullWidth
-    sx={{
-      bgcolor: "white",
-      height: 40,
-      "& .MuiSelect-select": {
-        py: 0, // Adjust padding
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-      },
-      flex: isMobile ? "none" : 1,
-    }}
-  >
-    <MenuItem value="">
-      Sélectionner une région parmi la liste
-    </MenuItem>
-    {Array.from(new Set(demoData.map((d) => d.location))).map((location) => (
-      <MenuItem key={location} value={location}>
-        {location}
-      </MenuItem>
-    ))}
-  </Select>
+            <Select
+              value={selectedRegion}
+              onChange={(e) => setSelectedRegion(e.target.value)}
+              displayEmpty
+              fullWidth
+              sx={{
+                bgcolor: "white",
+                height: 40,
+                "& .MuiSelect-select": {
+                  py: 0, // Adjust padding
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                },
+                flex: isMobile ? "none" : 1,
+              }}
+            >
+              <MenuItem value="">
+                Sélectionner une région parmi la liste
+              </MenuItem>
+              {Array.from(new Set(demoData.map((d) => d.location))).map(
+                (location) => (
+                  <MenuItem key={location} value={location}>
+                    {location}
+                  </MenuItem>
+                )
+              )}
+            </Select>
 
-  <Box sx={{ width: isMobile ? "100%" : "auto" }}>
-    <Calendar />
-  </Box>
-</Box>
-
+            <Box sx={{ width: isMobile ? "100%" : "auto" }}>
+              <Calendar />
+            </Box>
+          </Box>
 
           <Box
             sx={{
@@ -424,95 +435,164 @@ export default function NoteDeSatisfaction() {
             >
               Patient(s)
             </Button>
-            
           </Box>
 
           {/* Table */}
-          <TableContainer component={Paper} elevation={0} sx={{ boxShadow: "none" }}>
-            <Table size='small'>
+          <TableContainer
+            component={Paper}
+            elevation={0}
+            sx={{ boxShadow: "none" }}
+          >
+            <Table size="small">
               <TableHead sx={{ backgroundColor: "#F6F7F9" }}>
                 <TableRow>
                   <TableCell
-                    sx={{  color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none",}}>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    Infirmière <PiSortAscendingLight size={18} />
-                    </Box>
-                  </TableCell>
-                  <TableCell
-                    sx={{  color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none",}}
+                    sx={{
+                      color: "#818EA0",
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      borderBottom: "none",
+                    }}
                   >
-                    <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    Note <PiSortAscendingLight size={18} />
+                    <Box
+                      sx={{ display: "flex", alignItems: "center", gap: "8px" }}
+                    >
+                      Infirmière <PiSortAscendingLight size={18} />
                     </Box>
                   </TableCell>
                   <TableCell
-                    sx={{  color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none",}}
+                    sx={{
+                      color: "#818EA0",
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      borderBottom: "none",
+                    }}
                   >
-                    <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    Commentaire <PiSortAscendingLight size={18} />
+                    <Box
+                      sx={{ display: "flex", alignItems: "center", gap: "8px" }}
+                    >
+                      Note <PiSortAscendingLight size={18} />
                     </Box>
-                    
                   </TableCell>
                   <TableCell
-                    sx={{  color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none",}}
+                    sx={{
+                      color: "#818EA0",
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      borderBottom: "none",
+                    }}
+                  >
+                    <Box
+                      sx={{ display: "flex", alignItems: "center", gap: "8px" }}
+                    >
+                      Commentaire <PiSortAscendingLight size={18} />
+                    </Box>
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color: "#818EA0",
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      borderBottom: "none",
+                    }}
                   >
                     Localisation
                   </TableCell>
                   <TableCell
-                    sx={{ color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none",}}
+                    sx={{
+                      color: "#818EA0",
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      borderBottom: "none",
+                    }}
                   >
-                    <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        Date 
-                    <PiSortAscendingLight size={18} />
+                    <Box
+                      sx={{ display: "flex", alignItems: "center", gap: "8px" }}
+                    >
+                      Date
+                      <PiSortAscendingLight size={18} />
                     </Box>
-                    
                   </TableCell>
-                  {selectedFilter === "Infirmier(s)" &&
-                    (<TableCell
-                        sx={{  color: "#818EA0", fontSize: "14px" ,fontWeight:'500', borderBottom: "none",}}
-                      >
-                        Profession
-                      </TableCell>
-                    )}
-                  
+                  {selectedFilter === "Infirmier(s)" && (
+                    <TableCell
+                      sx={{
+                        color: "#818EA0",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        borderBottom: "none",
+                      }}
+                    >
+                      Profession
+                    </TableCell>
+                  )}
                 </TableRow>
               </TableHead>
               <TableBody>
                 {paginatedData.map((row) => (
                   <TableRow key={row.id}>
                     <TableCell
-                      sx={{  fontSize: "14px",fontWeight:'500',  p: "20px",borderBottom:'1px solid #F6F7F9'  }}
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        p: "20px",
+                        borderBottom: "1px solid #F6F7F9",
+                      }}
                     >
                       {row.nurse}
                     </TableCell>
                     <TableCell
-                    sx={{ width: "16%", fontSize: "14px",fontWeight:'500',  p: "20px",borderBottom:'1px solid #F6F7F9'  }}>
+                      sx={{
+                        width: "16%",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        p: "20px",
+                        borderBottom: "1px solid #F6F7F9",
+                      }}
+                    >
                       <RatingStars rating={row.rating} />
                     </TableCell>
                     <TableCell
-                      sx={{  fontSize: "14px",fontWeight:'500',  p: "20px",borderBottom:'1px solid #F6F7F9'  }}
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        p: "20px",
+                        borderBottom: "1px solid #F6F7F9",
+                      }}
                     >
                       {row.comment}
                     </TableCell>
                     <TableCell
-                      sx={{  fontSize: "14px",fontWeight:'500',  p: "20px",borderBottom:'1px solid #F6F7F9'  }}
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        p: "20px",
+                        borderBottom: "1px solid #F6F7F9",
+                      }}
                     >
                       {row.location}
                     </TableCell>
                     <TableCell
-                      sx={{ fontSize: "14px",fontWeight:'500',  p: "20px",borderBottom:'1px solid #F6F7F9'  }}
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        p: "20px",
+                        borderBottom: "1px solid #F6F7F9",
+                      }}
                     >
                       {row.date}
                     </TableCell>
-                    {selectedFilter === "Infirmier(s)" &&
-                    (<TableCell
-                        sx={{  fontSize: "14px",fontWeight:'500',  p: "20px",borderBottom:'1px solid #F6F7F9'  }}
+                    {selectedFilter === "Infirmier(s)" && (
+                      <TableCell
+                        sx={{
+                          fontSize: "14px",
+                          fontWeight: "500",
+                          p: "20px",
+                          borderBottom: "1px solid #F6F7F9",
+                        }}
                       >
                         {row.profession}
                       </TableCell>
                     )}
-                    
-                    
                   </TableRow>
                 ))}
               </TableBody>
@@ -565,7 +645,7 @@ export default function NoteDeSatisfaction() {
               disabled={page === totalPages}
               size="small"
             >
-              <ChevronRight/>
+              <ChevronRight />
             </IconButton>
           </Box>
         </Box>
