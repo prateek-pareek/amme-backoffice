@@ -19,7 +19,7 @@ import { ResponsiveContainer, XAxis, YAxis, Bar, BarChart } from "recharts";
 import NavBar from "../NavBar";
 import SideBar from "../SideBar";
 import { Search } from "@mui/icons-material";
-import DateRangePicker from "../Presentation/Calendar";
+import DateRangePicker from "./Calendar";
 
 const lineData = [
   5000, 7000, 8000, 9500, 9000, 10000, 9500, 11000, 10000, 12000, 11000, 11500,
@@ -151,23 +151,7 @@ export default function NombrePrestations() {
     setBarData(initialBarData);
   };
 
-  // const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setSelectedDate(event.target.value);
-  // };
-
-  // const formatDate = (date: string): string => {
-  //   if (!date) return "";
-  //   const dateObj = new Date(date);
-  //   const options: Intl.DateTimeFormatOptions = {
-  //     day: "2-digit",
-  //     month: "short",
-  //     year: "numeric",
-  //   };
-  //   const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(
-  //     dateObj
-  //   );
-  //   return formattedDate.replace(/ /g, "-");
-  // };
+ 
 
   const handleFilterClick = (filter: string) => {
     setSelectedFilter(filter);

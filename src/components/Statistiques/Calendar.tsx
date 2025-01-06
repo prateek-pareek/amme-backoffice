@@ -1,30 +1,14 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState } from "react";
 import { Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-interface TimeState {
-  hours: string;
-  minutes: string;
-}
-
-interface DateTimeRange {
-  date: Date | null;
-  time: TimeState;
-}
+import { IoIosArrowDown } from "react-icons/io";
 
 const DateRangePicker: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [selectedDateRange, setSelectedDateRange] = useState<string>("");
-  const [startDateTime, setStartDateTime] = useState<DateTimeRange>({
-    date: null,
-    time: { hours: "00", minutes: "00" },
-  });
-  const [endDateTime, setEndDateTime] = useState<DateTimeRange>({
-    date: null,
-    time: { hours: "06", minutes: "00" },
-  });
-
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
   const [currentMonth, setCurrentMonth] = useState<number>(8); // September (0-indexed)
   const [currentYear, setCurrentYear] = useState<number>(2024);
 
@@ -55,38 +39,14 @@ const DateRangePicker: React.FC = () => {
 
   const calendarDays: number[] = getDaysInMonth(currentMonth, currentYear);
 
-  const handleTimeChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    field: keyof TimeState,
-    type: "start" | "end"
-  ): void => {
-    const value = e.target.value;
-    const maxValue = field === "hours" ? 23 : 59;
-
-    if (/^\d*$/.test(value) && parseInt(value) <= maxValue) {
-      const updatedTime = { [field]: value.padStart(2, "0") };
-      if (type === "start") {
-        setStartDateTime((prev) => ({
-          ...prev,
-          time: { ...prev.time, ...updatedTime },
-        }));
-      } else {
-        setEndDateTime((prev) => ({
-          ...prev,
-          time: { ...prev.time, ...updatedTime },
-        }));
-      }
-    }
-  };
-
   const handleDateSelect = (day: number, type: "start" | "end"): void => {
     if (day === 0) return; // Ignore padding days
     const selectedDate = new Date(currentYear, currentMonth, day);
 
     if (type === "start") {
-      setStartDateTime((prev) => ({ ...prev, date: selectedDate }));
+      setStartDate(selectedDate);
     } else {
-      setEndDateTime((prev) => ({ ...prev, date: selectedDate }));
+      setEndDate(selectedDate);
     }
   };
 
@@ -97,14 +57,10 @@ const DateRangePicker: React.FC = () => {
   };
 
   const handleApply = (): void => {
-    if (startDateTime.date && endDateTime.date) {
-      const isSameYear =
-        startDateTime.date.getFullYear() === endDateTime.date.getFullYear();
-
-      const startFormatted = `${formatDate(startDateTime.date)}`;
-      const endFormatted = `${formatDate(endDateTime.date)} ${
-        isSameYear ? ` ${endDateTime.date.getFullYear()}` : ""
-      } - ${endDateTime.time.hours}:${endDateTime.time.minutes}`;
+    if (startDate && endDate) {
+      const isSameYear = startDate.getFullYear() === endDate.getFullYear();
+      const startFormatted = `${formatDate(startDate)}`;
+      const endFormatted = `${formatDate(endDate)} ${isSameYear ? ` ${endDate.getFullYear()}` : ""}`;
 
       setSelectedDateRange(`${startFormatted} au ${endFormatted}`);
     }
@@ -130,19 +86,27 @@ const DateRangePicker: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full max-w-sm h-[40px]">
+    <div className="relative w-[19rem] max-w-sm h-[2.2rem]">
       {/* Trigger Button */}
       <div
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 p-2 border rounded-md cursor-pointer hover:bg-gray-50"
-        style={{height:'40px', width:'300px'}}
+        className={`flex items-center gap-2 p-2 border rounded-md cursor-pointer hover:bg-gray-50 text-[0.875rem] font-medium ${
+          selectedDateRange ? "text-[#151515]" : "text-[#818EA0]"
+        }`}
+        style={{ height: "40px", width: "300px" }}
       >
         <Calendar className="h-4 w-4 text-[#151515]" />
 
         <Input
-          value={selectedDateRange || "Veuillez sélectionner une date"}
+          value={selectedDateRange || "Aujourd’hui - 19 Sep 2024"}
           readOnly
-          className="border-0 focus-visible:ring-0 p-0 text-[#818EA0]"
+          className={`border-0 focus-visible:ring-0 p-0 text-[0.875rem] font-normal ${
+            selectedDateRange ? "text-[#151515]" : "text-[#151515]"
+          }`}
+        />
+        <IoIosArrowDown
+          size="1.25rem"
+          className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
         />
       </div>
 
@@ -169,42 +133,62 @@ const DateRangePicker: React.FC = () => {
             </div>
 
             {/* Calendar */}
-            <div className="grid grid-cols-7 gap-1 mb-4">
-  {["LUN", "MAR", "MER", "JEU", "VEN", "SAM", "DIM"].map((day) => (
-    <div key={day} className="text-center text-sm text-gray-500 py-1">
-      {day}
-    </div>
-  ))}
-  {calendarDays.map((day, index) => (
-    <button
-      key={index}
-      className={`p-2 text-center rounded hover:bg-blue-100 ${
-        day > 0 &&
-        (startDateTime.date?.getDate() === day ||
-          endDateTime.date?.getDate() === day)
-          ? "bg-[#0C66E6] text-white"
-          : ""
-      }`}
-      onClick={() =>
-        handleDateSelect(day, !startDateTime.date ? "start" : "end")
-      }
-    >
-      {day > 0 ? day : ""}
-    </button>
-  ))}
-</div>
+            <div className="grid grid-cols-7 gap-0 mb-2">
+              {["LUN", "MAR", "MER", "JEU", "VEN", "SAM", "DIM"].map((day) => (
+                <div key={day} className="text-center text-sm text-gray-500 py-1">
+                  {day}
+                </div>
+              ))}
+              {calendarDays.map((day, index) => {
+                const isSelected =
+                  day > 0 && (startDate?.getDate() === day || endDate?.getDate() === day);
 
+                const isInRange =
+                  day > 0 &&
+                  startDate &&
+                  endDate &&
+                  new Date(currentYear, currentMonth, day) >= startDate &&
+                  new Date(currentYear, currentMonth, day) <= endDate;
 
-           
+                return (
+                  <button
+                    key={index}
+                    className={`p-2 text-center rounded  ${
+                      isSelected
+                        ? "bg-[#0C66E6] text-white"
+                        : isInRange
+                        ? "bg-[#F3FBFF]"
+                        : ""
+                    }`}
+                    onClick={() =>
+                      handleDateSelect(day, !startDate ? "start" : "end")
+                    }
+                  >
+                    {day > 0 ? day : ""}
+                  </button>
+                );
+              })}
+            </div>
 
             {/* Buttons */}
             <div className="flex gap-2 justify-end">
-              <Button variant="outline"
-              style={{fontSize:'12px', fontWeight:'500'}}
-               onClick={() => setOpen(false)}>
+              <Button
+                variant="outline"
+                style={{ fontSize: "0.75rem", fontWeight: "500" }}
+                onClick={() => setOpen(false)}
+              >
                 Annuler
               </Button>
-              <Button onClick={handleApply} style={{backgroundColor:'#0C66E6', fontSize:'12px', fontWeight:'500'}}>Appliquer</Button>
+              <Button
+                onClick={handleApply}
+                style={{
+                  backgroundColor: "#0C66E6",
+                  fontSize: "0.75rem",
+                  fontWeight: "500",
+                }}
+              >
+                Appliquer
+              </Button>
             </div>
           </div>
         </div>
