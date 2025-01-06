@@ -272,7 +272,7 @@ const SideBar: React.FC<SidebarProps> = () => {
                        }}
                    >
                         <IoIosArrowDown
-                            size="1rem"
+                            size="1.25rem"
                             style={{
                                 transform: isSublistOpen ? "rotate(180deg)" : "rotate(0)",
                                 transition: "transform 0.2s ease",

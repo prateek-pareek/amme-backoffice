@@ -14,10 +14,9 @@ import {
   Typography,
 } from "@mui/material";
 import { ChevronLeft, ChevronRight, Search } from "@mui/icons-material";
-import SideBar from "../SideBar";
 import NavBar from "../NavBar";
 import { PiSortAscendingLight } from "react-icons/pi";
-import Calendar from "../Presentation/Calendar";
+import Calendar from "./Calendar";
 import EditPaySlip from "./EditPayslip1";
 import EditPaySlip2 from "./EditPaySlip2";
 import EditPaySlip3 from "./EditPaySlip3";

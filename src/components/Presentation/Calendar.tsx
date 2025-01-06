@@ -2,6 +2,7 @@ import React, { useState, ChangeEvent } from "react";
 import { Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { IoIosArrowDown } from "react-icons/io";
 
 interface TimeState {
   hours: string;
@@ -130,20 +131,31 @@ const DateRangePicker: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full max-w-sm h-[40px]">
+    <div className="relative w-[19rem] max-w-sm h-[2.2rem]">
       {/* Trigger Button */}
       <div
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 p-2 border rounded-md cursor-pointer hover:bg-gray-50 text-[14px] font-medium"
+        className={`flex items-center gap-2 p-2 border rounded-md cursor-pointer hover:bg-gray-50 text-[0.875rem] font-medium ${
+          selectedDateRange ? "text-[#151515]" : "text-[#818EA0]"
+        }`}
         style={{height:'40px', width:'300px'}}
       >
         <Calendar className="h-4 w-4 text-[#151515]" />
 
-        <Input
-          value={selectedDateRange || "Veuillez sélectionner une date"}
-          readOnly
-          className="border-0 focus-visible:ring-0 p-0 text-[#818EA0]"
-        />
+        <Input 
+    value={selectedDateRange || "Veuillez sélectionner une date"} 
+    readOnly 
+    className={`border-0 focus-visible:ring-0 p-0 ${ 
+        selectedDateRange ? 'text-[#151515]' : 'text-[#818EA0]' 
+    }`} 
+/>
+<IoIosArrowDown
+    size="1.25rem"
+    className={`transition-transform duration-300 ${
+      open ? "rotate-180" : ""
+    }`}
+  />
+
       </div>
 
       {/* Popup Content */}
@@ -169,34 +181,45 @@ const DateRangePicker: React.FC = () => {
             </div>
 
             {/* Calendar */}
-            <div className="grid grid-cols-7 gap-1 mb-4">
+            <div className="grid grid-cols-7 gap-0 mb-2">
   {["LUN", "MAR", "MER", "JEU", "VEN", "SAM", "DIM"].map((day) => (
     <div key={day} className="text-center text-sm text-gray-500 py-1">
       {day}
     </div>
   ))}
-  {calendarDays.map((day, index) => (
-    <button
-      key={index}
-      className={`p-2 text-center rounded hover:bg-blue-100 ${
-        day > 0 &&
-        (startDateTime.date?.getDate() === day ||
-          endDateTime.date?.getDate() === day)
-          ? "bg-[#0C66E6] text-white"
-          : ""
-      }`}
-      onClick={() =>
-        handleDateSelect(day, !startDateTime.date ? "start" : "end")
-      }
-    >
-      {day > 0 ? day : ""}
-    </button>
-  ))}
+  {calendarDays.map((day, index) => {
+    const isSelected =
+      day > 0 &&
+      (startDateTime.date?.getDate() === day || endDateTime.date?.getDate() === day);
+
+    const isInRange =
+      day > 0 &&
+      startDateTime.date &&
+      endDateTime.date &&
+      new Date(startDateTime.date.getFullYear(), startDateTime.date.getMonth(), day) >=
+        startDateTime.date &&
+      new Date(startDateTime.date.getFullYear(), startDateTime.date.getMonth(), day) <=
+        endDateTime.date;
+
+    return (
+      <button
+        key={index}
+        className={`p-2 text-center rounded  ${
+          isSelected ? "bg-[#0C66E6] text-white" : isInRange ? "bg-[#F3FBFF]" : ""
+        }`}
+        onClick={() =>
+          handleDateSelect(day, !startDateTime.date ? "start" : "end")
+        }
+      >
+        {day > 0 ? day : ""}
+      </button>
+    );
+  })}
 </div>
 
 
-            <div className="flex items-center justify-between mb-4">
-              <span style={{fontSize:'14px', fontWeight:'500', color:'#151515'}}>Heure</span>
+            <div className="flex items-center justify-between mb-6">
+              <span style={{fontSize:'0.875rem', fontWeight:'500', color:'#151515'}}>Heure</span>
               <div className="flex items-center gap-2">
                 <Input
                   type="number"
@@ -217,11 +240,11 @@ const DateRangePicker: React.FC = () => {
             {/* Buttons */}
             <div className="flex gap-2 justify-end">
               <Button variant="outline"
-              style={{fontSize:'12px', fontWeight:'500'}}
+              style={{fontSize:'0.75rem', fontWeight:'500'}}
                onClick={() => setOpen(false)}>
                 Annuler
               </Button>
-              <Button onClick={handleApply} style={{backgroundColor:'#0C66E6', fontSize:'12px', fontWeight:'500'}}>Appliquer</Button>
+              <Button onClick={handleApply} style={{backgroundColor:'#0C66E6', fontSize:'0.75rem', fontWeight:'500'}}>Appliquer</Button>
             </div>
           </div>
         </div>
