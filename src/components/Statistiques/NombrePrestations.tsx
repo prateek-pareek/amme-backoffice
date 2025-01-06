@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Box,
   Button,
@@ -20,6 +20,8 @@ import NavBar from "../NavBar";
 import SideBar from "../SideBar";
 import { Search } from "@mui/icons-material";
 import DateRangePicker from "./Calendar";
+import DateRangePicker2 from "./CalendarwithoutTextField";
+import { IoIosArrowDown } from "react-icons/io";
 
 const lineData = [
   5000, 7000, 8000, 9500, 9000, 10000, 9500, 11000, 10000, 12000, 11000, 11500,
@@ -75,9 +77,9 @@ const initialBarData = [
 ];
 
 export default function NombrePrestations() {
-  // const [selectedDate, setSelectedDate] = useState<string>(
-  //   "Aujourd’hui - 19 Sep 2024"
-  // );
+  const [selectedTimeRange, setSelectedTimeRange] = useState<string>(
+    "12 derniers mois"
+  );
   const [selectedFilter, setSelectedFilter] = useState<string>("parRegion");
   const [selectedSublist, setSelectedSublist] = useState<string>(
     "Nombre de prestations"
@@ -88,6 +90,32 @@ export default function NombrePrestations() {
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedService, setSelectedService] = useState("");
+  const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
+
+  const calendarRef = useRef<HTMLDivElement>(null);
+
+  // Close the calendar if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
+        setIsCalendarOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  
+
+  
+  const handleSelectClick = (e : any) => {
+    e.preventDefault();
+    setIsCalendarOpen((prev) => !prev); // Toggle the calendar visibility
+  };
 
   const nurses = [
     "Aphélie Sanchez",
@@ -642,21 +670,28 @@ export default function NombrePrestations() {
                     >
                       Total
                     </Typography>
-                    <select
-                      style={{
-                        padding: "4px 8px",
-                        borderRadius: "4px",
-                        border: "1px solid #E2E8F0",
-                        fontSize: "10px",
-                        fontWeight: "500",
-                        height: "22px",
-                      }}
-                    >
-                      <option value="dernier-mois">Dernier mois</option>
-                      <option value="3-derniers-mois">3 Derniers mois</option>
-                      <option value="6-derniers-mois">6 Derniers mois</option>
-                      <option value="12-derniers-mois">12 Derniers mois</option>
-                    </select>
+                    <div className="relative">
+      <div className="relative cursor-pointer" onClick={handleSelectClick}>
+        <button
+          className="cursor-pointer px-2 py-1 pr-8 rounded border border-slate-200 text-xs font-medium h-[22px] min-w-[120px] text-left bg-white"
+        >
+          {selectedTimeRange}
+        </button>
+        <IoIosArrowDown
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
+          size={14}
+        />
+      </div>
+
+      {isCalendarOpen && (
+        <div ref={calendarRef} className="absolute right-[-1rem] top-full mt-[-2rem] z-50">
+          <DateRangePicker2 setselectedTimeRange={setSelectedTimeRange} 
+          setIsCalendarOpen={setIsCalendarOpen}/>
+        </div>
+      )}
+    </div>
+
+
                   </Box>
                   <Box sx={{ height: "20px" }}>
                     <LineChart
