@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logoIcon from "../assets/logo.svg";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import api from "./../axiosConfig";
 
 const ResetPassword: React.FC = () => {
@@ -10,6 +10,7 @@ const ResetPassword: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
 
   // const handleSubmit = async (e: React.FormEvent) => {
   //   e.preventDefault();
@@ -58,6 +59,7 @@ const ResetPassword: React.FC = () => {
     try {
       const response = await api.post("/auth/reset-password", data);
       console.log("password reset successfull:", response.data);
+      navigate("/success");
     } catch (error) {
       console.error(
         "Error updating user details:",
