@@ -15,12 +15,19 @@ import NoteDeSatisfaction from "./components/Statistiques/NoteDeSatisfaction";
 import ArgentGenere from "./components/Statistiques/ArgentGenere";
 import SideBar from "./components/SideBar";
 import ResetPassword from "./components/ResetPassword";
+import SuccessScreen from "./components/SuccessScreen";
 
 function App() {
   const location = useLocation();
 
   // List of routes where the sidebar should not be displayed
-  const noSidebarRoutes = ["/", "/page2", "/page3", "/resetPassword"];
+  const noSidebarRoutes = [
+    "/",
+    "/page2",
+    "/page3",
+    "/resetPassword",
+    "/success",
+  ];
 
   const shouldShowSidebar = !noSidebarRoutes.includes(location.pathname);
 
@@ -36,6 +43,7 @@ function App() {
           <Route path="/page2" element={<Page2 />} />
           <Route path="/page3" element={<Page3 />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
+          <Route path="/success" element={<SuccessScreen />} />
 
           {/* Routes with sidebar */}
           <Route
