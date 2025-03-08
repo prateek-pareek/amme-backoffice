@@ -1,8 +1,9 @@
 import React from "react";
 import logoIcon from "../assets/logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Page1: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="w-[367px] max-w-sm p-6 bg-white rounded-lg mx-auto mt-24">
       {/* Logo */}
@@ -15,7 +16,10 @@ const Page1: React.FC = () => {
       </div>
 
       {/* Title */}
-      <h2 className="mb-6 text-[24px] font-semibold text-left text-black">
+      <h2
+        className="mb-6 text-[24px] font-semibold text-left text-black cursor-pointer"
+        onClick={() => navigate("/resetPassword")}
+      >
         Connexion
       </h2>
 
