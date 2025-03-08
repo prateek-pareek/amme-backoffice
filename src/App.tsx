@@ -14,12 +14,13 @@ import NombrePrestations from "./components/Statistiques/NombrePrestations";
 import NoteDeSatisfaction from "./components/Statistiques/NoteDeSatisfaction";
 import ArgentGenere from "./components/Statistiques/ArgentGenere";
 import SideBar from "./components/SideBar";
+import ResetPassword from "./components/ResetPassword";
 
 function App() {
   const location = useLocation();
 
   // List of routes where the sidebar should not be displayed
-  const noSidebarRoutes = ["/", "/page2", "/page3"];
+  const noSidebarRoutes = ["/", "/page2", "/page3", "/resetPassword"];
 
   const shouldShowSidebar = !noSidebarRoutes.includes(location.pathname);
 
@@ -34,7 +35,8 @@ function App() {
           <Route path="/" element={<Page1 />} />
           <Route path="/page2" element={<Page2 />} />
           <Route path="/page3" element={<Page3 />} />
-          
+          <Route path="/resetPassword" element={<ResetPassword />} />
+
           {/* Routes with sidebar */}
           <Route
             path="/access-administration"
