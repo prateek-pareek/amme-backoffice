@@ -58,7 +58,7 @@ const ResetPassword: React.FC = () => {
 
     try {
       const response = await api.post("/auth/reset-password", data);
-      console.log("password reset successfull:", response.data);
+      alert("Password reset successful!");
       navigate("/success");
     } catch (error) {
       console.error(
