@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -17,6 +17,7 @@ import {
   useMediaQuery,
   useTheme,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import { AiFillStar } from "react-icons/ai";
 import NavBar from "../NavBar";
@@ -26,6 +27,18 @@ import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { PiSortAscendingLight } from "react-icons/pi";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import axios from "axios";
+
+// Interface for patient ratings
+interface PatientRating {
+  _id: string;
+  nurseEmail: string;
+  userId: string;
+  rating: number;
+  review?: string;
+  createdAt: string;
+  __v: number;
+}
 
 const demoData = [
   {
@@ -158,9 +171,41 @@ export default function NoteDeSatisfaction() {
   const [selectedRegion, setSelectedRegion] = useState("");
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;
-  const totalPages = Math.ceil(demoData.length / rowsPerPage);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [patientRatings, setPatientRatings] = useState<PatientRating[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // Fetch patient ratings from API
+  useEffect(() => {
+    if (selectedFilter === "Patient(s)") {
+      fetchPatientRatings();
+    }
+  }, [selectedFilter]);
+
+  const fetchPatientRatings = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const config = {
+        method: "get",
+        maxBodyLength: Infinity,
+        url: "https://amme-api-pied.vercel.app/api/backOffice/ratings",
+        headers: {
+          Authorization: localStorage.getItem("authToken"),
+        },
+      };
+
+      const response = await axios.request(config);
+      setPatientRatings(response.data);
+    } catch (error) {
+      console.error("Error fetching patient ratings:", error);
+      setError("Failed to fetch patient ratings");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleChangePage = (newPage: number) => {
     setPage(newPage);
@@ -168,29 +213,56 @@ export default function NoteDeSatisfaction() {
 
   const handleFilterClick = (filter: string) => {
     setSelectedFilter(filter);
+    setPage(1); // Reset to first page when switching tabs
   };
 
-  // Calculate average rating
+  // Calculate average rating based on selected filter
   const averageRating = useMemo(() => {
-    const total = demoData.reduce((sum, item) => sum + item.rating, 0);
-    return (total / demoData.length).toFixed(1);
-  }, []);
+    if (selectedFilter === "Infirmier(s)") {
+      const total = demoData.reduce((sum, item) => sum + item.rating, 0);
+      return (total / demoData.length).toFixed(1);
+    } else {
+      // Calculate for patient ratings
+      if (patientRatings.length === 0) return "0.0";
+      const total = patientRatings.reduce((sum, item) => sum + item.rating, 0);
+      return (total / patientRatings.length).toFixed(1);
+    }
+  }, [selectedFilter, patientRatings]);
 
   // Filter data based on selections
   const filteredData = useMemo(() => {
-    return demoData.filter((row) => {
-      return (
-        (selectedNurse ? row.nurse === selectedNurse : true) &&
-        (selectedRegion ? row.location === selectedRegion : true)
-      );
-    });
-  }, [selectedNurse, selectedRegion]);
+    if (selectedFilter === "Infirmier(s)") {
+      return demoData.filter((row) => {
+        return (
+          (selectedNurse ? row.nurse === selectedNurse : true) &&
+          (selectedRegion ? row.location === selectedRegion : true)
+        );
+      });
+    } else {
+      // Filter patient data if needed - here we could add filtering by nurseEmail
+      return patientRatings.filter((row) => {
+        return selectedNurse ? row.nurseEmail === selectedNurse : true;
+      });
+    }
+  }, [selectedFilter, selectedNurse, selectedRegion, patientRatings]);
 
   const paginatedData = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     return filteredData.slice(start, end);
   }, [filteredData, page, rowsPerPage]);
+
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+
+  // Format date from ISO to DD/MM/YYYY
+  const formatDate = (isoDate: string) => {
+    const date = new Date(isoDate);
+    return `${date.getDate().toString().padStart(2, "0")}/${(
+      date.getMonth() + 1
+    )
+      .toString()
+      .padStart(2, "0")}/${date.getFullYear()}`;
+  };
 
   return (
     <Box sx={{ display: "flex", bgcolor: "white", minHeight: "100vh" }}>
@@ -336,8 +408,8 @@ export default function NoteDeSatisfaction() {
                 bgcolor: "white",
                 height: 40,
                 "& .MuiSelect-select": {
-                  py: 0, // Adjust padding to align text properly
-                  height: "100%", // Ensures the text aligns within the given height
+                  py: 0,
+                  height: "100%",
                   display: "flex",
                   alignItems: "center",
                 },
@@ -347,43 +419,53 @@ export default function NoteDeSatisfaction() {
               <MenuItem value="">
                 Sélectionner une infirmière parmi la liste
               </MenuItem>
-              {Array.from(new Set(demoData.map((d) => d.nurse))).map(
-                (nurse) => (
-                  <MenuItem key={nurse} value={nurse}>
-                    {nurse}
-                  </MenuItem>
-                )
-              )}
+              {selectedFilter === "Infirmier(s)"
+                ? Array.from(new Set(demoData.map((d) => d.nurse))).map(
+                    (nurse) => (
+                      <MenuItem key={nurse} value={nurse}>
+                        {nurse}
+                      </MenuItem>
+                    )
+                  )
+                : Array.from(
+                    new Set(patientRatings.map((d) => d.nurseEmail))
+                  ).map((nurseEmail) => (
+                    <MenuItem key={nurseEmail} value={nurseEmail}>
+                      {nurseEmail}
+                    </MenuItem>
+                  ))}
             </Select>
 
-            <Select
-              value={selectedRegion}
-              onChange={(e) => setSelectedRegion(e.target.value)}
-              displayEmpty
-              fullWidth
-              sx={{
-                bgcolor: "white",
-                height: 40,
-                "& .MuiSelect-select": {
-                  py: 0, // Adjust padding
-                  height: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                },
-                flex: isMobile ? "none" : 1,
-              }}
-            >
-              <MenuItem value="">
-                Sélectionner une région parmi la liste
-              </MenuItem>
-              {Array.from(new Set(demoData.map((d) => d.location))).map(
-                (location) => (
-                  <MenuItem key={location} value={location}>
-                    {location}
-                  </MenuItem>
-                )
-              )}
-            </Select>
+            {selectedFilter === "Infirmier(s)" && (
+              <Select
+                value={selectedRegion}
+                onChange={(e) => setSelectedRegion(e.target.value)}
+                displayEmpty
+                fullWidth
+                sx={{
+                  bgcolor: "white",
+                  height: 40,
+                  "& .MuiSelect-select": {
+                    py: 0,
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                  },
+                  flex: isMobile ? "none" : 1,
+                }}
+              >
+                <MenuItem value="">
+                  Sélectionner une région parmi la liste
+                </MenuItem>
+                {Array.from(new Set(demoData.map((d) => d.location))).map(
+                  (location) => (
+                    <MenuItem key={location} value={location}>
+                      {location}
+                    </MenuItem>
+                  )
+                )}
+              </Select>
+            )}
 
             <Box sx={{ width: isMobile ? "100%" : "auto" }}>
               <Calendar />
@@ -438,82 +520,23 @@ export default function NoteDeSatisfaction() {
           </Box>
 
           {/* Table */}
-          <TableContainer
-            component={Paper}
-            elevation={0}
-            sx={{ boxShadow: "none" }}
-          >
-            <Table size="small">
-              <TableHead sx={{ backgroundColor: "#F6F7F9" }}>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      color: "#818EA0",
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      borderBottom: "none",
-                    }}
-                  >
-                    <Box
-                      sx={{ display: "flex", alignItems: "center", gap: "8px" }}
-                    >
-                      Infirmière <PiSortAscendingLight size={18} />
-                    </Box>
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      color: "#818EA0",
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      borderBottom: "none",
-                    }}
-                  >
-                    <Box
-                      sx={{ display: "flex", alignItems: "center", gap: "8px" }}
-                    >
-                      Note <PiSortAscendingLight size={18} />
-                    </Box>
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      color: "#818EA0",
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      borderBottom: "none",
-                    }}
-                  >
-                    <Box
-                      sx={{ display: "flex", alignItems: "center", gap: "8px" }}
-                    >
-                      Commentaire <PiSortAscendingLight size={18} />
-                    </Box>
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      color: "#818EA0",
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      borderBottom: "none",
-                    }}
-                  >
-                    Localisation
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      color: "#818EA0",
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      borderBottom: "none",
-                    }}
-                  >
-                    <Box
-                      sx={{ display: "flex", alignItems: "center", gap: "8px" }}
-                    >
-                      Date
-                      <PiSortAscendingLight size={18} />
-                    </Box>
-                  </TableCell>
-                  {selectedFilter === "Infirmier(s)" && (
+          {loading ? (
+            <Box sx={{ display: "flex", justifyContent: "center", my: 4 }}>
+              <CircularProgress />
+            </Box>
+          ) : error ? (
+            <Typography color="error" sx={{ my: 4, textAlign: "center" }}>
+              {error}
+            </Typography>
+          ) : (
+            <TableContainer
+              component={Paper}
+              elevation={0}
+              sx={{ boxShadow: "none" }}
+            >
+              <Table size="small">
+                <TableHead sx={{ backgroundColor: "#F6F7F9" }}>
+                  <TableRow>
                     <TableCell
                       sx={{
                         color: "#818EA0",
@@ -522,82 +545,238 @@ export default function NoteDeSatisfaction() {
                         borderBottom: "none",
                       }}
                     >
-                      Profession
-                    </TableCell>
-                  )}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {paginatedData.map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell
-                      sx={{
-                        fontSize: "14px",
-                        fontWeight: "500",
-                        p: "20px",
-                        borderBottom: "1px solid #F6F7F9",
-                      }}
-                    >
-                      {row.nurse}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        {selectedFilter === "Patient(s)"
+                          ? "Infirmier"
+                          : "Infirmière"}{" "}
+                        <PiSortAscendingLight size={18} />
+                      </Box>
                     </TableCell>
                     <TableCell
                       sx={{
-                        width: "16%",
+                        color: "#818EA0",
                         fontSize: "14px",
                         fontWeight: "500",
-                        p: "20px",
-                        borderBottom: "1px solid #F6F7F9",
+                        borderBottom: "none",
                       }}
                     >
-                      <RatingStars rating={row.rating} />
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        Note <PiSortAscendingLight size={18} />
+                      </Box>
                     </TableCell>
                     <TableCell
                       sx={{
+                        color: "#818EA0",
                         fontSize: "14px",
                         fontWeight: "500",
-                        p: "20px",
-                        borderBottom: "1px solid #F6F7F9",
+                        borderBottom: "none",
                       }}
                     >
-                      {row.comment}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        fontSize: "14px",
-                        fontWeight: "500",
-                        p: "20px",
-                        borderBottom: "1px solid #F6F7F9",
-                      }}
-                    >
-                      {row.location}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        fontSize: "14px",
-                        fontWeight: "500",
-                        p: "20px",
-                        borderBottom: "1px solid #F6F7F9",
-                      }}
-                    >
-                      {row.date}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        Commentaire <PiSortAscendingLight size={18} />
+                      </Box>
                     </TableCell>
                     {selectedFilter === "Infirmier(s)" && (
                       <TableCell
                         sx={{
+                          color: "#818EA0",
                           fontSize: "14px",
                           fontWeight: "500",
-                          p: "20px",
-                          borderBottom: "1px solid #F6F7F9",
+                          borderBottom: "none",
                         }}
                       >
-                        {row.profession}
+                        Localisation
+                      </TableCell>
+                    )}
+                    {selectedFilter === "Patient(s)" && (
+                      <TableCell
+                        sx={{
+                          color: "#818EA0",
+                          fontSize: "14px",
+                          fontWeight: "500",
+                          borderBottom: "none",
+                        }}
+                      >
+                        Patient
+                      </TableCell>
+                    )}
+                    <TableCell
+                      sx={{
+                        color: "#818EA0",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        borderBottom: "none",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        Date
+                        <PiSortAscendingLight size={18} />
+                      </Box>
+                    </TableCell>
+                    {selectedFilter === "Infirmier(s)" && (
+                      <TableCell
+                        sx={{
+                          color: "#818EA0",
+                          fontSize: "14px",
+                          fontWeight: "500",
+                          borderBottom: "none",
+                        }}
+                      >
+                        Profession
                       </TableCell>
                     )}
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {selectedFilter === "Infirmier(s)"
+                    ? paginatedData.map((row) => (
+                        <TableRow key={row.id}>
+                          <TableCell
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              p: "20px",
+                              borderBottom: "1px solid #F6F7F9",
+                            }}
+                          >
+                            {row.nurse}
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              width: "16%",
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              p: "20px",
+                              borderBottom: "1px solid #F6F7F9",
+                            }}
+                          >
+                            <RatingStars rating={row.rating} />
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              p: "20px",
+                              borderBottom: "1px solid #F6F7F9",
+                            }}
+                          >
+                            {row.comment}
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              p: "20px",
+                              borderBottom: "1px solid #F6F7F9",
+                            }}
+                          >
+                            {row.location}
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              p: "20px",
+                              borderBottom: "1px solid #F6F7F9",
+                            }}
+                          >
+                            {row.date}
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              p: "20px",
+                              borderBottom: "1px solid #F6F7F9",
+                            }}
+                          >
+                            {row.profession}
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    : paginatedData.map((row: PatientRating) => (
+                        <TableRow key={row._id}>
+                          <TableCell
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              p: "20px",
+                              borderBottom: "1px solid #F6F7F9",
+                            }}
+                          >
+                            {row.nurseEmail}
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              width: "16%",
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              p: "20px",
+                              borderBottom: "1px solid #F6F7F9",
+                            }}
+                          >
+                            <RatingStars rating={row.rating} />
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              p: "20px",
+                              borderBottom: "1px solid #F6F7F9",
+                            }}
+                          >
+                            {row.review || "-"}
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              p: "20px",
+                              borderBottom: "1px solid #F6F7F9",
+                            }}
+                          >
+                            {row.userId}
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              p: "20px",
+                              borderBottom: "1px solid #F6F7F9",
+                            }}
+                          >
+                            {formatDate(row.createdAt)}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         </Box>
         {/* Footer */}
         <Box
@@ -618,10 +797,11 @@ export default function NoteDeSatisfaction() {
             color="textSecondary"
             sx={{ fontSize: "clamp(0.75rem, 1.5vw, 0.875rem)" }}
           >
-            {`${(page - 1) * rowsPerPage + 1}-${Math.min(
-              page * rowsPerPage,
+            {`${
+              filteredData.length > 0 ? (page - 1) * rowsPerPage + 1 : 0
+            }-${Math.min(page * rowsPerPage, filteredData.length)} sur ${
               filteredData.length
-            )} sur ${filteredData.length}`}
+            }`}
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <IconButton
@@ -638,11 +818,11 @@ export default function NoteDeSatisfaction() {
                 fontSize: "clamp(0.75rem, 1.5vw, 0.875rem)",
               }}
             >
-              {page} / {totalPages}
+              {page} / {totalPages || 1}
             </Typography>
             <IconButton
               onClick={() => handleChangePage(page + 1)}
-              disabled={page === totalPages}
+              disabled={page === totalPages || totalPages === 0}
               size="small"
             >
               <ChevronRight />

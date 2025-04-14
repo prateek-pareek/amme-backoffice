@@ -1,18 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import logoIcon from "../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Page1: React.FC = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await axios.post(
+        "https://amme-api-pied.vercel.app/api/auth/login",
+        {
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(response.data);
+      // You can store the token in localStorage or sessionStorage
+      localStorage.setItem("token", response.data.token);
+      navigate("/access-administration");
+    } catch (error) {
+      console.error(error);
+      setError("Failed to login. Please check your credentials.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="w-[367px] max-w-sm p-6 bg-white rounded-lg mx-auto mt-24">
       {/* Logo */}
       <div className="flex justify-center items-center m-auto h-12 w-12 p-2 rounded-sm bg-[#0C66E6] mb-6">
-        <img
-          src={logoIcon} // Replace with your logo's path
-          alt="Logo"
-          className="h-12 w-12"
-        />
+        <img src={logoIcon} alt="Logo" className="h-12 w-12" />
       </div>
 
       {/* Title */}
@@ -24,20 +58,22 @@ const Page1: React.FC = () => {
       </h2>
 
       {/* Form */}
-      <form>
+      <form onSubmit={handleLogin}>
         {/* Email Field */}
         <div className="mb-4">
           <label
             htmlFor="email"
-            className="block  text-[14px] font-normal text-black"
+            className="block text-[14px] font-normal text-black"
           >
             Adresse email
           </label>
           <input
             type="email"
             id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-            // placeholder="Entrez votre email"
+            required
           />
         </div>
 
@@ -51,13 +87,16 @@ const Page1: React.FC = () => {
           </label>
           <div className="relative">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-              // placeholder="Entrez votre mot de passe"
+              required
             />
             <button
               type="button"
+              onClick={() => setShowPassword(!showPassword)}
               className="absolute inset-y-0 right-3 flex items-center text-gray-500"
             >
               {/* Eye Icon */}
@@ -107,15 +146,19 @@ const Page1: React.FC = () => {
           </a>
         </div>
 
+        {/* Error message */}
+        {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
+
         {/* Submit Button */}
-        <Link to="/access-administration">
-          <button
-            type="submit"
-            className="w-full px-4 py-2 text-white bg-[#0C66E6] rounded-[4px] hover:bg-blue-700  mt-6 text-[16px] font-medium "
-          >
-            Se connecter
-          </button>
-        </Link>
+        <button
+          type="submit"
+          disabled={loading}
+          className={`w-full px-4 py-2 text-white bg-[#0C66E6] rounded-[4px] hover:bg-blue-700 mt-6 text-[16px] font-medium ${
+            loading ? "opacity-70 cursor-not-allowed" : ""
+          }`}
+        >
+          {loading ? "Connexion..." : "Se connecter"}
+        </button>
       </form>
     </div>
   );
