@@ -81,7 +81,7 @@ const ResetPassword: React.FC = () => {
 
       {/* Title */}
       <h2 className="mb-6 text-[24px] font-semibold text-left text-black">
-        Reset Password
+        Réinitialiser le mot de passe
       </h2>
 
       {/* Error / Success Message */}
@@ -98,7 +98,7 @@ const ResetPassword: React.FC = () => {
             htmlFor="newPassword"
             className="block  text-[14px] font-normal text-black"
           >
-            New Password
+            Nouveau mot de passe
           </label>
           <input
             type="password"
@@ -116,7 +116,7 @@ const ResetPassword: React.FC = () => {
             htmlFor="confirmPassword"
             className="block text-[14px] font-normal text-black"
           >
-            Confirm New Password
+            Confirmer le nouveau mot de passe
           </label>
           <input
             type="password"
@@ -132,7 +132,7 @@ const ResetPassword: React.FC = () => {
           type="submit"
           className="w-full px-4 py-2 text-white bg-[#0C66E6] rounded-[4px] hover:bg-blue-700 mt-6 text-[16px] font-medium"
         >
-          Reset Password
+          Réinitialiser le mot de passe
         </button>
       </form>
     </div>
