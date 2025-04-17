@@ -10,7 +10,6 @@ const theme = createTheme({
     fontFamily: 'Inter, Arial, sans-serif',
   },
 });
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
      <ThemeProvider theme={theme}>
