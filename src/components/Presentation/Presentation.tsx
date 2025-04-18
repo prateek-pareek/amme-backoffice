@@ -375,7 +375,17 @@ export default function Presentation() {
       </Box>
 
       {/* Render the modal */}
-      {selectedRow && <Benifits row={selectedRow} onClose={handleCloseModal} />}
+      {selectedRow && (
+        <Benifits
+          row={{
+            employe: selectedRow.employe || "",
+            patient: selectedRow.patient || "",
+            date: selectedRow.date || "",
+            heure: selectedRow.heure || "",
+          }}
+          onClose={handleCloseModal}
+        />
+      )}
     </Box>
   );
 }

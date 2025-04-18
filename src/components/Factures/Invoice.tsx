@@ -35,7 +35,7 @@ const Invoices: React.FC<BenifitsProps> = ({ setState, row, onClose }) => {
         headers: {
           Authorization: token,
         },
-        responseType: "blob", // Important for file downloads
+        responseType: "blob" as const, // Important for file downloads - adding type assertion
       };
 
       const response = await axios.request(config);
