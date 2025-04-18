@@ -718,7 +718,7 @@ export default function NoteDeSatisfaction() {
                           </TableCell>
                         </TableRow>
                       ))
-                    : paginatedData.map((row: PatientRating) => (
+                    : paginatedData.map((row) => (
                         <TableRow key={row._id}>
                           <TableCell
                             sx={{

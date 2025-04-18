@@ -29,7 +29,7 @@ type Prestation = {
   status: string;
   prescriptionUrl?: string;
   slots: any[];
-  employe?: string; // Keep for UI compatibility or derive from other fields
+  employe: string; // Keep for UI compatibility or derive from other fields
   patient?: string; // Use userId or another field for display
   date?: string; // Could be derived from slots if filled
   heure?: string; // Could be derived from slots if filled
