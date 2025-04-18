@@ -19,7 +19,6 @@ import SuccessScreen from "./components/SuccessScreen";
 
 function App() {
   const location = useLocation();
-
   // List of routes where the sidebar should not be displayed
   const noSidebarRoutes = [
     "/",
