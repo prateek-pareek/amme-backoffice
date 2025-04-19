@@ -32,7 +32,7 @@ const Page1: React.FC = () => {
 
       console.log(response.data);
       // You can store the token in localStorage or sessionStorage
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", response?.data?.accessToken);
       navigate("/access-administration");
     } catch (error) {
       console.error(error);

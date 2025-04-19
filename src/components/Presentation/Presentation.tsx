@@ -21,6 +21,7 @@ import { PiSortAscendingLight } from "react-icons/pi";
 import Benifits from "./Benifits";
 import Calendar from "./Calendar";
 import axios from "axios";
+import { data } from "react-router-dom";
 
 // Define data structure
 type Prestation = {
@@ -42,6 +43,8 @@ export default function Presentation() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [congesData, setCongesData] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleOpenModal = (row: Prestation) => {
     setSelectedRow(row);
@@ -56,19 +59,28 @@ export default function Presentation() {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        setLoading(true);
-        const config = {
-          method: "get",
-          url: "https://amme-api-pied.vercel.app/api/backOffice/appointments",
-          headers: {
-            Authorization: "YOUR_AUTH_TOKEN",
-          },
-        };
-
-        const response = await axios.request(config);
-        setPrestations(response.data);
-      } catch (error) {
-        console.error("Error fetching appointments:", error);
+        const response = await axios.get(
+          "https://amme-api-pied.vercel.app/api/backOffice/appointments"
+        );
+        console.log(JSON.stringify(response.data));
+        if (response.data) {
+          const fetchedPrestations = response.data.map((appointment: any) => ({
+            _id: appointment._id,
+            userId: appointment.userId,
+            status: appointment.status,
+            prescriptionUrl: appointment.prescriptionUrl,
+            slots: appointment.slots,
+            employe: appointment.preferredNurseName || "No employee assigned",
+            patient: appointment.patientName || appointment.userId,
+            date: appointment.date || "No date specified",
+            heure: appointment.timeSlot || "No time specified",
+            timeSlots: appointment.timeSlots || [],
+            preferredNurse: appointment.preferredNurse || "No preferred nurse",
+          }));
+          setPrestations(fetchedPrestations);
+        }
+      } catch (err) {
+        console.error("Error fetching appointments:", err);
         setError("Failed to load appointments");
       } finally {
         setLoading(false);
@@ -77,6 +89,19 @@ export default function Presentation() {
 
     fetchAppointments();
   }, []);
+
+  const token = localStorage.getItem("token") || "";
+  console.log("tolen", token);
+  const config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: "https://amme-api-pied.vercel.app/api/backOffice/appointments",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+    data: data,
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,6 +123,20 @@ export default function Presentation() {
 
     fetchData();
   }, []);
+
+  const filteredPrestations = prestations.filter((prestation) => {
+    const matchesSearchQuery =
+      prestation.employe.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      prestation.patient?.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesDate =
+      !selectedDate ||
+      (prestation.date &&
+        new Date(prestation.date).toDateString() ===
+          selectedDate.toDateString());
+
+    return matchesSearchQuery && matchesDate;
+  });
 
   return (
     <Box sx={{ display: "flex", bgcolor: "#F6F7F9", minHeight: "100vh" }}>
@@ -149,6 +188,8 @@ export default function Presentation() {
               <InputBase
                 sx={{ ml: 1, flex: 1, fontSize: "0.875rem", fontWeight: "500" }}
                 placeholder="Rechercher un infirmier, un patient ..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </Box>
 
@@ -159,7 +200,10 @@ export default function Presentation() {
                 height: "2.5rem",
               }}
             >
-              <Calendar />
+              <Calendar
+                value={selectedDate}
+                onChange={(date) => setSelectedDate(date)}
+              />
             </Box>
           </Box>
 
@@ -258,7 +302,7 @@ export default function Presentation() {
                 </TableRow>
               </TableHead>
               <TableBody sx={{ py: "4px" }}>
-                {prestations.map((row, index) => (
+                {filteredPrestations.map((row, index) => (
                   <TableRow key={row._id || index} hover>
                     <TableCell
                       sx={{
@@ -306,7 +350,7 @@ export default function Presentation() {
                     </TableCell>
                     <TableCell
                       sx={{
-                        position: "relative", // Ensure the button can be positioned absolutely
+                        position: "relative",
                         width: "30%",
                         borderBottom: "1px solid #F6F7F9",
                         p: "1.2rem",
@@ -316,10 +360,10 @@ export default function Presentation() {
                         variant="contained"
                         size="small"
                         sx={{
-                          position: "absolute", // Absolutely position the button
-                          right: "1.25rem", // Adjust spacing from the right
-                          top: "50%", // Position the button at 50% height of the parent
-                          transform: "translateY(-50%)", // Center the button vertically
+                          position: "absolute",
+                          right: "1.25rem",
+                          top: "50%",
+                          transform: "translateY(-50%)",
                           textTransform: "none",
                           bgcolor: "#0C66E6",
                           "&:hover": { bgcolor: "#0052CC" },
