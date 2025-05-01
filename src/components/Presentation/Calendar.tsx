@@ -14,11 +14,16 @@ interface DateTimeRange {
   time: TimeState;
 }
 
-const DateRangePicker: React.FC = () => {
+interface CalendarProps {
+  value?: Date;
+  onChange?: (date: Date) => void;
+}
+
+const DateRangePicker: React.FC<CalendarProps> = ({ value, onChange }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [selectedDateRange, setSelectedDateRange] = useState<string>("");
   const [startDateTime, setStartDateTime] = useState<DateTimeRange>({
-    date: null,
+    date: value || null,
     time: { hours: "00", minutes: "00" },
   });
   const [endDateTime, setEndDateTime] = useState<DateTimeRange>({
@@ -80,20 +85,22 @@ const DateRangePicker: React.FC = () => {
     }
   };
 
-  const handleDateSelect = (day: number, type: "start" | "end"): void => {
-    if (day === 0) return; // Ignore padding days
+  const handleDateSelect = (day: number): void => {
+    if (day === 0) return;
     const selectedDate = new Date(currentYear, currentMonth, day);
+    setStartDateTime((prev) => ({ ...prev, date: selectedDate }));
 
-    if (type === "start") {
-      setStartDateTime((prev) => ({ ...prev, date: selectedDate }));
-    } else {
-      setEndDateTime((prev) => ({ ...prev, date: selectedDate }));
+    if (onChange) {
+      onChange(selectedDate);
     }
   };
 
   const formatDate = (date: Date | null): string => {
     if (!date) return "";
-    const options: Intl.DateTimeFormatOptions = { day: "2-digit", month: "short" };
+    const options: Intl.DateTimeFormatOptions = {
+      day: "2-digit",
+      month: "short",
+    };
     return date.toLocaleDateString("fr-FR", options).replace(/\./g, "");
   };
 
@@ -138,24 +145,23 @@ const DateRangePicker: React.FC = () => {
         className={`flex items-center gap-2 p-2 border rounded-md cursor-pointer hover:bg-gray-50 text-[0.875rem] font-medium ${
           selectedDateRange ? "text-[#151515]" : "text-[#818EA0]"
         }`}
-        style={{height:'40px', width:'300px'}}
+        style={{ height: "40px", width: "300px" }}
       >
         <Calendar className="h-4 w-4 text-[#151515]" />
 
-        <Input 
-    value={selectedDateRange || "Veuillez sélectionner une date"} 
-    readOnly 
-    className={`border-0 focus-visible:ring-0 p-0 ${ 
-        selectedDateRange ? 'text-[#151515]' : 'text-[#818EA0]' 
-    }`} 
-/>
-<IoIosArrowDown
-    size="1.25rem"
-    className={`transition-transform duration-300 ${
-      open ? "rotate-180" : ""
-    }`}
-  />
-
+        <Input
+          value={selectedDateRange || "Veuillez sélectionner une date"}
+          readOnly
+          className={`border-0 focus-visible:ring-0 p-0 ${
+            selectedDateRange ? "text-[#151515]" : "text-[#818EA0]"
+          }`}
+        />
+        <IoIosArrowDown
+          size="1.25rem"
+          className={`transition-transform duration-300 ${
+            open ? "rotate-180" : ""
+          }`}
+        />
       </div>
 
       {/* Popup Content */}
@@ -182,44 +188,63 @@ const DateRangePicker: React.FC = () => {
 
             {/* Calendar */}
             <div className="grid grid-cols-7 gap-0 mb-2">
-  {["LUN", "MAR", "MER", "JEU", "VEN", "SAM", "DIM"].map((day) => (
-    <div key={day} className="text-center text-sm text-gray-500 py-1">
-      {day}
-    </div>
-  ))}
-  {calendarDays.map((day, index) => {
-    const isSelected =
-      day > 0 &&
-      (startDateTime.date?.getDate() === day || endDateTime.date?.getDate() === day);
+              {["LUN", "MAR", "MER", "JEU", "VEN", "SAM", "DIM"].map((day) => (
+                <div
+                  key={day}
+                  className="text-center text-sm text-gray-500 py-1"
+                >
+                  {day}
+                </div>
+              ))}
+              {calendarDays.map((day, index) => {
+                const isSelected =
+                  day > 0 &&
+                  (startDateTime.date?.getDate() === day ||
+                    endDateTime.date?.getDate() === day);
 
-    const isInRange =
-      day > 0 &&
-      startDateTime.date &&
-      endDateTime.date &&
-      new Date(startDateTime.date.getFullYear(), startDateTime.date.getMonth(), day) >=
-        startDateTime.date &&
-      new Date(startDateTime.date.getFullYear(), startDateTime.date.getMonth(), day) <=
-        endDateTime.date;
+                const isInRange =
+                  day > 0 &&
+                  startDateTime.date &&
+                  endDateTime.date &&
+                  new Date(
+                    startDateTime.date.getFullYear(),
+                    startDateTime.date.getMonth(),
+                    day
+                  ) >= startDateTime.date &&
+                  new Date(
+                    startDateTime.date.getFullYear(),
+                    startDateTime.date.getMonth(),
+                    day
+                  ) <= endDateTime.date;
 
-    return (
-      <button
-        key={index}
-        className={`p-2 text-center rounded  ${
-          isSelected ? "bg-[#0C66E6] text-white" : isInRange ? "bg-[#F3FBFF]" : ""
-        }`}
-        onClick={() =>
-          handleDateSelect(day, !startDateTime.date ? "start" : "end")
-        }
-      >
-        {day > 0 ? day : ""}
-      </button>
-    );
-  })}
-</div>
-
+                return (
+                  <button
+                    key={index}
+                    className={`p-2 text-center rounded  ${
+                      isSelected
+                        ? "bg-[#0C66E6] text-white"
+                        : isInRange
+                        ? "bg-[#F3FBFF]"
+                        : ""
+                    }`}
+                    onClick={() => handleDateSelect(day)}
+                  >
+                    {day > 0 ? day : ""}
+                  </button>
+                );
+              })}
+            </div>
 
             <div className="flex items-center justify-between mb-6">
-              <span style={{fontSize:'0.875rem', fontWeight:'500', color:'#151515'}}>Heure</span>
+              <span
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: "500",
+                  color: "#151515",
+                }}
+              >
+                Heure
+              </span>
               <div className="flex items-center gap-2">
                 <Input
                   type="number"
@@ -239,12 +264,23 @@ const DateRangePicker: React.FC = () => {
 
             {/* Buttons */}
             <div className="flex gap-2 justify-end">
-              <Button variant="outline"
-              style={{fontSize:'0.75rem', fontWeight:'500'}}
-               onClick={() => setOpen(false)}>
+              <Button
+                variant="outline"
+                style={{ fontSize: "0.75rem", fontWeight: "500" }}
+                onClick={() => setOpen(false)}
+              >
                 Annuler
               </Button>
-              <Button onClick={handleApply} style={{backgroundColor:'#0C66E6', fontSize:'0.75rem', fontWeight:'500'}}>Appliquer</Button>
+              <Button
+                onClick={handleApply}
+                style={{
+                  backgroundColor: "#0C66E6",
+                  fontSize: "0.75rem",
+                  fontWeight: "500",
+                }}
+              >
+                Appliquer
+              </Button>
             </div>
           </div>
         </div>
